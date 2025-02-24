@@ -36,4 +36,4 @@ catch (PDOException $e) {
 
 $stmt = $pdo->query('SELECT * FROM Games');
 $games = $stmt->fetchAll();
-print_r($games);
+echo $games[0]['gamename'];
