@@ -15,7 +15,7 @@ function addTicket($pdo, $ticket_id, $ticket_text, $status, $priority, $ticket_t
         // Bind the values
         $data = [
             ':ticket_id' => 1,  
-            ':ticket_text' => 'Sample ticket text',
+            ':ticket_text' => 'Infinite loading on login',
             ':submission_date' => '2025-2-01 12:00:00',  
             ':last_updated_date' => '2025-2-01 18:00:00', 
             ':status' => 'open',
