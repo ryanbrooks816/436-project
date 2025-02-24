@@ -33,3 +33,7 @@ catch (PDOException $e) {
     // Re-throw exception                    
     throw new PDOException($e->getMessage(), $e->getCode());
 }
+
+$stmt = $pdo->query('SELECT * FROM Games');
+$games = $stmt->fetchAll();
+print_r($games);
