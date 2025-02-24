@@ -5,7 +5,7 @@ require 'config.php';
 // Function to insert a new ticket into the database
 function addTicket($pdo, $ticket_id, $ticket_text, $status, $priority, $ticket_type) {
     try {
-        // Prepare the INSERT SQL query 
+        // Prepare the query 
         $sql = "INSERT INTO Ticket (ticket_id, ticket_text, submission_date, last_updated_date, status, priority, ticket_type) 
                 VALUES (ticket_id, :ticket_text, :submission_date, :last_updated_date, :status, :priority, :ticket_type)";
 
@@ -31,6 +31,7 @@ function addTicket($pdo, $ticket_id, $ticket_text, $status, $priority, $ticket_t
     }
 }
 
+// Check ticket has been added
 if (addTicket($pdo, $ticket_id, $ticket_text, $status, $priority, $ticket_type)) {
     echo "Ticket added successfully!";
 } else {
