@@ -1,39 +1,50 @@
 <?php
 
-$username = 'rybro8_main';
-$password = '1hO9bAOQ8Pr0CfyoaLY';
+$type = 'mysql';                             // Type of database
+$server = '192.185.2.183';                    // Server the database is on
+$db = 'rybro8_436-project';                  // Name of the database
+$port = '3306';                           // Port is usually 3306 in Hostgator
+$charset = 'utf8mb4';                       // UTF-8 encoding using 4 bytes of data per char
+
+$username = 'rybro8_main';     // Enter YOUR cPanel username and user here
+$password = '1hO9bAOQ8Pr0CfyoaLY';           // Enter YOUR user password here
 
 
-$type = 'mysql';                        // Type of database
-$server = '192.185.2.183';               // Server the database is on
-$db = 'rybro8_436-project';  // Name of the database
-$port = '3306';                      // Port is usually 3306 in Hostgator
-$charset = 'utf8mb4';                 // UTF-8 encoding using 4 bytes per char
 
-// Create DSN
-$dsn = "$type:host=$server;dbname=$db;port=$port;charset=$charset";
+// DO *NOT* CHANGE ANYTHING BENEATH THIS LINE
+
 
 // Array containing options for configuring PDO
-//       Set error mode to throw exceptions
-//       Set default fetch mode to associative array
-//       Disable emulation of prepared statements
 $options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,       // Set error mode to throw exceptions
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Set default fetch mode to associative array
+    PDO::ATTR_EMULATE_PREPARES => false,            // Disable emulation of prepared statements
 ];
 
-// Try connecting to the db
-try {
-    // Create a new PDO instance
-    $pdo = new PDO($dsn, $username, $password, $options);
-}
-// Catch any exceptions that occur during connection
-catch (PDOException $e) {
-    // Re-throw exception                    
-    throw new PDOException($e->getMessage(), $e->getCode());
+
+$dsn = "$type:host=$server;dbname=$db;port=$port;charset=$charset"; // Create DSN 
+try {                                                              // Try connecting to the db
+    $pdo = new PDO($dsn, $username, $password, $options);         // Create a new PDO instance
+} catch (PDOException $e) {                  // Catch any exceptions that occur during connection
+    throw new PDOException($e->getMessage(), $e->getCode());    // Re-throw exception
 }
 
-$stmt = $pdo->query('SELECT * FROM Games');
-$games = $stmt->fetchAll();
-echo $games[0]['gamename'];
+/*
+ * Executes an SQL query using PDO, optionally binding parameters.
+ * 
+ * @param PDO $pdo                      An instance of the PDO class.
+ * @param string $sql                   The SQL query string.
+ * @param array|null $arguments         Optional array of parameters to bind to the SQL query.
+ * @return PDOStatement PDOStatement    A PDOStatement object containing the result set.
+ */
+function pdo(PDO $pdo, string $sql, array $arguments = null)
+{
+    if (!$arguments) {                   // If no arguments provided
+        return $pdo->query($sql);       // Run SQL query and return PDOStatement object
+    }
+    $statement = $pdo->prepare($sql);  // If arguments, prepare SQL statement
+    $statement->execute($arguments);  // Bind & execute SQL statement w/provided arguments
+    return $statement;               // Return PDOStatement object
+}
+
+?>
