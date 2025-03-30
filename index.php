@@ -3,6 +3,8 @@ require "db.php";
 
 echo "Hello world";
 
+// EXAMPLE
+
 $sql = "SELECT * FROM Game"; // SQL query to fetch all rows from the Game table
 $games = pdo($pdo, $sql)->fetchAll(); // Execute the query and fetch all results
 
