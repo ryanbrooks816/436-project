@@ -1,14 +1,13 @@
-<?php
-require "db.php";
+<?php require "header.php"; ?>
 
-echo "Hello world";
+<h1>Hiiiii</h1>
 
-// EXAMPLE
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Card Title</h5>
+        <p class="card-text">This is a simple card example using Bootstrap.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
 
-$sql = "SELECT * FROM Game"; // SQL query to fetch all rows from the Game table
-$games = pdo($pdo, $sql)->fetchAll(); // Execute the query and fetch all results
-
-foreach ($games as $game) {
-    print_r($game);
-    echo "<br>";
-}
+<?php require "footer.php"; ?>
