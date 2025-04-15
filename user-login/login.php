@@ -1,5 +1,5 @@
 <?php
-require '../classes/db.php';
+require_once '../classes/db.php';
 
 session_start();
 
