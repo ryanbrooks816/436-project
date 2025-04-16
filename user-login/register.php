@@ -68,15 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Register</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</head>
+<?php include '../header.php'; ?>
 <body class="bg-light">
   <div class="container mt-5">
     <div class="row justify-content-center">
@@ -131,13 +123,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function () {
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.map(el => new bootstrap.Tooltip(el))
   });
 </script>
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
-</html>
+<?php include '../footer.php'; ?>
+
