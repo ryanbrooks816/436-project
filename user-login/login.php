@@ -46,28 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
-
-    .login-container {
-      margin-top: 100px;
-    }
-
-    .card {
-      border-radius: 1rem;
-    }
-  </style>
-</head>
-
+<?php include '../header.php'; ?>
 <body>
   <div class="container login-container">
     <div class="row justify-content-center">
@@ -96,5 +76,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
   </div>
 </body>
-
-</html>
+<?php include '../footer.php'; ?>
