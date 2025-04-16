@@ -5,8 +5,6 @@ session_start();
 $register_error = "";
 $register_success = "";
 
-$recaptcha_secret = getenv('RECAPTCHA_SECRET');
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $first = $_POST['first'] ?? '';
     $last = $_POST['last'] ?? '';
@@ -126,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
               <label class="form-label">Profile Picture (optional)</label>
               <input type="file" name="profile_picture" class="form-control" accept="image/*">
             </div>
-            <div class="g-recaptcha mb-3" data-sitekey="<?php echo getenv('RECAPTCHA_SITEKEY'); ?>"></div>
+            <div class="g-recaptcha mb-3" data-sitekey="<?= $recaptcha_site ?>"></div>
             <button type="submit" class="btn btn-primary w-100">Register</button>
           </form>
         </div>
