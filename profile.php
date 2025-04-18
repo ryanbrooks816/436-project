@@ -3,6 +3,13 @@ session_start();
 require_once 'classes/db.php';
 include 'header.php';
 
+// Handle logout if the logout button was pressed
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+
 $email = $_SESSION['email'] ?? null;
 
 // Safety check: make sure email is set
@@ -25,7 +32,7 @@ $update_success = "";
 $update_error = "";
 
 // Update profile if form submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
     $first = $_POST['first'] ?? '';
     $last = $_POST['last'] ?? '';
     $age = $_POST['age'] ?? '';
@@ -101,10 +108,16 @@ $profilePicData = $customer && $customer['profile_picture']
 
     <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
   </form>
-  
+
   <div class="text-center mt-3">
-  <a href="password.php" class="btn btn-outline-secondary">Change Password</a>
-</div>
+    <a href="password.php" class="btn btn-outline-secondary">Change Password</a>
+  </div>
+
+  <div class="text-center mt-2">
+    <form method="POST" style="display: inline;">
+      <button type="submit" name="logout" class="btn btn-danger">Log Out</button>
+    </form>
+  </div>
 </div>
 
 <?php include 'footer.php'; ?>
