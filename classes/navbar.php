@@ -36,7 +36,7 @@ $profilePicData = $customer && $customer['profile_picture']
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/user-profile/profile.php">
+          <a class="nav-link" href="profile.php">
             <img src="<?php echo htmlspecialchars($profilePicData); ?>" alt="Profile" width="50" height="50" class="rounded-circle">
           </a>
         </li>
