@@ -97,13 +97,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <div class="mb-3">
             <label class="form-label"> Password <span style="color: red">*</span>
-              <span data-bs-toggle="tooltip" title="At least 8 characters, with uppercase, lowercase, and a number." style="cursor: help;">
+              <span data-toggle="tooltip" title="At least 8 characters, with uppercase, lowercase, and a number." style="cursor: help;">
                 <i class="bi bi-info-circle"></i>
               </span>
             </label>
               <input type="password" name="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
             </div>
-
             <div class="mb-3">
               <label class="form-label">Retype Password <span style="color: red">*</span></label>
               <input type="password" name="confirm" class="form-control" required>
@@ -123,13 +122,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     </div>
   </div>
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map(el => new bootstrap.Tooltip(el))
-  });
-</script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <?php include '../footer.php'; ?>
 </body>
-<?php include '../footer.php'; ?>
+
 
