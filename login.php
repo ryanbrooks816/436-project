@@ -63,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <?php include 'header.php'; ?>
 
-<body>
     <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="row justify-content-center w-100">
             <div class="col-md-4">
@@ -91,4 +90,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
     <?php include 'footer.php'; ?>
-</body>

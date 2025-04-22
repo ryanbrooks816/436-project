@@ -4,15 +4,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once 'db.php';
 
-// Check if the user is logged in
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-    exit;
-}
+$customer = null;
 
-$email = $_SESSION['email'];
-$sql = "SELECT profile_picture FROM Customers WHERE cust_email = ?";
-$customer = pdo($pdo, $sql, [$email])->fetch();
+// Only if user is logged in
+if (isset($_SESSION['email'])) {
+  $email = $_SESSION['email'];
+  $sql = "SELECT profile_picture FROM Customers WHERE cust_email = ?";
+  $customer = pdo($pdo, $sql, [$email])->fetch();
+}
 
 $profilePicData = $customer && $customer['profile_picture']
     ? 'data:image/jpeg;base64,' . base64_encode($customer['profile_picture'])

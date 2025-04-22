@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'classes/db.php';
+require 'modules/require-login.php';
 include 'header.php';
 
 // Handle logout if the logout button was pressed
@@ -66,7 +67,6 @@ $profilePicData = $customer && $customer['profile_picture']
     : 'images/placeholder.jpg';
 ?>
 
-<?php include 'classes/navbar.php'; ?>
 
 <div class="container mt-5">
   <h2 class="text-primary mb-4">Manage Your Profile</h2>
