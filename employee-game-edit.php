@@ -101,17 +101,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Edit Game</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
+<?php include 'header.php'; ?>
+
 <body class="bg-light">
 <div class="container mt-5">
   <h1 class="mb-4">Edit Game: <?= htmlspecialchars($game['game_name']) ?></h1>
 
   <form method="POST">
     <div class="mb-3">
-      <label for="game-name" class="form-label">Title</label>
-      <input type="text" class="form-control" name="game-name" value="<?= htmlspecialchars($game['game_name']) ?>">
+      <label for="game_name" class="form-label">Title</label>
+      <input type="text" class="form-control" name="game_name" value="<?= htmlspecialchars($game['game_name']) ?>">
     </div>
-
-    
 
     <div class="mb-3">
       <label for="publisher_ids" class="form-label">Publishers</label>
@@ -145,4 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p><em>This section would use AJAX or separate endpoints to add/delete items from join tables.</em></p>
 </div>
 </body>
+
+<?php include 'footer.php'; ?>
+
 </html>
