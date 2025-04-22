@@ -40,8 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<?php include 'classes/navbar.php'; ?>
-
 <div class="container mt-5">
   <h2 class="text-primary mb-4">Change Password</h2>
 
