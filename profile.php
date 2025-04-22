@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'classes/db.php';
 require 'modules/require-login.php';
 include 'header.php';
@@ -13,21 +12,12 @@ if (isset($_POST['logout'])) {
 
 $email = $_SESSION['email'] ?? null;
 
-// Safety check: make sure email is set
-if (!$email) {
-    die("No user is logged in.");
-}
-
 $sql = "SELECT * FROM Customers WHERE cust_email = ?";
 $customer = pdo($pdo, $sql, [$email])->fetch();
 $first = $customer['cust_name_first'] ?? '';
 $last = $customer['cust_name_last'] ?? '';
 $age = $customer['cust_age'] ?? '';
-
-// Check if customer was found
-if (!$customer) {
-    die("No customer found with email: " . htmlspecialchars($email));
-}
+$profile_picture = $customer['profile_picture'] ?? 'placeholder.jpg';
 
 $update_success = "";
 $update_error = "";
@@ -37,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
     $first = $_POST['first'] ?? '';
     $last = $_POST['last'] ?? '';
     $age = $_POST['age'] ?? '';
-    $profile_picture = $customer['profile_picture'];
 
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
         $allowedTypes = ['image/jpeg', 'image/png'];
@@ -49,7 +38,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
         } elseif ($fileSize > 2 * 1024 * 1024) {
             $update_error = "File must be under 2MB.";
         } else {
-            $profile_picture = file_get_contents($_FILES['profile_picture']['tmp_name']);
+            // Create a folder for the user based on their email
+            $userFolder = 'images/' . md5($email); // Use hashed email for folder name
+            if (!is_dir($userFolder)) {
+                mkdir($userFolder, 0777, true);
+            }
+
+            // Generate a unique file name
+            $extension = pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION);
+            $profile_picture = uniqid('profile_', true) . '.' . $extension;
+
+            // Move the uploaded file to the user's folder
+            $destination = $userFolder . '/' . $profile_picture;
+            if (!move_uploaded_file($_FILES['profile_picture']['tmp_name'], $destination)) {
+                $update_error = "Failed to save the profile picture.";
+            }
         }
     }
 
@@ -59,14 +62,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
         $update_success = "Profile updated successfully.";
         // Refresh customer info
         $customer = pdo($pdo, "SELECT * FROM Customers WHERE cust_email = ?", [$email])->fetch();
+        $profile_picture = $customer['profile_picture'];
     }
 }
 
-$profilePicData = $customer && $customer['profile_picture']
-    ? 'data:image/jpeg;base64,' . base64_encode($customer['profile_picture'])
-    : 'images/placeholder.jpg';
+// Construct the path to the profile picture
+$userFolder = 'images/' . md5($email);
+$profilePicPath = $userFolder . '/' . ($profile_picture ?? 'placeholder.jpg');
+if (!file_exists($profilePicPath)) {
+    $profilePicPath = 'images/placeholder.jpg'; // Fallback to default
+}
 ?>
-
 
 <div class="container mt-5">
   <h2 class="text-primary mb-4">Manage Your Profile</h2>
@@ -79,7 +85,7 @@ $profilePicData = $customer && $customer['profile_picture']
 
   <form method="POST" enctype="multipart/form-data">
     <div class="form-group text-center">
-      <img src="<?php echo htmlspecialchars($profilePicData, ENT_QUOTES, 'UTF-8'); ?>" class="profile-img mb-2" alt="Profile Picture">
+      <img src="<?php echo htmlspecialchars($profilePicPath, ENT_QUOTES, 'UTF-8'); ?>" class="profile-img mb-2" alt="Profile Picture">
       <div>
         <input type="file" name="profile_picture" accept="image/*" class="form-control-file">
       </div>

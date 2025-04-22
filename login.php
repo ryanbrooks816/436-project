@@ -2,11 +2,6 @@
 require_once 'classes/db.php';
 session_start();
 
-// If user is already logged in, skip login and redirect
-// if (!isset($_SESSION['employee_id']) && !isset($_SESSION['customer_id'])) {
-//     redirect_after_login();
-// }
-
 function redirect_after_login()
 {
     if (isset($_SESSION['redirect_after_login'])) {
@@ -62,31 +57,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <?php include 'header.php'; ?>
-
-    <div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="row justify-content-center w-100">
-            <div class="col-md-4">
-                <div class="card shadow p-4">
-                    <h4 class="text-center mb-4">Login</h4>
-                    <?php if ($login_error): ?>
-                        <div class="alert alert-danger"><?php echo htmlspecialchars($login_error); ?></div>
-                    <?php endif; ?>
-                    <form method="POST" action="">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-                </div>
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 90vh; margin-top: -50px;">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-4">
+            <div class="card shadow p-4">
+                <h4 class="text-center mb-4">Login</h4>
+                <?php if ($login_error): ?>
+                    <div class="alert alert-danger"><?php echo htmlspecialchars($login_error); ?></div>
+                <?php endif; ?>
+                <form method="POST" action="">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
             </div>
         </div>
-        <div class="text-center mt-3">
-            <a href="register.php">New user? Create an account</a>
-        </div>
     </div>
+    <div class="text-center mt-3">
+        <a href="register.php">New user? Create an account</a>
+    </div>
+</div>
     <?php include 'footer.php'; ?>
