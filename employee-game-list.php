@@ -65,14 +65,11 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="container py-5">
     <h1 class="mb-4 text-center">Accessible Games</h1>
 
-    <!-- 🔍 Search and Filter Form -->
     <form method="GET" class="row g-3 mb-4">
-        <!-- Search -->
         <div class="col-md-3">
             <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" class="form-control" placeholder="Search by game name">
         </div>
 
-        <!-- Feature Filter -->
         <div class="col-md-3">
             <select name="feature" class="form-select">
             <option value="">All Accessibility Features</option>
@@ -84,7 +81,6 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </select>
         </div>
 
-        <!-- Publisher Filter -->
         <div class="col-md-3">
             <select name="publisher" class="form-select">
             <option value="">All Publishers</option>
@@ -96,7 +92,6 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </select>
         </div>
 
-        <!-- Rating Filter -->
         <div class="col-md-2">
             <select name="rating" class="form-select">
             <option value="">All Ratings</option>
@@ -108,7 +103,6 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </select>
         </div>
 
-        <!-- Submit -->
         <div class="col-md-1">
             <button type="submit" class="btn btn-primary w-100">Filter</button>
         </div>
