@@ -58,6 +58,9 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <title>Accessible Games</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
+<?php include 'header.php'; ?>
+
 <body class="bg-light">
   <div class="container py-5">
     <h1 class="mb-4 text-center">Accessible Games</h1>
@@ -111,7 +114,6 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         </form>
 
-
     <?php if (count($games) === 0): ?>
       <div class="alert alert-warning text-center">No games found.</div>
     <?php else: ?>
@@ -129,9 +131,23 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
       </div>
     <?php endif; ?>
+
+    <a href="/436-project/employee-account-mod.php" class="btn btn-outline-secondary position-fixed start-0 bottom-0 m-4 shadow rounded-pill"
+        style="width: 140px; height: 50px; font-weight: bold; text-align: center; line-height: 2.2;">
+        👤 My Account
+    </a>
+
+    <a href="/436-project/employee-game-create.php" class="btn btn-success position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
+        title="Add New Game" style="width: 60px; height: 60px; font-size: 24px; text-align: center; line-height: 1.8;">
+        +
+    </a>
   </div>
 </body>
+
+<?php include 'footer.php'; ?>
+
 </html>
+
 
 
 
