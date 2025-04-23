@@ -116,7 +116,7 @@ if (!file_exists($profilePicPath)) {
   </form>
 
   <div class="text-center mt-3">
-    <a href="password.php" class="btn btn-outline-secondary">Change Password</a>
+    <a href="password.php" class="btn btn-secondary">Change Password</a>
   </div>
 
   <div class="text-center mt-2">
