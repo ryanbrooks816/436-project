@@ -99,208 +99,210 @@ if (isset($_GET['tid'])) {
 }
 ?>
 
-<div class="alert alert-info notification d-none" id="mainAlert" role="alert"><i class="bi bi-bell"></i></div>
+<main class="page-wrapper">
+    <div class="alert alert-info notification d-none" id="mainAlert" role="alert"><i class="bi bi-bell"></i></div>
+    <section class="tickets-section">
+        <!-- Sidebar toggle button for mobile screens -->
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="bi bi-list"></i>
+        </button>
+        <!-- Overlay for mobile when sidebar is open -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<section class="tickets-section">
-    <!-- Sidebar toggle button for mobile screens -->
-    <button class="sidebar-toggle" id="sidebarToggle">
-        <i class="bi bi-list"></i>
-    </button>
-    <!-- Overlay for mobile when sidebar is open -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="ticket-info">
-            <h2>Ticket Details</h2>
-            <div class="info-item">
-                <div class="label">Ticket ID</div>
-                <div class="value"><?= $ticketId ?></div>
-            </div>
-            <div class="info-item">
-                <div class="label">Status</div>
-                <div class="value">
-                    <span
-                        class="status <?= strtolower(str_replace(' ', '-', $ticket['status'])) ?>"><?= $ticket['status'] ?></span>
+        <aside class="sidebar" id="sidebar">
+            <div class="ticket-info">
+                <h2>Ticket Details</h2>
+                <div class="info-item">
+                    <div class="label">Ticket ID</div>
+                    <div class="value"><?= $ticketId ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Status</div>
+                    <div class="value">
+                        <span
+                            class="status <?= strtolower(str_replace(' ', '-', $ticket['status'])) ?>"><?= $ticket['status'] ?></span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Priority</div>
+                    <div class="value">
+                        <span
+                            class="priority <?= strtolower($ticket['priority']) ?>"><?= ucfirst($ticket['priority']) ?></span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Created</div>
+                    <div class="value"><?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Last Updated</div>
+                    <div class="value"><?= date("F j, Y, g:i A", strtotime($ticket['last_updated_date'])) ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Category</div>
+                    <?php
+                    $sql = "SELECT type_name FROM Ticket_Types WHERE type_id = ? LIMIT 1";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$ticket['ticket_type_id']]);
+                    $ticketType = $stmt->fetch();
+                    ?>
+                    <div class="value"><?= $ticketType['type_name'] ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">Assigned to</div>
+                    <div class="value">
+                        <?= $employee['em_name_first'] . ' ' . $employee['em_name_last'] ?>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="label">User</div>
+                    <div class="value"><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></div>
+                </div>
+                <div class="info-item">
+                    <div class="label">User Email</div>
+                    <div class="value"><?= htmlspecialchars($customer['cust_email']) ?></div>
                 </div>
             </div>
-            <div class="info-item">
-                <div class="label">Priority</div>
-                <div class="value">
-                    <span
-                        class="priority <?= strtolower($ticket['priority']) ?>"><?= ucfirst($ticket['priority']) ?></span>
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="label">Created</div>
-                <div class="value"><?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?></div>
-            </div>
-            <div class="info-item">
-                <div class="label">Last Updated</div>
-                <div class="value"><?= date("F j, Y, g:i A", strtotime($ticket['last_updated_date'])) ?></div>
-            </div>
-            <div class="info-item">
-                <div class="label">Category</div>
-                <?php
-                $sql = "SELECT type_name FROM Ticket_Types WHERE type_id = ? LIMIT 1";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$ticket['ticket_type_id']]);
-                $ticketType = $stmt->fetch();
-                ?>
-                <div class="value"><?= $ticketType['type_name'] ?></div>
-            </div>
-            <div class="info-item">
-                <div class="label">Assigned to</div>
-                <div class="value">
-                    <?= $employee['em_name_first'] . ' ' . $employee['em_name_last'] ?>
-                </div>
-            </div>
-            <div class="info-item">
-                <div class="label">User</div>
-                <div class="value"><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></div>
-            </div>
-            <div class="info-item">
-                <div class="label">User Email</div>
-                <div class="value"><?= htmlspecialchars($customer['cust_email']) ?></div>
-            </div>
-        </div>
-        <?php if ($_SESSION['user_type'] === 'employee'): ?>
-            <div class="actions">
-                <?php if ($ticket['employee_id'] === $_SESSION['employee_id']): ?>
-                    <button id="reassign-ticket" class="btn btn-primary w-100" data-bs-toggle="modal"
-                        data-bs-target="#assignModal">
-                        Reassign Ticket
-                    </button>
-                <?php else: ?>
-                    <div class="btn-group w-100">
-                        <button id="assign-to-me" class="btn btn-primary" style="flex: 7;"
-                            onclick="assignToCurrentUser()">Assign to Me</button>
-                        <button id="assign-to-others" class="btn btn-primary" style="flex: 3;" data-bs-toggle="modal"
+            <?php if ($_SESSION['user_type'] === 'employee'): ?>
+                <div class="actions">
+                    <?php if ($ticket['employee_id'] === $_SESSION['employee_id']): ?>
+                        <button id="reassign-ticket" class="btn btn-primary w-100" data-bs-toggle="modal"
                             data-bs-target="#assignModal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-chevron-down" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1">
-                                <path fill-rule="evenodd"
-                                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            </svg>
+                            Reassign Ticket
                         </button>
-                    </div>
-                <?php endif; ?>
-                <button id="change-status" class="btn btn-outline-primary" data-bs-toggle="modal"
-                    data-bs-target="#changeStatusModal">Change Status</button>
-                <button id="update-priority" class="btn btn-outline-primary" data-bs-toggle="modal"
-                    data-bs-target="#updatePriorityModal">Update Priority</button>
-                <button id="close-ticket" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#closeTicketModal"
-                    <?= $ticket['status'] === 'Resolved' ? 'disabled' : '' ?>>
-                    <?= $ticket['status'] === 'Resolved' ? 'Ticket is Closed' : 'Close Ticket' ?>
-                </button>
-            </div>
-        <?php endif; ?>
-    </aside>
-
-    <div class="container">
-        <div class="ticket-content-wrapper">
-            <div class="ticket-content">
-                <div class="ticket-header">
-                    <h1 class="ticket-title"><?= $ticket['ticket_name'] ?></h1>
-                    <div class="ticket-meta">
-                        Reported by
-                        <strong><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></strong> on
-                        <?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?>
-                    </div>
+                    <?php else: ?>
+                        <div class="btn-group w-100">
+                            <button id="assign-to-me" class="btn btn-primary" style="flex: 7;"
+                                onclick="assignToCurrentUser()">Assign to Me</button>
+                            <button id="assign-to-others" class="btn btn-primary" style="flex: 3;" data-bs-toggle="modal"
+                                data-bs-target="#assignModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-chevron-down" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1">
+                                    <path fill-rule="evenodd"
+                                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                                </svg>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                    <button id="change-status" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#changeStatusModal">Change Status</button>
+                    <button id="update-priority" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#updatePriorityModal">Update Priority</button>
+                    <button id="close-ticket" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#closeTicketModal" <?= $ticket['status'] === 'Resolved' ? 'disabled' : '' ?>>
+                        <?= $ticket['status'] === 'Resolved' ? 'Ticket is Closed' : 'Close Ticket' ?>
+                    </button>
                 </div>
-                <div class="conversation">
-                    <div class="message">
-                        <div class="message-header">
-                            <div class="message-sender">
-                                <div class="message-avatar">M</div>
-                                <div>
-                                    <span
-                                        class="message-name"><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></span>
-                                    <span class="message-role">User</span>
-                                </div>
-                            </div>
-                            <div class="message-time">
-                                <?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?>
-                            </div>
+            <?php endif; ?>
+        </aside>
 
-                        </div>
-                        <div class="message-content">
-                            <?= $ticket['ticket_text'] ?>
-                        </div>
-                        <div class="message-attachments">
-                            <a href="#" class="attachment">
-                                <i class="bi bi-download"></i>
-                                error_screenshot.png
-                            </a>
+        <div class="container">
+            <div class="ticket-content-wrapper">
+                <div class="ticket-content">
+                    <div class="ticket-header">
+                        <h1 class="ticket-title"><?= $ticket['ticket_name'] ?></h1>
+                        <div class="ticket-meta">
+                            Reported by
+                            <strong><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></strong> on
+                            <?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?>
                         </div>
                     </div>
-
-                    <?php foreach ($feedbacks as $feedback): ?>
+                    <div class="conversation">
                         <div class="message">
                             <div class="message-header">
                                 <div class="message-sender">
-                                    <div class="message-avatar">S</div>
+                                    <div class="message-avatar">M</div>
                                     <div>
-                                        <?php
-                                        if (isset($feedback['employee_id'])) {
-                                            $sql = "SELECT * FROM Employees WHERE employee_id = ? LIMIT 1";
-                                            $stmt = $pdo->prepare($sql);
-                                            $stmt->execute([$feedback['employee_id']]);
-                                            $employee = $stmt->fetch();
-                                            $name = $employee['em_name_first'] . ' ' . $employee['em_name_last'];
-                                            $role = "Support Agent";
-                                        } elseif (isset($feedback['customer_id'])) {
-                                            $sql = "SELECT * FROM Customers WHERE customer_id = ? LIMIT 1";
-                                            $stmt = $pdo->prepare($sql);
-                                            $stmt->execute([$feedback['customer_id']]);
-                                            $customer = $stmt->fetch();
-                                            $name = $customer['cust_name_first'] . ' ' . $customer['cust_name_last'];
-                                            $role = "User";
-                                        }
-                                        ?>
-                                        <span class="message-name"><?= $name ?></span>
-                                        <span class="message-role"><?= $role ?></span>
+                                        <span
+                                            class="message-name"><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></span>
+                                        <span class="message-role">User</span>
                                     </div>
                                 </div>
                                 <div class="message-time">
-                                    <?= date("F j, Y, g:i A", strtotime($feedback['timestamp'])) ?>
+                                    <?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?>
                                 </div>
+
                             </div>
                             <div class="message-content">
-                                <?= $feedback['message'] ?>
+                                <?= $ticket['ticket_text'] ?>
+                            </div>
+                            <div class="message-attachments">
+                                <a href="#" class="attachment">
+                                    <i class="bi bi-download"></i>
+                                    error_screenshot.png
+                                </a>
                             </div>
                         </div>
-                    <?php endforeach; ?>
 
+                        <?php foreach ($feedbacks as $feedback): ?>
+                            <div class="message">
+                                <div class="message-header">
+                                    <div class="message-sender">
+                                        <div class="message-avatar">S</div>
+                                        <div>
+                                            <?php
+                                            if (isset($feedback['employee_id'])) {
+                                                $sql = "SELECT * FROM Employees WHERE employee_id = ? LIMIT 1";
+                                                $stmt = $pdo->prepare($sql);
+                                                $stmt->execute([$feedback['employee_id']]);
+                                                $employee = $stmt->fetch();
+                                                $name = $employee['em_name_first'] . ' ' . $employee['em_name_last'];
+                                                $role = "Support Agent";
+                                            } elseif (isset($feedback['customer_id'])) {
+                                                $sql = "SELECT * FROM Customers WHERE customer_id = ? LIMIT 1";
+                                                $stmt = $pdo->prepare($sql);
+                                                $stmt->execute([$feedback['customer_id']]);
+                                                $customer = $stmt->fetch();
+                                                $name = $customer['cust_name_first'] . ' ' . $customer['cust_name_last'];
+                                                $role = "User";
+                                            }
+                                            ?>
+                                            <span class="message-name"><?= $name ?></span>
+                                            <span class="message-role"><?= $role ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="message-time">
+                                        <?= date("F j, Y, g:i A", strtotime($feedback['timestamp'])) ?>
+                                    </div>
+                                </div>
+                                <div class="message-content">
+                                    <?= $feedback['message'] ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                </div>
+
+                <div class="reply-box">
+                    <h3>Reply to Ticket</h3>
+                    <form id="replyForm">
+                        <div id="editor">
+                            <p>Hello World!</p>
+                            <p>Some initial <strong>bold</strong> text</p>
+                            <p><br /></p>
+                        </div>
+                        <input type="hidden" class="ticketId" name="ticket_id" value="<?= $ticket['ticket_id'] ?>">
+                        <input type="hidden" name="sender_id"
+                            value="<?= $_SESSION['user_type'] === 'employee' ? $_SESSION['employee_id'] : $_SESSION['customer_id'] ?>">
+                        <input type="hidden" name="sender_type" value="<?= $_SESSION['user_type'] ?>">
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <button type="button" class="attachment-btn">
+                                <i class="bi bi-paperclip"></i>
+                                Add Attachment
+                            </button>
+                            <div class="d-flex">
+                                <button type="button" id="sendReply" class="btn btn-primary w-auto m-0">
+                                    <i class="bi bi-send-fill me-2"></i> Send Reply
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div class="reply-box">
-                <h3>Reply to Ticket</h3>
-                <form id="replyForm">
-                    <div id="editor">
-                        <p>Hello World!</p>
-                        <p>Some initial <strong>bold</strong> text</p>
-                        <p><br /></p>
-                    </div>
-                    <input type="hidden" class="ticketId" name="ticket_id" value="<?= $ticket['ticket_id'] ?>">
-                    <input type="hidden" name="sender_id" value="<?= $_SESSION['user_type'] === 'employee' ? $_SESSION['employee_id'] : $_SESSION['customer_id'] ?>">
-                    <input type="hidden" name="sender_type" value="<?= $_SESSION['user_type'] ?>">
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <button type="button" class="attachment-btn">
-                            <i class="bi bi-paperclip"></i>
-                            Add Attachment
-                        </button>
-                        <div class="d-flex">
-                            <button type="button" id="sendReply" class="btn btn-primary w-auto m-0">
-                                <i class="bi bi-send-fill me-2"></i> Send Reply
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
 <!-- Assign to Others Modal -->
 <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
@@ -391,7 +393,7 @@ if (isset($_GET['tid'])) {
                     <div class="alert alert-danger mt-3 d-none" id="priorityAlert" role="alert"></div>
                     <div class="form-group">
                         <label for="prioritySelect">Select New Priority</label>
-                        <select class="form-control" id="prioritySelect" name="priority">
+                        <select class="form-control form-select" id="prioritySelect" name="priority">
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
                             <option value="High">High</option>
