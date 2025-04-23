@@ -41,6 +41,9 @@ if (isset($_SESSION['email'])) {
         <li class="nav-item ml-5">
           <a class="nav-link" href="/tickets.php" style="font-size: 1.5rem;">Tickets</a>
         </li>
+        <li class="nav-item ml-5">
+          <a class="nav-link" href="/436-project-main/ticket_status.php" style="font-size: 1.5rem;">Submitted Tickets</a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
