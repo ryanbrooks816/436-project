@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
             $update_error = "File must be under 2MB.";
         } else {
             // Create a folder for the user based on their email
-            $userFolder = 'images/' . md5($email); // Use hashed email for folder name
+            $userFolder = 'images/pfps/' . md5($email); // Use hashed email for folder name
             if (!is_dir($userFolder)) {
                 mkdir($userFolder, 0777, true);
             }
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
 }
 
 // Construct the path to the profile picture
-$userFolder = 'images/' . md5($email);
+$userFolder = 'images/pfps/' . md5($email);
 $profilePicPath = $userFolder . '/' . ($profile_picture ?? 'placeholder.jpg');
 if (!file_exists($profilePicPath)) {
     $profilePicPath = 'images/placeholder.jpg'; // Fallback to default

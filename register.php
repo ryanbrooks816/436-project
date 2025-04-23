@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $register_error = "Profile picture must be under 2MB.";
             } else {
                 // Hash the email to create a unique folder name
-                $userFolder = 'images/' . md5($email); // Use MD5 hash of the email
+                $userFolder = 'images/pfps/' . md5($email); // Use MD5 hash of the email
                 if (!is_dir($userFolder)) {
                     mkdir($userFolder, 0777, true);
                 }
