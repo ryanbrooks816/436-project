@@ -1,5 +1,5 @@
 <?php
-require '/Applications/MAMP/htdocs/436-project/classes/db.php';
+require '/classes/db.php';
 
 // Get search and filter inputs
 $search = $_GET['search'] ?? '';
