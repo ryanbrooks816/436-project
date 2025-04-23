@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if the user is logged in as either an employee or a customer. If not, redirect them.
 if (!isset($_SESSION['employee_id']) && !isset($_SESSION['customer_id'])) {
