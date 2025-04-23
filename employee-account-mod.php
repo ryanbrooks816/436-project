@@ -4,7 +4,7 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require '/Applications/MAMP/htdocs/436-project/classes/db.php';
+require 'classes/db.php';
 
 if (!isset($_SESSION['employee_id'])) {
   die("You must be logged in to view this page.");

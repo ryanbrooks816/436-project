@@ -1,6 +1,6 @@
 <?php
 require_once 'classes/db.php';
-session_start();
+include 'header.php';
 
 $register_error = "";
 $register_success = "";
@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm'] ?? '';
     $age = $_POST['age'] ?? '';
-    $profilePic = null;
+    $profile_picture = null;
 
     // Check reCAPTCHA
     $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
@@ -31,10 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Handle profile picture upload
-        $profile_picture = null;
         $allowedTypes = ['image/jpeg', 'image/png'];
-        // This is 2MB
-        $maxSize = 2 * 1024 * 1024; 
+        $maxSize = 2 * 1024 * 1024; // 2MB
 
         if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
             $fileType = $_FILES['profile_picture']['type'];
@@ -45,13 +43,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } elseif ($fileSize > $maxSize) {
                 $register_error = "Profile picture must be under 2MB.";
             } else {
-                $profile_picture = file_get_contents($_FILES['profile_picture']['tmp_name']);
+                // Hash the email to create a unique folder name
+                $userFolder = 'images/' . md5($email); // Use MD5 hash of the email
+                if (!is_dir($userFolder)) {
+                    mkdir($userFolder, 0777, true);
+                }
+
+                // Generate a unique file name
+                $extension = pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION);
+                $profile_picture = uniqid('profile_', true) . '.' . $extension;
+
+                // Move the uploaded file to the user's folder
+                $destination = $userFolder . '/' . $profile_picture;
+                if (!move_uploaded_file($_FILES['profile_picture']['tmp_name'], $destination)) {
+                    $register_error = "Failed to save the profile picture.";
+                }
             }
         }
 
         // Use default profile picture if none uploaded and no previous error
         if (!$profile_picture && !$register_error) {
-            $profile_picture = file_get_contents('images/placeholder.jpg'); // Ensure this file exists
+            $profile_picture = 'placeholder.jpg'; // Ensure this file exists in the `pfps` folder
         }
 
         if (!$register_error) {
@@ -68,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<?php include 'header.php'; ?>
 <body class="bg-light">
   <div class="container mt-5">
     <div class="row justify-content-center">

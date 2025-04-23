@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require '/Applications/MAMP/htdocs/436-project/classes/db.php';
+require 'classes/db.php';
 
 if (!isset($_GET['game_id'])) {
   die("No game ID provided.");
