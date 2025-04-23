@@ -57,30 +57,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <?php include 'header.php'; ?>
-<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 90vh; margin-top: -50px;">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-4">
-            <div class="card shadow p-4">
-                <h4 class="text-center mb-4">Login</h4>
-                <?php if ($login_error): ?>
-                    <div class="alert alert-danger"><?php echo htmlspecialchars($login_error); ?></div>
-                <?php endif; ?>
-                <form method="POST" action="">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" required>
+
+<section class="section-spo w-100 h-100">
+    <div class="container">
+        <div class="d-flex justify-content-center flex-column">
+            <h1>Login</h1>
+            <p>Don't have an account yet? Then please <a class="white" href="register.php">Sign Up</a></p>
+
+            <div class="form-container">
+                <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                    <div class="form-message">
+                        <?php if ($login_error): ?>
+                            <div class="alert alert-danger"><?php echo htmlspecialchars($login_error); ?></div>
+                        <?php endif; ?>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control-input" name="email" required>
+                    </div>
+                    <div class="form-group">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="password" class="form-control-input" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <div class="form-group">
+                        <button type="submit" class="form-control-submit-button">Login</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="text-center mt-3">
-        <a href="register.php">New user? Create an account</a>
-    </div>
-</div>
-    <?php include 'footer.php'; ?>
+</section>
+
+
+<?php include 'footer.php'; ?>

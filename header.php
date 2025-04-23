@@ -1,6 +1,4 @@
-<?php
-require "classes/config.php"
-    ?>
+<?php require "classes/config.php" ?>
 
 <!DOCTYPE html>
 <html lang="en">
