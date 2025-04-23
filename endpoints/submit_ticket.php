@@ -31,9 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        // Generate a hexadecimal UUID and convert it to binary
+        $hex_uuid = bin2hex(random_bytes(16));
+        $binary_uuid = hex2bin($hex_uuid);
+
         // Prepare the SQL statement for inserting the ticket
-        $sql = "INSERT INTO Tickets (ticket_name, ticket_text, submission_date, status, priority, ticket_type_id, customer_id) VALUES (?, ?, NOW(), ?, ?, ?, ?)";
-        $stmt = pdo($pdo, $sql, [$ticket_name, $ticket_text, $status, $priority, $type_id, $customer_id]);
+        $sql = "INSERT INTO Tickets (ticket_name, ticket_text, submission_date, status, priority, ticket_type_id, customer_id, ticket_pub_id) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?)";
+        $stmt = pdo($pdo, $sql, [$ticket_name, $ticket_text, $status, $priority, $type_id, $customer_id, $binary_uuid]);
 
         http_response_code(200);
         echo json_encode(['success' => 'Support ticket submitted successfully.']);
