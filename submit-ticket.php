@@ -1,16 +1,6 @@
 <?php
 require "header.php";
-
-session_start();
-
-if (!isset($_SESSION['customer_id']) || !isset($_SESSION['cust_name_first']) || !isset($_SESSION['cust_name_last'])) {
-    header("Location: user-login/login.php");
-    exit;
-}
-
-$customer_id = $_SESSION['customer_id'];
-$cust_name_first = $_SESSION['cust_name_first'];
-$cust_name_last = $_SESSION['cust_name_last'];
+require "modules/require-login.php";
 ?>
 
 <h1>Submit a Support Request</h1>
@@ -59,7 +49,6 @@ $cust_name_last = $_SESSION['cust_name_last'];
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#submitButton').click(function () {
