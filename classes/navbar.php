@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once 'db.php';
 
 $customer = null;
-$profilePicPath = '../images/placeholder.jpg';
+$profilePicPath = 'images/placeholder.jpg';
 
 // Only if the user is logged in
 if (isset($_SESSION['email'])) {
@@ -14,13 +14,13 @@ if (isset($_SESSION['email'])) {
   $customer = pdo($pdo, $sql, [$email])->fetch();
 
   if ($customer && $customer['profile_picture']) {
-    $userFolder = dirname(__DIR__) . '/images/' . md5($email); // Absolute path to the user's folder
+    $userFolder = 'images/pfps/' . md5($email); // Absolute path to the user's folder
     $absoluteProfilePicPath = $userFolder . '/' . $customer['profile_picture'];
 
-    $relativeProfilePicPath = '../images/' . md5($email) . '/' . $customer['profile_picture'];
+    $relativeProfilePicPath = 'images/pfps/' . md5($email) . '/' . $customer['profile_picture'];
     // Check if the file exists
     if (!file_exists($absoluteProfilePicPath)) {
-        $relativeProfilePicPath = '../images/placeholder.jpg';
+        $relativeProfilePicPath = 'images/placeholder.jpg';
     }
     $profilePicPath = $relativeProfilePicPath;
 }
@@ -39,13 +39,13 @@ if (isset($_SESSION['email'])) {
       <div class="d-flex w-100 justify-content-between align-items-center">
         <ul class="navbar-nav">
           <li class="nav-item ml-5">
-            <a class="nav-link" href="/game_search.php" style="font-size: 1.5rem;">Game Search</a>
+            <a class="nav-link" href="game_search.php" style="font-size: 1.5rem;">Game Search</a>
           </li>
           <li class="nav-item ml-5">
-            <a class="nav-link" href="/tickets.php" style="font-size: 1.5rem;">Tickets</a>
+            <a class="nav-link" href="tickets.php" style="font-size: 1.5rem;">Tickets</a>
           </li>
           <li class="nav-item ml-5">
-            <a class="nav-link" href="../ticket_status.php" style="font-size: 1.5rem;">Submitted Tickets</a>
+            <a class="nav-link" href="ticket_status.php" style="font-size: 1.5rem;">Submitted Tickets</a>
           </li>
         </ul>
 
