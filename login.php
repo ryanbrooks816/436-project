@@ -56,7 +56,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<?php include 'header.php'; ?>
+<?php include 'header.php';
+
+// Redirect if already logged in
+if (isset($_SESSION['user_type'])) {
+    echo '
+    <section class="section top-space bottom-space">
+        <div class="container">
+            <div class="d-flex justify-content-center flex-column text-center">
+                <h2 class="mb-4">You\' Already Logged In, Redirecting...</h2>
+                <script>setTimeout(function() { window.location.href = "index.php"; }, 3000);</script>
+            </div>
+        </div>
+    </section>
+    ';
+    exit;
+}
+
+?>
 
 <section class="section-spo top-space bottom-space">
     <div class="container">
@@ -80,13 +97,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <input type="password" class="form-control-input" name="password" required>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="form-control-submit-button">Login</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </section>
-
 
 <?php include 'footer.php'; ?>
