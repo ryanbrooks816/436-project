@@ -99,7 +99,7 @@ if (isset($_GET['tid'])) {
 }
 ?>
 
-<main class="page-wrapper">
+<main class="page-wrapper top-space bottom-space">
     <div class="alert alert-info notification d-none" id="mainAlert" role="alert"><i class="bi bi-bell"></i></div>
     <section class="tickets-section">
         <!-- Sidebar toggle button for mobile screens -->
@@ -184,11 +184,11 @@ if (isset($_GET['tid'])) {
                             </button>
                         </div>
                     <?php endif; ?>
-                    <button id="change-status" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    <button id="change-status" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
                         data-bs-target="#changeStatusModal">Change Status</button>
-                    <button id="update-priority" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    <button id="update-priority" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
                         data-bs-target="#updatePriorityModal">Update Priority</button>
-                    <button id="close-ticket" class="btn btn-danger" data-bs-toggle="modal"
+                    <button id="close-ticket" class="btn btn-danger w-100" data-bs-toggle="modal"
                         data-bs-target="#closeTicketModal" <?= $ticket['status'] === 'Resolved' ? 'disabled' : '' ?>>
                         <?= $ticket['status'] === 'Resolved' ? 'Ticket is Closed' : 'Close Ticket' ?>
                     </button>
@@ -278,9 +278,7 @@ if (isset($_GET['tid'])) {
                     <h3>Reply to Ticket</h3>
                     <form id="replyForm">
                         <div id="editor">
-                            <p>Hello World!</p>
-                            <p>Some initial <strong>bold</strong> text</p>
-                            <p><br /></p>
+                        Type your reply here...
                         </div>
                         <input type="hidden" class="ticketId" name="ticket_id" value="<?= $ticket['ticket_id'] ?>">
                         <input type="hidden" name="sender_id"
@@ -432,6 +430,11 @@ if (isset($_GET['tid'])) {
     </div>
 </div>
 
+<script>
+    const quill = new Quill("#editor", {
+        theme: "snow",
+    });
+</script>
 
 <?php require "footer.php"; ?>
 

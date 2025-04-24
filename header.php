@@ -11,4 +11,4 @@
 </head>
 
 <body>
-    <?php include 'classes/navbar.php'; ?>
+    <?php include 'modules/navbar.php'; ?>

@@ -1,19 +1,25 @@
 <footer>
   <section class="py-4 bg-dark">
-    <div class="container d-flex justify-content-between py-4">
-      <div class="footer-brand d-flex">
-        <img src="images/logo-mono.png" alt="Accessible Games Support Center" class="img-fluid me-3">
-        <p>Accessible Games<br>Support Center</p>
+    <div class="container py-4">
+      <div class="row g-4">
+        <div class="col-lg-5 col-md-6 col-12">
+            <div class="footer-brand d-flex align-items-start flex-wrap gap-3">
+            <img src="images/logo-mono.png" alt="Accessible Games Support Center" class="img-fluid me-3">
+            <p>Accessible Games<br>Support Center</p>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-12">
+          <nav class="footer-nav">
+            <ul class="footer-nav-list d-flex flex-column flex-md-row justify-content-md-end">
+              <li class="footer-nav-item"><a href="index.php" class="footer-nav-link">Home</a></li>
+              <li class="footer-nav-item"><a href="search-games.php" class="footer-nav-link">Search Games</a></li>
+              <li class="footer-nav-item"><a href="my-tickets.php" class="footer-nav-link">My Tickets</a></li>
+              <li class="footer-nav-item"><a href="profile.php" class="footer-nav-link">My Profile</a></li>
+              <li class="footer-nav-item"><a href="login.php" class="footer-nav-link">Login</a></li>
+            </ul>
+          </nav>
+        </div>
       </div>
-      <nav class="footer-nav">
-        <ul class="footer-nav-list">
-          <li class="footer-nav-item"><a href="index.php" class="footer-nav-link">Home</a></li>
-          <li class="footer-nav-item"><a href="search-games.php" class="footer-nav-link">Search Games</a></li>
-          <li class="footer-nav-item"><a href="my-tickets.php" class="footer-nav-link">My Tickets</a></li>
-          <li class="footer-nav-item"><a href="my-profile.php" class="footer-nav-link">My Profile</a></li>
-          <li class="footer-nav-item"><a href="login.php" class="footer-nav-link">Login</a></li>
-        </ul>
-      </nav>
     </div>
   </section>
 </footer>
@@ -28,10 +34,14 @@
   $(function () {
     $('[data-toggle="tooltip"]').tooltip();
   });
-</script>
-<script>
-  const quill = new Quill("#editor", {
-    theme: "snow",
+
+  $(window).on('scroll', function () {
+    if ($(window).scrollTop() === 0) {
+      console.log('Scrolled to top');
+      $('#navbar').addClass('bg-light');
+    } else {
+      $('#navbar').removeClass('bg-light');
+    }
   });
 </script>
 <script src="js/ticket-history.js"></script>
