@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-require_once 'db.php';
+require_once 'classes/db.php';
 
 $customer = null;
 $profilePicPath = 'images/placeholder.jpg';
@@ -29,13 +29,13 @@ if (isset($_SESSION['email'])) {
 
 <?php
 $pagesWithCustomClass = ['login.php', 'register.php'];
-
+$navbarClass = '';
 $currentPage = basename($_SERVER['PHP_SELF']);
 if (in_array($currentPage, $pagesWithCustomClass)) {
   $navbarClass = 'navbar-spo';
 }
 ?>
-<nav class="navbar navbar-expand-lg fixed-top top-nav-collapse <?php echo $navbarClass; ?>">
+<nav id="navbar" class="navbar bg-light navbar-expand-lg fixed-top top-nav-collapse <?php echo $navbarClass; ?>">
   <div class="container-fluid">
     <div class="navbar-brand d-flex align-items-center">
       <img class="me-3" src="images/logo.png" alt="Logo" height="70px">
@@ -59,7 +59,7 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="profile.hp">
+            <a class="nav-link" href="profile.php">
               <img src="<?php echo htmlspecialchars($profilePicPath); ?>" alt="Profile" width="50" height="50"
                 class="rounded-circle">
             </a>

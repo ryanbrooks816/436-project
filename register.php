@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<section class="section-spo w-100 h-100">
+<section class="section-spo top-space bottom-space">
   <div class="container">
     <div class="d-flex justify-content-center flex-column">
       <h1>Create An Account</h1>

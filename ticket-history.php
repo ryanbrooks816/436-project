@@ -99,7 +99,7 @@ if (isset($_GET['tid'])) {
 }
 ?>
 
-<main class="page-wrapper">
+<main class="page-wrapper top-space bottom-space">
     <div class="alert alert-info notification d-none" id="mainAlert" role="alert"><i class="bi bi-bell"></i></div>
     <section class="tickets-section">
         <!-- Sidebar toggle button for mobile screens -->
@@ -430,6 +430,11 @@ if (isset($_GET['tid'])) {
     </div>
 </div>
 
+<script>
+    const quill = new Quill("#editor", {
+        theme: "snow",
+    });
+</script>
 
 <?php require "footer.php"; ?>
 

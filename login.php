@@ -16,18 +16,18 @@ function redirect_after_login()
 $login_error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    if ($username && $password) {
+    if ($email && $password) {
         // Check Employees table
         $sql = "SELECT employee_id, em_password FROM Employees WHERE em_email = ?";
-        $stmt = pdo($pdo, $sql, [$username]);
+        $stmt = pdo($pdo, $sql, [$email]);
         $employee = $stmt->fetch();
 
         if ($employee && password_verify($password, $employee['em_password'])) {
             $_SESSION['user_type'] = 'employee';
-            $_SESSION['email'] = $username;
+            $_SESSION['email'] = $email;
             $_SESSION['employee_id'] = $employee['employee_id'];
             redirect_after_login();
             exit;
@@ -35,12 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Check Customers table
         $sql = "SELECT customer_id, cust_name_first, cust_name_last, cust_password FROM Customers WHERE cust_email = ?";
-        $stmt = pdo($pdo, $sql, [$username]);
+        $stmt = pdo($pdo, $sql, [$email]);
         $customer = $stmt->fetch();
 
         if ($customer && password_verify($password, $customer['cust_password'])) {
             $_SESSION['user_type'] = 'customer';
-            $_SESSION['email'] = $username;
+            $_SESSION['email'] = $email;
             $_SESSION['customer_id'] = $customer['customer_id'];
             $_SESSION['cust_name_first'] = $customer['cust_name_first'];
             $_SESSION['cust_name_last'] = $customer['cust_name_last'];
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <?php include 'header.php'; ?>
 
-<section class="section-spo w-100 h-100">
+<section class="section-spo top-space bottom-space">
     <div class="container">
         <div class="d-flex justify-content-center flex-column">
             <h1>Login</h1>
