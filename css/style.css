@@ -288,6 +288,12 @@ a.white {
     transition: all 0.2s;
 }
 
+.form-control-file {
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+}
+
 .form-control-input:focus,
 .form-control-select:focus,
 .form-control-textarea:focus {
@@ -301,23 +307,9 @@ a.white {
     border: 1px solid #a1a1a1;
 }
 
-.form-control-submit-button {
-    display: inline-block;
-    width: 100%;
-    height: 3.125rem;
-    border: 1px solid var(--primary);
-    border-radius: 1.5rem;
-    background-color: var(--primary);
-    color: #fff;
-    font: 700 0.875rem/0 "Open Sans", sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.form-control-submit-button:hover {
-    background-color: transparent;
-    color: var(--primary);
+/* Tabs */
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    font-weight: 600;
 }
 
 /* Navbar */
@@ -801,21 +793,6 @@ footer .footer-brand img {
     margin-bottom: 1rem;
     font-size: 1.1rem;
     color: var(--text);
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    min-height: 120px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    resize: vertical;
 }
 
 .attachment-btn {
