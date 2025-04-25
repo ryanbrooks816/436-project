@@ -21,7 +21,7 @@ $change_success = "";
 $change_error = "";
 
 // Handle form submission
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['change_password'])) {
   $current = $_POST['current_password'] ?? '';
   $new = $_POST['new_password'] ?? '';
   $confirm = $_POST['confirm_password'] ?? '';
@@ -55,15 +55,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <?php endif; ?>
 
       <form method="POST">
+        <input type="hidden" name="change_password" value="1">
         <div class="form-group">
           <label>Current Password <span class="text-danger">*</span></label>
           <input type="password" name="current_password" class="form-control" required>
         </div>
 
         <div class="form-group">
-          <label>New Password <span class="text-danger">*</span></label>
-          <input type="password" name="new_password" class="form-control"
-            placeholder="At least 8 chars, upper/lower, number, symbol" required>
+          <label>New Password <span class="text-danger">*</span>
+            <span data-toggle="tooltip"
+              title="At least 8 characters, with uppercase, lowercase, special character and a number."
+              style="cursor: help;">
+              <i class="bi bi-info-circle"></i>
+            </span>
+          </label>
+          <input type="password" name="new_password" class="form-control" required>
         </div>
 
         <div class="form-group">
