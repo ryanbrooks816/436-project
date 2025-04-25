@@ -16,8 +16,6 @@ if (isset($_GET['tid'])) {
         exit;
     }
 
-    error_log("Ticket ID: $ticketId, Binary Ticket ID: $binaryTicketId");
-
     // Check if the ticket exists
     $sql = "SELECT * FROM Tickets WHERE ticket_pub_id = ? LIMIT 1";
     $stmt = $pdo->prepare($sql);
@@ -53,7 +51,7 @@ if (isset($_GET['tid'])) {
     //     }
     // Let employees access each others' tickets, restrict customers
     if ($_SESSION['user_type'] !== 'employee') {
-        $sql = "SELECT cust_id FROM Tickets WHERE ticket_pub_id = ?";
+        $sql = "SELECT customer_id FROM Tickets WHERE ticket_pub_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$binaryTicketId]);
         $custId = $stmt->fetchColumn();
@@ -100,7 +98,10 @@ if (isset($_GET['tid'])) {
 ?>
 
 <main class="page-wrapper top-space bottom-space">
-    <div class="alert alert-info notification d-none" id="mainAlert" role="alert"><i class="bi bi-bell"></i></div>
+    <div class="alert alert-info notification d-none alert-dismissible fade show" id="mainAlert" role="alert">
+        <i class="bi bi-bell"></i>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <section class="tickets-section">
         <!-- Sidebar toggle button for mobile screens -->
         <button class="sidebar-toggle" id="sidebarToggle">
@@ -114,29 +115,33 @@ if (isset($_GET['tid'])) {
                 <h2>Ticket Details</h2>
                 <div class="info-item">
                     <div class="label">Ticket ID</div>
-                    <div class="value"><?= $ticketId ?></div>
+                    <div class="value"><?= htmlspecialchars($ticketId) ?></div>
                 </div>
                 <div class="info-item">
                     <div class="label">Status</div>
                     <div class="value">
                         <span
-                            class="status <?= strtolower(str_replace(' ', '-', $ticket['status'])) ?>"><?= $ticket['status'] ?></span>
+                            class="status-badge status-<?= htmlspecialchars(strtolower(str_replace(' ', '-', $ticket['status']))) ?>"><?= htmlspecialchars($ticket['status']) ?></span>
                     </div>
                 </div>
                 <div class="info-item">
                     <div class="label">Priority</div>
                     <div class="value">
                         <span
-                            class="priority <?= strtolower($ticket['priority']) ?>"><?= ucfirst($ticket['priority']) ?></span>
+                            class="priority-badge priority-<?= htmlspecialchars(strtolower($ticket['priority'])) ?>"><?= htmlspecialchars(ucfirst($ticket['priority'])) ?></span>
                     </div>
                 </div>
                 <div class="info-item">
                     <div class="label">Created</div>
-                    <div class="value"><?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?></div>
+                    <div class="value">
+                        <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['submission_date']))) ?>
+                    </div>
                 </div>
                 <div class="info-item">
                     <div class="label">Last Updated</div>
-                    <div class="value"><?= date("F j, Y, g:i A", strtotime($ticket['last_updated_date'])) ?></div>
+                    <div class="value">
+                        <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['last_updated_date']))) ?>
+                    </div>
                 </div>
                 <div class="info-item">
                     <div class="label">Category</div>
@@ -146,17 +151,21 @@ if (isset($_GET['tid'])) {
                     $stmt->execute([$ticket['ticket_type_id']]);
                     $ticketType = $stmt->fetch();
                     ?>
-                    <div class="value"><?= $ticketType['type_name'] ?></div>
+                    <div class="value"><?= htmlspecialchars($ticketType['type_name']) ?></div>
                 </div>
                 <div class="info-item">
                     <div class="label">Assigned to</div>
                     <div class="value">
-                        <?= $employee['em_name_first'] . ' ' . $employee['em_name_last'] ?>
+                        <?= isset($employee['em_name_first'], $employee['em_name_last'])
+                            ? htmlspecialchars($employee['em_name_first'] . ' ' . $employee['em_name_last'])
+                            : 'Unassigned' ?>
                     </div>
                 </div>
                 <div class="info-item">
                     <div class="label">User</div>
-                    <div class="value"><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></div>
+                    <div class="value">
+                        <?= htmlspecialchars($customer['cust_name_first'] . ' ' . $customer['cust_name_last']) ?>
+                    </div>
                 </div>
                 <div class="info-item">
                     <div class="label">User Email</div>
@@ -200,11 +209,12 @@ if (isset($_GET['tid'])) {
             <div class="ticket-content-wrapper">
                 <div class="ticket-content">
                     <div class="ticket-header">
-                        <h1 class="ticket-title"><?= $ticket['ticket_name'] ?></h1>
+                        <h1 class="ticket-title"><?= htmlspecialchars($ticket['ticket_name']) ?></h1>
                         <div class="ticket-meta">
                             Reported by
-                            <strong><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></strong> on
-                            <?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?>
+                            <strong><?= htmlspecialchars($customer['cust_name_first'] . ' ' . $customer['cust_name_last']) ?></strong>
+                            on
+                            <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['submission_date']))) ?>
                         </div>
                     </div>
                     <div class="conversation">
@@ -214,23 +224,31 @@ if (isset($_GET['tid'])) {
                                     <div class="message-avatar">M</div>
                                     <div>
                                         <span
-                                            class="message-name"><?= $customer['cust_name_first'] . ' ' . $customer['cust_name_last'] ?></span>
+                                            class="message-name"><?= htmlspecialchars($customer['cust_name_first'] . ' ' . $customer['cust_name_last']) ?></span>
                                         <span class="message-role">User</span>
                                     </div>
                                 </div>
                                 <div class="message-time">
-                                    <?= date("F j, Y, g:i A", strtotime($ticket['submission_date'])) ?>
+                                    <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['submission_date']))) ?>
                                 </div>
-
                             </div>
                             <div class="message-content">
-                                <?= $ticket['ticket_text'] ?>
+                                <?= htmlspecialchars_decode($ticket['ticket_text'], ENT_QUOTES) ?>
                             </div>
                             <div class="message-attachments">
-                                <a href="#" class="attachment">
-                                    <i class="bi bi-download"></i>
-                                    error_screenshot.png
-                                </a>
+                                <?php
+                                $sql = "SELECT * FROM Ticket_Attachments WHERE ticket_id = ? AND feedback_id IS NULL";
+                                $stmt = $pdo->prepare($sql);
+                                $stmt->execute([$ticket['ticket_id']]);
+                                $attachments = $stmt->fetchAll();
+                                foreach ($attachments as $attachment): ?>
+                                    <a href="<?= htmlspecialchars($attachment['file_path']) ?>" class="attachment"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#lightboxModal-<?= htmlspecialchars($attachment['attachment_id']) ?>">
+                                        <i class="bi bi-eye"></i>
+                                        <span><?= htmlspecialchars(basename($attachment['file_path'])) ?></span>
+                                    </a>
+                                <?php endforeach; ?>
                             </div>
                         </div>
 
@@ -257,16 +275,31 @@ if (isset($_GET['tid'])) {
                                                 $role = "User";
                                             }
                                             ?>
-                                            <span class="message-name"><?= $name ?></span>
-                                            <span class="message-role"><?= $role ?></span>
+                                            <span class="message-name"><?= htmlspecialchars($name) ?></span>
+                                            <span class="message-role"><?= htmlspecialchars($role) ?></span>
                                         </div>
                                     </div>
                                     <div class="message-time">
-                                        <?= date("F j, Y, g:i A", strtotime($feedback['timestamp'])) ?>
+                                        <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($feedback['timestamp']))) ?>
                                     </div>
                                 </div>
                                 <div class="message-content">
-                                    <?= $feedback['message'] ?>
+                                    <?= htmlspecialchars_decode($feedback['message'], ENT_QUOTES) ?>
+                                </div>
+                                <div class="message-attachments">
+                                    <?php
+                                    $sql = "SELECT * FROM Ticket_Attachments WHERE ticket_id = ? AND feedback_id = ?";
+                                    $stmt = $pdo->prepare($sql);
+                                    $stmt->execute([$ticket['ticket_id'], $feedback['feedback_id']]);
+                                    $attachments = $stmt->fetchAll();
+                                    foreach ($attachments as $attachment): ?>
+                                        <a href="<?= htmlspecialchars($attachment['file_path']) ?>" class="attachment"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#lightboxModal-<?= htmlspecialchars($attachment['attachment_id']) ?>">
+                                            <i class="bi bi-eye"></i>
+                                            <span><?= htmlspecialchars(basename($attachment['file_path'])) ?></span>
+                                        </a>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -278,17 +311,16 @@ if (isset($_GET['tid'])) {
                     <h3>Reply to Ticket</h3>
                     <form id="replyForm">
                         <div id="editor">
-                        Type your reply here...
+                            Type your reply here...
                         </div>
-                        <input type="hidden" class="ticketId" name="ticket_id" value="<?= $ticket['ticket_id'] ?>">
+                        <input type="hidden" class="ticketId" name="ticket_id"
+                            value="<?= htmlspecialchars($ticket['ticket_id']) ?>">
+                        <input type="hidden" name="ticket_pub_id" value="<?= htmlspecialchars($ticketId) ?>">
                         <input type="hidden" name="sender_id"
-                            value="<?= $_SESSION['user_type'] === 'employee' ? $_SESSION['employee_id'] : $_SESSION['customer_id'] ?>">
-                        <input type="hidden" name="sender_type" value="<?= $_SESSION['user_type'] ?>">
+                            value="<?= htmlspecialchars($_SESSION['user_type'] === 'employee' ? $_SESSION['employee_id'] : $_SESSION['customer_id']) ?>">
+                        <input type="hidden" name="sender_type" value="<?= htmlspecialchars($_SESSION['user_type']) ?>">
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                            <button type="button" class="attachment-btn">
-                                <i class="bi bi-paperclip"></i>
-                                Add Attachment
-                            </button>
+                            <?php require_once 'modules/ticket-attachments.php' ?>
                             <div class="d-flex">
                                 <button type="button" id="sendReply" class="btn btn-primary w-auto m-0">
                                     <i class="bi bi-send-fill me-2"></i> Send Reply
@@ -430,47 +462,70 @@ if (isset($_GET['tid'])) {
     </div>
 </div>
 
+<?php foreach ($attachments as $attachment): ?>
+    <!-- Lightbox Modal -->
+    <div class="modal fade" id="lightboxModal-<?= htmlspecialchars($attachment['attachment_id']) ?>" tabindex="-1"
+        aria-labelledby="lightboxModalLabel-<?= htmlspecialchars($attachment['attachment_id']) ?>" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lightboxModalLabel-<?= htmlspecialchars($attachment['attachment_id']) ?>">
+                        <?= htmlspecialchars(basename($attachment['file_path'])) ?>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="<?= htmlspecialchars($attachment['file_path']) ?>"
+                        alt="<?= htmlspecialchars(basename($attachment['file_path'])) ?>" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<?php require "footer.php"; ?>
+
 <script>
     const quill = new Quill("#editor", {
         theme: "snow",
     });
 </script>
 
-<?php require "footer.php"; ?>
+<?php if ($_SESSION['user_type'] === 'employee'): ?>
+    <script>
+        function assignToCurrentUser() {
+            const ticketId = $('.ticketId').val();
+            const employeeId = <?= $_SESSION['employee_id'] ?>;
 
-<script>
-    function assignToCurrentUser() {
-        const ticketId = $('.ticketId').val();
-        const employeeId = <?= $_SESSION['employee_id'] ?>;
+            $.ajax({
+                url: 'endpoints/update_ticket.php',
+                type: 'POST',
+                data: {
+                    field: 'employee_id',
+                    value: employeeId,
+                    ticket_id: ticketId
+                },
+                success: function (response) {
+                    const res = JSON.parse(response);
+                    const mainAlert = $('#mainAlert');
+                    mainAlert.removeClass('d-none alert-success alert-danger');
 
-        $.ajax({
-            url: 'endpoints/update_ticket.php',
-            type: 'POST',
-            data: {
-                field: 'employee_id',
-                value: employeeId,
-                ticket_id: ticketId
-            },
-            success: function (response) {
-                const res = JSON.parse(response);
-                const mainAlert = $('#mainAlert');
-                mainAlert.removeClass('d-none alert-success alert-danger');
-
-                if (res.success) {
-                    mainAlert.addClass('alert-success');
-                    mainAlert.text(res.message);
-                    location.reload();
-                } else {
-                    mainAlert.addClass('alert-danger');
-                    mainAlert.text(res.message);
+                    if (res.success) {
+                        mainAlert.addClass('alert-success');
+                        mainAlert.text(res.message);
+                        location.reload();
+                    } else {
+                        mainAlert.addClass('alert-danger');
+                        mainAlert.text(res.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    const mainAlert = $('#mainAlert');
+                    mainAlert.removeClass('d-none alert-success').addClass('alert-danger');
+                    mainAlert.text('An error occurred while assigning the ticket.');
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error('Error:', error);
-                const mainAlert = $('#mainAlert');
-                mainAlert.removeClass('d-none alert-success').addClass('alert-danger');
-                mainAlert.text('An error occurred while assigning the ticket.');
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
+<?php endif; ?>

@@ -152,22 +152,41 @@ $(document).ready(function () {
     // Handle replying to the ticket
     $('#sendReply').on('click', function () {
         const ticketId = $('.ticketId').val();
+        const ticketPubId = $('input[name="ticket_pub_id"]').val();
         const message = quill.root.innerHTML;
         const senderId = $('input[name="sender_id"]').val();
         const senderType = $('input[name="sender_type"]').val();
+        const attachments = selectedFiles;
+
+        const mainAlert = $('#mainAlert');
+
+        // Create FormData object to handle both text and file data
+        const formData = new FormData();
+        formData.append('ticket_id', ticketId);
+        formData.append('ticket_pub_id', ticketPubId);
+        formData.append('message', message);
+        formData.append('sender_id', senderId);
+        formData.append('sender_type', senderType);
+
+        // Add attachments to FormData
+        for (let i = 0; i < attachments.length; i++) {
+            if (attachments[i].size > 2 * 1024 * 1024) { // 2MB limit
+                mainAlert.removeClass('d-none alert-success alert-danger');
+                mainAlert.addClass('alert-danger');
+                mainAlert.text(`File "${attachments[i].name}" exceeds the 2MB size limit.`);
+                return;
+            }
+            formData.append('attachments[]', attachments[i]);
+        }
 
         $.ajax({
-            url: 'endpoints/ticket_reply.php',
+            url: 'endpoints/reply_to_ticket.php',
             type: 'POST',
-            data: {
-                ticket_id: ticketId,
-                message: message,
-                sender_id: senderId,
-                sender_type: senderType
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function (response) {
                 const res = JSON.parse(response);
-                const mainAlert = $('#mainAlert');
                 mainAlert.removeClass('d-none alert-success alert-danger');
 
                 if (res.success) {
@@ -214,7 +233,7 @@ $(document).ready(function () {
         if ($(window).width() > 768) {
             sidebar.removeClass('active');
             sidebarOverlay.removeClass('active');
-            sidebarToggle.removeClass('active');s
+            sidebarToggle.removeClass('active'); s
         }
     });
 });

@@ -37,7 +37,6 @@
 
   $(window).on('scroll', function () {
     if ($(window).scrollTop() === 0) {
-      console.log('Scrolled to top');
       $('#navbar').addClass('bg-light');
     } else {
       $('#navbar').removeClass('bg-light');
