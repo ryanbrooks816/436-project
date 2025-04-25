@@ -25,8 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $register_error = "All fields except profile picture are required.";
     } elseif ($password !== $confirm) {
         $register_error = "Passwords do not match.";
-    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/', $password)) {
-        $register_error = "Password must be at least 8 characters and include uppercase, lowercase, and a number.";
+    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/', $password)) {
+        $register_error = "Password must be at least 8 characters and include uppercase, lowercase, special character, and a number.";
     } else {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -111,13 +111,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="form-group">
                         <label class="form-label"> Password <span style="color: red">*</span>
                             <span data-toggle="tooltip"
-                                title="At least 8 characters, with uppercase, lowercase, and a number."
+                                title="At least 8 characters, with uppercase, lowercase, special character and a number."
                                 style="cursor: help;">
                                 <i class="bi bi-info-circle"></i>
                             </span>
                         </label>
                         <input type="password" name="password" class="form-control-input"
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Retype Password <span style="color: red">*</span></label>

@@ -24,7 +24,7 @@ $update_success = "";
 $update_error = "";
 
 // Update profile if form submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout']) && isset($_POST['update_profile'])) {
   $first = $_POST['first'] ?? '';
   $last = $_POST['last'] ?? '';
   $age = $_POST['age'] ?? '';
@@ -116,6 +116,7 @@ if (!file_exists($profilePicPath)) {
       <!-- Profile Details Tab -->
       <div class="tab-pane fade show active" id="profile-details" role="tabpanel" aria-labelledby="profile-details-tab">
         <form method="POST" enctype="multipart/form-data" class="mt-4">
+          <input type="hidden" name="update_profile" value="1">
           <div class="form-group">
             <label class="form-label">Change Profile Picture</label>
             <input type="file" name="profile_picture" accept="image/*" class="form-control-file">
