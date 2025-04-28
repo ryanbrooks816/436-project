@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require 'classes/db.php';
+require '../classes/db.php';
 
 if (!isset($_GET['game_id'])) {
   die("No game ID provided.");
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
 
-  header("Location: employee-game.php?game_id=$game_id");
+  header("Location: admin/game-view.php?game_id=$game_id");
   exit;
 }
 ?>
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<?php include 'header.php'; ?>
+<?php include '../header.php'; ?>
 
 <body class="bg-light">
 <div class="container mt-5">
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     <button type="submit" class="btn btn-primary">Update Game</button>
-    <a href="employee-game.php?game_id=<?= urlencode($game['game_id']) ?>" class="btn btn-secondary">Cancel</a>
+    <a href="admin/game-view.php?game_id=<?= urlencode($game['game_id']) ?>" class="btn btn-secondary">Cancel</a>
   </form>
 
   <hr>
@@ -147,6 +147,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 </body>
 
-<?php include 'footer.php'; ?>
+<?php include '../footer.php'; ?>
 
 </html>

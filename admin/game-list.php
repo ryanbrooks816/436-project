@@ -1,5 +1,5 @@
 <?php
-require 'classes/db.php';
+require '../classes/db.php';
 
 // Get search and filter inputs
 $search = $_GET['search'] ?? '';
@@ -59,7 +59,7 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<?php include 'header.php'; ?>
+<?php include '../header.php'; ?>
 
 <body class="bg-light">
   <div class="container py-5">
@@ -114,7 +114,7 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <?php foreach ($games as $game): ?>
           <div class="col">
-            <a href="/436-project/employee-game.php?game_id=<?= urlencode($game['game_id']) ?>" class="text-decoration-none text-dark">
+            <a href="/436-project/admin/game-view.php?game_id=<?= urlencode($game['game_id']) ?>" class="text-decoration-none text-dark">
               <div class="card h-100 shadow-sm border-primary">
                 <div class="card-body text-center">
                   <h5 class="card-title"><?= htmlspecialchars($game['game_name']) ?></h5>
@@ -126,19 +126,19 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     <?php endif; ?>
 
-    <a href="/436-project/employee-account-mod.php" class="btn btn-outline-secondary position-fixed start-0 bottom-0 m-4 shadow rounded-pill"
+    <a href="/436-project/admin/dashboard.php" class="btn btn-outline-secondary position-fixed start-0 bottom-0 m-4 shadow rounded-pill"
         style="width: 140px; height: 50px; font-weight: bold; text-align: center; line-height: 2.2;">
-        👤 My Account
+        Home
     </a>
 
-    <a href="/436-project/employee-game-create.php" class="btn btn-success position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
+    <a href="/436-project/admin/game-create.php" class="btn btn-success position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
         title="Add New Game" style="width: 60px; height: 60px; font-size: 24px; text-align: center; line-height: 1.8;">
         +
     </a>
   </div>
 </body>
 
-<?php include 'footer.php'; ?>
+<?php include '../footer.php'; ?>
 
 </html>
 

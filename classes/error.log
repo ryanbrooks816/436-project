@@ -1,0 +1,8 @@
+[28-Apr-2025 03:38:26 UTC] PHP Warning:  require_once(classes/db.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 03:38:26 UTC] PHP Fatal error:  require_once(): Failed opening required 'classes/db.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 16:12:57 UTC] PHP Warning:  require_once(../classes/db.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 16:12:57 UTC] PHP Fatal error:  require_once(): Failed opening required '../classes/db.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 16:13:05 UTC] PHP Warning:  require_once(../classes/db.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 16:13:05 UTC] PHP Fatal error:  require_once(): Failed opening required '../classes/db.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 16:14:06 UTC] PHP Warning:  require_once(classes/db.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
+[28-Apr-2025 16:14:06 UTC] PHP Fatal error:  require_once(): Failed opening required 'classes/db.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/modules/navbar.php on line 5
