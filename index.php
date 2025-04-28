@@ -6,7 +6,7 @@
     <div class="card-body">
         <h5 class="card-title">Card Title</h5>
         <p class="card-text">This is a simple card example using Bootstrap.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="admin/dashboard.php" class="btn btn-primary">Go somewhere</a>
     </div>
 </div>
 

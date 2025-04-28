@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-require 'classes/db.php';
+require '../classes/db.php';
 
 if (!isset($_GET['game_id'])) {
   die("No game ID provided.");
@@ -53,7 +53,7 @@ if (!$game) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<?php include 'header.php'; ?>
+<?php include '../header.php'; ?>
 
 <body class="bg-light">
   <div class="container py-5">
@@ -89,6 +89,6 @@ if (!$game) {
   </div>
 </body>
 
-<?php include 'footer.php'; ?>
+<?php include '../footer.php'; ?>
 
 </html>
