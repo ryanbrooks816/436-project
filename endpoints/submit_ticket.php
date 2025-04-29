@@ -19,6 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Check if ticket_text is the placeholder
+    if ($ticket_text === '&lt;p&gt;Type your message here...&lt;/p&gt;') {
+        echo json_encode(['success' => false, 'message' => 'Please provide a valid message for the ticket.']);
+        exit;
+    }
+
     try {
         // Look up the ticket type ID
         $type_query = "SELECT type_id FROM Ticket_Types WHERE type_name = ?";

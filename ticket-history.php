@@ -1,4 +1,4 @@
-<?php 
+<?php
 require 'header.php';
 require 'modules/require-login.php';
 
@@ -97,10 +97,6 @@ if (isset($_GET['tid'])) {
 ?>
 
 <main class="page-wrapper top-space bottom-space">
-    <div class="alert alert-info notification d-none alert-dismissible fade show" id="mainAlert" role="alert">
-        <i class="bi bi-bell"></i>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <section class="tickets-section">
         <!-- Sidebar toggle button for mobile screens -->
         <button class="sidebar-toggle" id="sidebarToggle">
@@ -109,7 +105,7 @@ if (isset($_GET['tid'])) {
         <!-- Overlay for mobile when sidebar is open -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar" id="sidebar" style="height: auto;">
             <div class="ticket-info">
                 <h2>Ticket Details</h2>
                 <div class="info-item">
@@ -139,7 +135,11 @@ if (isset($_GET['tid'])) {
                 <div class="info-item">
                     <div class="label">Last Updated</div>
                     <div class="value">
-                        <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['last_updated_date']))) ?>
+                        <?php if ($ticket['last_updated_date'] === "0000-00-00 00:00:00"): ?>
+                            No Activity Yet
+                        <?php else: ?>
+                            <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['last_updated_date']))) ?>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="info-item">
@@ -204,7 +204,7 @@ if (isset($_GET['tid'])) {
             <?php endif; ?>
         </aside>
 
-        <div class="container">
+        <div class="container" style="height: auto";>
             <div class="ticket-content-wrapper">
                 <div class="ticket-content">
                     <div class="ticket-header">
@@ -308,6 +308,8 @@ if (isset($_GET['tid'])) {
 
                 <div class="reply-box">
                     <h3>Reply to Ticket</h3>
+                    <!-- Alert -->
+                    <div class="alert alert-info d-none alert-dismissible fade show" id="mainAlert" role="alert"></div>
                     <form id="replyForm">
                         <div id="editor">
                             Type your reply here...

@@ -15,6 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Check if ticket_text is the placeholder
+    if ($message === '&lt;p&gt;Type your reply here...&lt;/p&gt;') {
+        echo json_encode(['success' => false, 'message' => 'Please provide a valid message for the ticket.']);
+        exit;
+    }
+
     try {
         // Determine the field to update based on sender_type
         $field = ($sender_type === 'employee') ? 'employee_id' : 'customer_id';
@@ -29,6 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $feedback_id = $pdo->lastInsertId(); // Get the ID of the newly created feedback
+
+            // Update the ticket's last_updated column
+            $updateQuery = "UPDATE Tickets SET last_updated_date = NOW() WHERE ticket_id = :ticket_id";
+            $updateStmt = $pdo->prepare($updateQuery);
+            $updateStmt->bindParam(':ticket_id', $ticket_id);
+            $updateStmt->execute();
 
             // Handle file uploads
             if (!empty($_FILES['attachments']['name'][0])) {
