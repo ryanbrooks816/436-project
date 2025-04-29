@@ -1,13 +1,13 @@
 <?php
-require_once "header.php";
-require_once "modules/require-login.php";
+require 'header.php';
+require 'modules/require-login.php';
 ?>
 
 <main class="page-wrapper">
     <div class="top-space header-margin bg-primary text-white text-center py-5">
         <h1 class="text-white">Submit Support Ticket</h1>
     </div>
-    <?php include 'modules/notification-alert.php'; ?>
+    <?php require 'modules/notification-alert.php'; ?>
     <section class="bottom-space">
         <div class="container">
             <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer'): ?>
@@ -18,19 +18,21 @@ require_once "modules/require-login.php";
                     <div class="form-container" style="width: 800px;">
                         <form id="supportForm">
                             <div id="submitTicketAlert" class="alert alert-danger mt-3 d-none" role="alert"></div>
-                            <div class="form-group">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control-input" id="name" name="name"
-                                    value="<?php echo htmlspecialchars($_SESSION['cust_name_first'] . ' ' . $_SESSION['cust_name_last']); ?>"
-                                    readonly>
+                            <div class="row">
+                                <div class="col-6 form-group">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control-input" id="name" name="name"
+                                        value="<?php echo htmlspecialchars($_SESSION['cust_name_first'] . ' ' . $_SESSION['cust_name_last']); ?>"
+                                        readonly>
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control-input" id="email" name="email"
+                                        value="<?php echo htmlspecialchars($_SESSION['email'] ?? ''); ?>" readonly>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control-input" id="email" name="email"
-                                    value="<?php echo htmlspecialchars($_SESSION['email'] ?? ''); ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="ticketType" class="form-label">Ticket Type</label>
+                                <label for="ticketType" class="form-label">Ticket Type <span style="color: red">*</span></label>
                                 <select class="form-control-select form-select" id="ticketType" name="ticketType" required>
                                     <option value="New Game Request">New Game Request</option>
                                     <option value="Missing/Incorrect Game Details">Missing/Incorrect Game Details</option>
@@ -39,7 +41,7 @@ require_once "modules/require-login.php";
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="subject" class="form-label">Subject</label>
+                                <label for="subject" class="form-label">Subject <span style="color: red">*</span></label>
                                 <input type="text" class="form-control-input" id="subject" name="subject" required>
                             </div>
                             <div class="form-group">

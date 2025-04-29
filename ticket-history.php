@@ -1,7 +1,6 @@
-<?php
-require "classes/db.php";
-require "modules/require-login.php";
-require "header.php";
+<?php 
+require 'header.php';
+require 'modules/require-login.php';
 
 if (isset($_GET['tid'])) {
     $ticketId = $_GET['tid']; // Get the ticket ID from the query string

@@ -1,11 +1,5 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-require '../classes/db.php';
+require '../header.php';
 
 if (!isset($_GET['game_id'])) {
   die("No game ID provided.");
@@ -45,50 +39,36 @@ if (!$game) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title><?= htmlspecialchars($game['game_name']) ?> – Game Info</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+<div class="container py-5">
+  <h1 class="mb-3"><?= htmlspecialchars($game['game_name']) ?></h1>
 
-<?php include '../header.php'; ?>
-
-<body class="bg-light">
-  <div class="container py-5">
-    <h1 class="mb-3"><?= htmlspecialchars($game['game_name']) ?></h1>
-
-    <div class="mb-3">
-      <strong>Rating:</strong><br>
-      <?= htmlspecialchars($game['game_rating'] ?? 'Unrated') ?>
-    </div>
-
-    <div class="mb-3">
-      <strong>Accessibility Features:</strong><br>
-      <?= $game['features'] ? htmlspecialchars($game['features']) : 'None listed' ?>
-    </div>
-
-    <div class="mb-3">
-      <strong>Platforms:</strong><br>
-      <?= $game['platforms'] ? htmlspecialchars($game['platforms']) : 'None listed' ?>
-    </div>
-
-    <div class="mb-3">
-      <strong>Categories:</strong><br>
-      <?= $game['categories'] ? htmlspecialchars($game['categories']) : 'None listed' ?>
-    </div>
-
-    <div class="mb-3">
-      <strong>Publisher:</strong><br>
-      <?= $game['publishers'] ? htmlspecialchars($game['publishers']) : 'None listed' ?>
-    </div>
-
-    <a href="employee-game-edit.php?game_id=<?= urlencode($game['game_id']) ?>" class="btn btn-primary mt-4">Edit Game</a>
-    <a href="/436-project/employee-game-list.php" class="btn btn-secondary mt-4 ms-2">Back to List</a>
+  <div class="mb-3">
+    <strong>Rating:</strong><br>
+    <?= htmlspecialchars($game['game_rating'] ?? 'Unrated') ?>
   </div>
-</body>
 
-<?php include '../footer.php'; ?>
+  <div class="mb-3">
+    <strong>Accessibility Features:</strong><br>
+    <?= $game['features'] ? htmlspecialchars($game['features']) : 'None listed' ?>
+  </div>
 
-</html>
+  <div class="mb-3">
+    <strong>Platforms:</strong><br>
+    <?= $game['platforms'] ? htmlspecialchars($game['platforms']) : 'None listed' ?>
+  </div>
+
+  <div class="mb-3">
+    <strong>Categories:</strong><br>
+    <?= $game['categories'] ? htmlspecialchars($game['categories']) : 'None listed' ?>
+  </div>
+
+  <div class="mb-3">
+    <strong>Publisher:</strong><br>
+    <?= $game['publishers'] ? htmlspecialchars($game['publishers']) : 'None listed' ?>
+  </div>
+
+  <a href="employee-game-edit.php?game_id=<?= urlencode($game['game_id']) ?>" class="btn btn-primary mt-4">Edit Game</a>
+  <a href="/436-project/employee-game-list.php" class="btn btn-secondary mt-4 ms-2">Back to List</a>
+</div>
+
+<?php require '../footer.php'; ?>

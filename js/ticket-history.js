@@ -1,11 +1,4 @@
 $(document).ready(function () {
-    // Set up employee change modal
-    $('.assign-btn').on('click', function () {
-        const employeeId = $(this).data('employee-id');
-        // Perform the assignment logic here (e.g., send an AJAX request)
-        console.log('Assigning ticket to employee ID:', employeeId);
-    });
-
     // Handle reassign employee modal submit
     $('.assign-btn').on('click', function () {
         const employeeId = $(this).data('employee-id');

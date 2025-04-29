@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require '../classes/db.php';
+require '../header.php';
 
 if (!isset($_GET['game_id'])) {
   die("No game ID provided.");
@@ -85,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Insert new feature links
   $insert_feature = $pdo->prepare("INSERT INTO Game_Accessibility_Features (game_id, feature_id) VALUES (?, ?)");
   foreach ($new_feature_ids as $fid) {
-  $insert_feature->execute([$game_id, $fid]);
+    $insert_feature->execute([$game_id, $fid]);
   }
 
 
@@ -94,17 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Edit Game</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<?php include '../header.php'; ?>
-
-<body class="bg-light">
 <div class="container mt-5">
   <h1 class="mb-4">Edit Game: <?= htmlspecialchars($game['game_name']) ?></h1>
 
@@ -126,14 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="mb-3">
-        <label for="feature_ids" class="form-label">Accessibility Features</label>
-        <select name="feature_ids[]" class="form-select" multiple>
-            <?php foreach ($all_features as $feature): ?>
-            <option value="<?= $feature['feature_id'] ?>" <?= in_array($feature['feature_id'], $current_feature_ids) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($feature['feature_name']) ?>
-            </option>
-            <?php endforeach; ?>
-        </select>
+      <label for="feature_ids" class="form-label">Accessibility Features</label>
+      <select name="feature_ids[]" class="form-select" multiple>
+        <?php foreach ($all_features as $feature): ?>
+          <option value="<?= $feature['feature_id'] ?>" <?= in_array($feature['feature_id'], $current_feature_ids) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($feature['feature_name']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
     </div>
 
 
@@ -145,8 +128,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <h3 class="mt-4">Manage Features, Platforms, and Categories</h3>
   <p><em>This section would use AJAX or separate endpoints to add/delete items from join tables.</em></p>
 </div>
-</body>
 
-<?php include '../footer.php'; ?>
-
-</html>
+<?php require '../footer.php'; ?>

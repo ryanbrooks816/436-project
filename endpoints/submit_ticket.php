@@ -1,6 +1,6 @@
 <?php
-require "../classes/db.php";
-require_once "../modules/upload-attachment.php";
+require_once '../classes/db.php';
+require "../modules/upload-attachment.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize input data

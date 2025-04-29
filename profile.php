@@ -1,7 +1,6 @@
 <?php
-require_once 'classes/db.php';
+require 'header.php';
 require 'modules/require-login.php';
-include 'header.php';
 
 // Handle logout if the logout button was pressed
 if (isset($_POST['logout'])) {
@@ -164,4 +163,23 @@ if (!file_exists($profilePicPath)) {
   </div>
 </main>
 
-<?php include 'footer.php'; ?>
+<?php require 'footer.php'; ?>
+
+<script>
+  $(document).ready(function () {
+    // Save active tab to localStorage
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (event) {
+      localStorage.setItem('activeTab', $(event.target).data('bs-target'));
+    });
+
+    // On page load, check if there's an active tab stored
+    const activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+      const $activeTabButton = $(`button[data-bs-target="${activeTab}"]`);
+      if ($activeTabButton.length) {
+        const tab = new bootstrap.Tab($activeTabButton[0]);
+        tab.show();
+      }
+    }
+  });
+</script>
