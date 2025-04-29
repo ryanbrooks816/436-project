@@ -1,11 +1,5 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-require '../classes/db.php';
+require '../header.php';
 
 if (!isset($_GET['game_id'])) {
   die("No game ID provided.");
@@ -106,36 +100,34 @@ if (!$game) {
   <div class="container py-5">
     <h1 class="mb-3"><?= htmlspecialchars($game['game_name']) ?></h1>
 
-    <div class="mb-3">
-      <strong>Rating:</strong><br>
-      <?= htmlspecialchars($game['game_rating'] ?? 'Unrated') ?>
-    </div>
+  <div class="mb-3">
+    <strong>Rating:</strong><br>
+    <?= htmlspecialchars($game['game_rating'] ?? 'Unrated') ?>
+  </div>
 
-    <div class="mb-3">
-      <strong>Accessibility Features:</strong><br>
-      <?= $game['features'] ? htmlspecialchars($game['features']) : 'None listed' ?>
-    </div>
+  <div class="mb-3">
+    <strong>Accessibility Features:</strong><br>
+    <?= $game['features'] ? htmlspecialchars($game['features']) : 'None listed' ?>
+  </div>
 
-    <div class="mb-3">
-      <strong>Platforms:</strong><br>
-      <?= $game['platforms'] ? htmlspecialchars($game['platforms']) : 'None listed' ?>
-    </div>
+  <div class="mb-3">
+    <strong>Platforms:</strong><br>
+    <?= $game['platforms'] ? htmlspecialchars($game['platforms']) : 'None listed' ?>
+  </div>
 
-    <div class="mb-3">
-      <strong>Categories:</strong><br>
-      <?= $game['categories'] ? htmlspecialchars($game['categories']) : 'None listed' ?>
-    </div>
+  <div class="mb-3">
+    <strong>Categories:</strong><br>
+    <?= $game['categories'] ? htmlspecialchars($game['categories']) : 'None listed' ?>
+  </div>
 
-    <div class="mb-3">
-      <strong>Publisher:</strong><br>
-      <?= $game['publishers'] ? htmlspecialchars($game['publishers']) : 'None listed' ?>
-    </div>
+  <div class="mb-3">
+    <strong>Publisher:</strong><br>
+    <?= $game['publishers'] ? htmlspecialchars($game['publishers']) : 'None listed' ?>
+  </div>
 
     <a href="game-edit.php?game_id=<?= urlencode($game['game_id']) ?>" class="btn btn-primary mt-4">Edit Game</a>
     <a href="game-list.php" class="btn btn-secondary mt-4 ms-2">Back to List</a>
   </div>
 </body>
 
-<?php include '../footer.php'; ?>
-
-</html>
+<?php require '../footer.php'; ?>

@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require '../classes/db.php';
+require '../header.php';
 
 // Fetch dropdown data
 $publisher_stmt = $pdo->query("SELECT * FROM Publishers ORDER BY publisher_name ASC");
@@ -149,8 +143,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a href="admin/game-list.php" class="btn btn-secondary ms-2">Cancel</a>
   </form>
 </div>
-</body>
 
-<?php include '../footer.php'; ?>
-
-</html>
+<?php require '../footer.php'; ?>

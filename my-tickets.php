@@ -1,7 +1,6 @@
 <?php
-require_once 'classes/db.php';
-include 'header.php';
-require_once "modules/require-login.php";
+require 'header.php';
+require "modules/require-login.php";
 
 // Only intended for customers, employees use admin view
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
@@ -13,7 +12,7 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
 ?>
 
 <main class="page-wrapper top-space bottom-space">
-    <?php include 'modules/notification-alert.php'; ?>
+    <?php require 'modules/notification-alert.php'; ?>
     <section>
         <div class="container mt-4">
             <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer'): ?>
@@ -24,36 +23,44 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
                         New Ticket
                     </a>
                 </div>
+                <hr>
 
                 <!-- Open Tickets -->
-                <h3>Open Tickets</h3>
-                <?php
-                $openTickets = array_filter($tickets, function ($ticket) {
-                    return strtolower($ticket['status']) !== 'resolved';
-                });
-                ?>
-                <?php if (!empty($openTickets)): ?>
-                    <?php foreach ($openTickets as $ticket) {
-                        include 'modules/ticket-card.php';
-                    } ?>
-                <?php else: ?>
-                    <p>You have no open tickets.</p>
-                <?php endif; ?>
+                <div class="d-flex justify-content-center flex-column" style="min-height: 200px;">
+                    <h3>Open Tickets</h3>
+                    <?php
+                    $openTickets = array_filter($tickets, function ($ticket) {
+                        return strtolower($ticket['status']) !== 'resolved';
+                    });
+                    ?>
+                    <?php if (!empty($openTickets)): ?>
+                        <?php foreach ($openTickets as $ticket) {
+                            include 'modules/ticket-card.php';
+                        } ?>
+                    <?php else: ?>
+                        <p>You have no open tickets.</p>
+                    <?php endif; ?>
+                    <hr>
+                </div>
 
                 <!-- Resolved Tickets -->
-                <h3>Resolved Tickets</h3>
-                <?php
-                $resolvedTickets = array_filter($tickets, function ($ticket) {
-                    return strtolower($ticket['status']) === 'resolved';
-                });
-                ?>
-                <?php if (!empty($resolvedTickets)): ?>
-                    <?php foreach ($resolvedTickets as $ticket) {
-                        include 'modules/ticket-card.php';
-                    } ?>
-                <?php else: ?>
-                    <p>You have no resolved tickets.</p>
-                <?php endif; ?>
+                <div class="d-flex justify-content-center flex-column" style="min-height: 200px;">
+                    <h3>Resolved Tickets</h3>
+                    <?php
+                    $resolvedTickets = array_filter($tickets, function ($ticket) {
+                        return strtolower($ticket['status']) === 'resolved';
+                    });
+                    ?>
+                    <?php if (!empty($resolvedTickets)): ?>
+                        <?php foreach ($resolvedTickets as $ticket) {
+                            include 'modules/ticket-card.php';
+                        } ?>
+                    <?php else: ?>
+                        <p>You have no resolved tickets.</p>
+                    <?php endif; ?>
+                    <hr>
+                </div>
+
             <?php else: ?>
                 <div class="text-center">
                     <h2 class="mb-4">Please Switch to a Customer Account</h2>
@@ -65,4 +72,4 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
     </section>
 </main>
 
-<?php require 'footer.php' ?>
+<?php require 'footer.php'; ?>

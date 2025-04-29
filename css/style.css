@@ -520,6 +520,9 @@ footer .footer-brand img {
 }
 
 /* Support Tickets */
+.ql-snow {
+    background-color: #fff;
+}
 
 .ticket-preview-text {
     font-style: normal !important;

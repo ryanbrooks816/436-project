@@ -1,5 +1,5 @@
 <?php
-require_once "../classes/db.php";
+require_once '../classes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $field = isset($_POST['field']) ? $_POST['field'] : null;
