@@ -569,7 +569,7 @@ footer .footer-brand img {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: var(--bg-card);
     height: fit-content;
-    width: 300px;
+    width: 350px;
     flex-shrink: 0;
     margin-right: 40px;
     transition: transform 0.3s ease;
@@ -685,12 +685,12 @@ footer .footer-brand img {
     color: var(--status-in-progress-color);
 }
 
-.status-badge.status.resolved {
+.status-badge.status-resolved {
     background-color: var(--status-resolved-bg);
     color: var(--status-resolved-color);
 }
 
-.status-bage.status.pending {
+.status-bage.status-pending {
     background-color: var(--status-pending-bg);
     color: var(--status-pending-color);
 }
@@ -817,9 +817,6 @@ footer .footer-brand img {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-weight: bold;
-    background-color: var(--primary);
 }
 
 .message-name {
