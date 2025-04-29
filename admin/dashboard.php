@@ -1,16 +1,8 @@
 <?php
-session_start();
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require '../header.php';
+require '../modules/require-login.php';
 
-require_once '../classes/db.php'; 
-
-if (!isset($_SESSION['employee_id'])) {
-  header('Location: login.php'); // redirect to login if not logged in
-  exit;
-}
 
 $loggedInUserId = $_SESSION['employee_id'];
 
@@ -52,57 +44,6 @@ try {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <?php include '../header.php'; ?>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard - Accessible Game Database</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding-top: 100px;
-    }
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: #343a40;
-      padding-top: 140px;
-    }
-    .sidebar a {
-      padding: 15px;
-      text-decoration: none;
-      font-size: 18px;
-      color: #ccc;
-      display: block;
-    }
-    .sidebar a:hover {
-      background-color: #495057;
-      color: white;
-    }
-    .content {
-      margin-left: 250px;
-      padding: 20px;
-      flex-grow: 1;
-    }
-    .navbar {
-      z-index: 1001;
-    }
-  </style>
-</head>
-
-?>
-<body>
-
-<?php include '../modules/navbar.php'; ?>
 
 <!-- Sidebar -->
 <div class="sidebar">
@@ -159,9 +100,4 @@ try {
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-<?php include '../footer.php'; ?>
-
-</html>
+<?php require '../footer.php'; ?>

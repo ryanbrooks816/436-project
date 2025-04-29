@@ -345,3 +345,151 @@
 [29-Apr-2025 03:56:19 UTC] PHP Warning:  include(): Failed opening 'modules/footer.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 165
 [29-Apr-2025 03:56:20 UTC] PHP Warning:  include(modules/footer.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 165
 [29-Apr-2025 03:56:20 UTC] PHP Warning:  include(): Failed opening 'modules/footer.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 165
+[29-Apr-2025 05:15:38 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'mconnors'@'localhost' (using password: YES) in /Applications/MAMP/htdocs/436-project/classes/db.php:37
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/classes/config.php(11): require_once()
+#1 /Applications/MAMP/htdocs/436-project/header.php(1): require('/Applications/M...')
+#2 /Applications/MAMP/htdocs/436-project/login.php(2): require('/Applications/M...')
+#3 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/classes/db.php on line 37
+[29-Apr-2025 05:23:41 UTC] PHP Warning:  require(modules/require-login.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:41 UTC] PHP Fatal error:  require(): Failed opening required 'modules/require-login.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:43 UTC] PHP Warning:  require(modules/require-login.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:43 UTC] PHP Fatal error:  require(): Failed opening required 'modules/require-login.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:43 UTC] PHP Warning:  require(modules/require-login.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:43 UTC] PHP Fatal error:  require(): Failed opening required 'modules/require-login.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:44 UTC] PHP Warning:  require(modules/require-login.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:44 UTC] PHP Fatal error:  require(): Failed opening required 'modules/require-login.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:44 UTC] PHP Warning:  require(modules/require-login.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:44 UTC] PHP Fatal error:  require(): Failed opening required 'modules/require-login.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:44 UTC] PHP Warning:  require(modules/require-login.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:23:44 UTC] PHP Fatal error:  require(): Failed opening required 'modules/require-login.php' (include_path='.:/Applications/MAMP/bin/php/php7.4.33/lib/php') in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 9
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:12 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 05:37:18 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:58:14 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 12:59:04 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:22 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:00:52 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:02:00 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:02:16 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:02:19 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:03:01 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:13:04 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:13:06 UTC] PHP Notice:  Undefined index: employee_id in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 7
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:33 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 13:13:59 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:04:58 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:00 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:05:03 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:19 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:10:27 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:11:52 UTC] PHP Notice:  Undefined index: ticket_pub_id in /Applications/MAMP/htdocs/436-project/modules/ticket-card.php on line 55
+[29-Apr-2025 20:26:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'csc436project.ticket_attachments' doesn't exist in /Applications/MAMP/htdocs/436-project/ticket-history.php:240
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/ticket-history.php(240): PDO->prepare('SELECT * FROM T...')
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/ticket-history.php on line 240

@@ -2,6 +2,8 @@
 $customer = null;
 $profilePicPath = 'images/placeholder.jpg';
 
+$isEmployee = isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'employee';
+
 // Only if the user is logged in
 if (isset($_SESSION['email'])) {
   $email = $_SESSION['email'];
@@ -30,10 +32,11 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
   $navbarClass = 'navbar-spo';
 }
 ?>
+
 <nav id="navbar" class="navbar bg-light navbar-expand-lg fixed-top top-nav-collapse <?php echo $navbarClass; ?>">
   <div class="container-fluid">
     <div class="navbar-brand d-flex align-items-center">
-      <img class="me-3" src="images/logo.png" alt="Logo" height="70px">
+      <img class="me-3" src="/436-project/images/logo.png" alt="Logo" height="70px">
       <h1 class="logo-text">Accessible Games<br>Support Center</h1>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -43,13 +46,13 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
       <div class="d-flex w-100 justify-content-end align-items-center" style="gap: 5%;">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="game-list.php">Search Games</a>
+            <a class="nav-link" href="<?= $isEmployee ? '../admin/game-list.php' : '/game-list.php'; ?>">Search Games</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="my-tickets.php">My Tickets</a>
+            <a class="nav-link" href="<?= $isEmployee ? '../admin/my-tickets.php' : '/my-tickets.php'; ?>">My Tickets</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="../login.php">LOG IN</a>
+            <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="<?= $isEmployee ? '../login.php' : 'login.php'; ?>">LOG IN</a>
           </li>
         </ul>
         <ul class="navbar-nav">
