@@ -1,0 +1,57 @@
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  include(classes/navbar.php): Failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  include(): Failed opening 'classes/navbar.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php8.3.14/lib/php') in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  Undefined variable $accessibility_features in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  Undefined variable $platforms in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  Undefined variable $ratings in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:21 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  include(classes/navbar.php): Failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  include(): Failed opening 'classes/navbar.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php8.3.14/lib/php') in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  Undefined variable $accessibility_features in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  Undefined variable $platforms in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  Undefined variable $ratings in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:27 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  include(classes/navbar.php): Failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  include(): Failed opening 'classes/navbar.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php8.3.14/lib/php') in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  Undefined variable $accessibility_features in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  Undefined variable $platforms in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  Undefined variable $ratings in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:28 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  include(classes/navbar.php): Failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  include(): Failed opening 'classes/navbar.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php8.3.14/lib/php') in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  Undefined variable $accessibility_features in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  Undefined variable $platforms in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  Undefined variable $ratings in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:36 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  include(classes/navbar.php): Failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  include(): Failed opening 'classes/navbar.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php8.3.14/lib/php') in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  Undefined variable $accessibility_features in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  Undefined variable $platforms in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  Undefined variable $ratings in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:40 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  include(classes/navbar.php): Failed to open stream: No such file or directory in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  include(): Failed opening 'classes/navbar.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php8.3.14/lib/php') in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 254
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  Undefined variable $accessibility_features in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 266
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  Undefined variable $platforms in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 277
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  Undefined variable $ratings in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[25-Apr-2025 03:23:46 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /Applications/MAMP/htdocs/436-project/games-homepage.php on line 288
+[29-Apr-2025 23:12:30 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 143
+[29-Apr-2025 23:12:36 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 143
+[29-Apr-2025 23:13:07 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 143
+[29-Apr-2025 23:27:41 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 143
+[29-Apr-2025 23:30:12 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 143
+[29-Apr-2025 23:34:11 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 150
+[29-Apr-2025 23:34:17 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 150
+[29-Apr-2025 23:39:44 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 150
+[29-Apr-2025 23:39:58 UTC] PHP Warning:  Undefined variable $game in /Applications/MAMP/htdocs/436-project/game-description.php on line 143
