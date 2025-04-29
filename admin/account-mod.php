@@ -1,10 +1,5 @@
 <?php
-session_start();
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-require '../classes/db.php';
+require '../header.php';
 
 if (!isset($_SESSION['employee_id'])) {
   die("You must be logged in to view this page.");
@@ -45,17 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Account Settings</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<?php include '../header.php'; ?>
-
-<body class="bg-light">
 <div class="container py-5">
   <h1 class="mb-4">My Account</h1>
 
@@ -82,8 +66,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit" class="btn btn-primary">Update Account</button>
   </form>
 </div>
-</body>
 
-<?php include '../footer.php'; ?>
-
-</html>
+<?php require '../footer.php'; ?>

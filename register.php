@@ -1,6 +1,5 @@
 <?php
-require_once 'classes/db.php';
-require_once 'header.php';
+require 'header.php';
 
 $register_error = "";
 $register_success = "";
@@ -141,4 +140,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-<?php include 'footer.php'; ?>
+<?php require 'footer.php'; ?>

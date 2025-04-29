@@ -1,6 +1,6 @@
 <?php
-require "../classes/db.php";
-require_once "../modules/upload-attachment.php";
+require_once '../classes/db.php';
+require "../modules/upload-attachment.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize input data
@@ -16,6 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate required fields
     if (empty($name) || empty($email) || empty($ticket_type) || empty($ticket_name) || empty($ticket_text) || empty($status) || empty($priority) || empty($customer_id)) {
         echo json_encode(['success' => false, 'message' => 'All fields are required.']);
+        exit;
+    }
+
+    // Check if ticket_text is the placeholder
+    if ($ticket_text === '&lt;p&gt;Type your message here...&lt;/p&gt;') {
+        echo json_encode(['success' => false, 'message' => 'Please provide a valid message for the ticket.']);
         exit;
     }
 

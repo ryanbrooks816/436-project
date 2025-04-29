@@ -1,9 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
 require_once 'classes/db.php';
-include 'header.php';
 
 $email = $_SESSION['email'] ?? null;
 if (!$email) {

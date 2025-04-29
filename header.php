@@ -11,4 +11,4 @@
 </head>
 
 <body>
-    <?php include 'modules/navbar.php'; ?>
+    <?php require 'modules/navbar.php'; ?>

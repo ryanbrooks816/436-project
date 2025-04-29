@@ -1,5 +1,5 @@
 <div
-    class="ticket-card card my-5 shadow-sm priority-<?= strtolower(htmlspecialchars($ticket['priority'])); ?> status-<?= strtolower(htmlspecialchars($ticket['status'])); ?>">
+    class="ticket-card card my-4 shadow-sm priority-<?= strtolower(htmlspecialchars($ticket['priority'])); ?> status-<?= strtolower(htmlspecialchars($ticket['status'])); ?>">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h5 class="card-title ticket-title">
