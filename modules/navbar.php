@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-require_once '../classes/db.php';
+require_once __DIR__ . '/../classes/db.php';
 
 $customer = null;
 $profilePicPath = 'images/placeholder.jpg';
@@ -48,13 +48,13 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
       <div class="d-flex w-100 justify-content-end align-items-center" style="gap: 5%;">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="search-games.php">Search Games</a>
+            <a class="nav-link" href="game-list.php">Search Games</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="my-tickets.php">My Tickets</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="login.php">LOG IN</a>
+            <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="../login.php">LOG IN</a>
           </li>
         </ul>
         <ul class="navbar-nav">

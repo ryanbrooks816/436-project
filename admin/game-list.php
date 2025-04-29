@@ -57,11 +57,58 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="UTF-8">
   <title>Accessible Games</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 100px;
+      padding-left: 250px;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #343a40;
+      padding-top: 140px;
+    }
+    .sidebar a {
+      padding: 15px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #ccc;
+      display: block;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+      color: white;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+      flex-grow: 1;
+    }
+    .navbar {
+      z-index: 1001;
+    }
+  </style>
 </head>
 
 <?php include '../header.php'; ?>
 
 <body class="bg-light">
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <a href="dashboard.php">Dashboard</a>
+  <a href="game-list.php">Manage Games</a>
+  <a href="manage-game-details.php">Manage Game Details</a>
+  <a href="manage-users.php">Manage Users</a>
+  <a href="#">Tickets</a>
+</div>
+
   <div class="container py-5">
     <h1 class="mb-4 text-center">Accessible Games</h1>
 
@@ -126,12 +173,7 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     <?php endif; ?>
 
-    <a href="/436-project/admin/dashboard.php" class="btn btn-outline-secondary position-fixed start-0 bottom-0 m-4 shadow rounded-pill"
-        style="width: 140px; height: 50px; font-weight: bold; text-align: center; line-height: 2.2;">
-        Home
-    </a>
-
-    <a href="/436-project/admin/game-create.php" class="btn btn-success position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
+    <a href="/436-project/admin/game-create.php" class="btn btn-primary position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
         title="Add New Game" style="width: 60px; height: 60px; font-size: 24px; text-align: center; line-height: 1.8;">
         +
     </a>

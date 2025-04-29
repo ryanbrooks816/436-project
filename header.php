@@ -12,3 +12,4 @@
 
 <body>
     <?php include 'modules/navbar.php'; ?>
+</body>
