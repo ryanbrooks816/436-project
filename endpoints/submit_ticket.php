@@ -1,5 +1,6 @@
 <?php
-require "../classes/db.php";
+require_once '../classes/db.php';
+require "../modules/upload-attachment.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve and sanitize input data
@@ -14,8 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate required fields
     if (empty($name) || empty($email) || empty($ticket_type) || empty($ticket_name) || empty($ticket_text) || empty($status) || empty($priority) || empty($customer_id)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'All fields are required.']);
+        echo json_encode(['success' => false, 'message' => 'All fields are required.']);
+        exit;
+    }
+
+    // Check if ticket_text is the placeholder
+    if ($ticket_text === '&lt;p&gt;Type your message here...&lt;/p&gt;') {
+        echo json_encode(['success' => false, 'message' => 'Please provide a valid message for the ticket.']);
         exit;
     }
 
@@ -26,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $type_id = $stmt->fetchColumn();
 
         if (!$type_id) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid ticket type.']);
+            echo json_encode(['success' => false, 'message' => 'Invalid ticket type.']);
             exit;
         }
 
@@ -37,12 +42,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Prepare the SQL statement for inserting the ticket
         $sql = "INSERT INTO Tickets (ticket_name, ticket_text, submission_date, status, priority, ticket_type_id, customer_id, ticket_pub_id) VALUES (?, ?, NOW(), ?, ?, ?, ?, ?)";
-        $stmt = pdo($pdo, $sql, [$ticket_name, $ticket_text, $status, $priority, $type_id, $customer_id, $binary_uuid]);
+        $stmt = $pdo->prepare($sql);
+        $success = $stmt->execute([$ticket_name, $ticket_text, $status, $priority, $type_id, $customer_id, $binary_uuid]);
 
-        http_response_code(200);
-        echo json_encode(['success' => 'Support ticket submitted successfully.']);
+        if ($success) {
+            $ticket_id = $pdo->lastInsertId(); // Get the ID of the newly created ticket
+            $feedback_id = null; // Feedback ID is null for initial ticket submission
+
+            // Handle file uploads
+            if (!empty($_FILES['attachments']['name'][0])) {
+                $messages = handle_ticket_attachments($pdo, $ticket_id, $feedback_id, $hex_uuid);
+                if (!empty($messages)) {
+                    echo json_encode(['success' => false, 'message' => implode(" ", $messages)]);
+                    exit;
+                }
+            }
+
+            echo json_encode(['success' => true, 'message' => 'Support ticket submitted successfully.']);
+        } else {
+            error_log("Failed to execute statement for ticket submission.");
+            echo json_encode(['success' => false, 'message' => 'Failed to submit the support ticket.']);
+        }
     } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
 }

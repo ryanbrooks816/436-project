@@ -1,8 +1,6 @@
 :root {
     --primary: #355EFC;
     --primary-hover: #2d50d6;
-    --secondary: #2ecc71;
-    --secondary-dark: #27ae60;
     --text: #333;
     --text-light: #666;
     --light: #f7f7f7;
@@ -13,6 +11,8 @@
     --border: #e1e1e1;
     --danger: #e74c3c;
     --danger-dark: #c0392b;
+    --success: #2b9b41;
+    --success-dark: #1e7e34;
     --h1-font-size: 2.5rem;
     --h1-line-height: 3.125rem;
     --h2-font-size: 2rem;
@@ -25,6 +25,26 @@
     --h5-line-height: 1.5rem;
     --h6-font-size: 1rem;
     --h6-line-height: 1.375rem;
+    --status-open-bg: #ffe5ca;
+    --status-open-color: #ff8c00;
+    --status-in-progress-bg: #e0f7fa;
+    --status-in-progress-color: #0097a7;
+    --status-resolved-bg: #e0f2e9;
+    --status-resolved-color: #27ae60;
+    --status-pending-bg: #fce4ec;
+    --status-pending-color: #d81b60;
+    --priority-urgent-border: #b71c1c;
+    --priority-high-border: #e53935;
+    --priority-medium-border: #ffb300;
+    --priority-low-border: #1e88e5;
+    --priority-low-bg: #e3f2fd;
+    --priority-low-color: #1e88e5;
+    --priority-medium-bg: #fff8e1;
+    --priority-medium-color: #ffb300;
+    --priority-high-bg: #ffebee;
+    --priority-high-color: #e53935;
+    --priority-urgent-bg: #ffcccb;
+    --priority-urgent-color: #b71c1c;
 }
 
 * {
@@ -68,7 +88,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: #333;
+    color: #121212;
     font-family: "Open Sans", sans-serif;
     font-weight: 700;
     letter-spacing: -0.2px;
@@ -126,7 +146,7 @@ a.white {
 }
 
 .header-margin {
-    margin-bottom: 6rem;
+    margin-bottom: 4rem;
 }
 
 .page-wrapper {
@@ -134,7 +154,7 @@ a.white {
 }
 
 .top-space {
-    padding-top: 8rem !important;
+    padding-top: 10rem !important;
 }
 
 .bottom-space {
@@ -146,10 +166,9 @@ a.white {
 .btn {
     display: inline-block;
     width: auto;
+    min-width: 120px;
     padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
-    border: 0.125rem solid var(--primary);
     border-radius: 2rem;
-    background-color: var(--primary);
     color: white;
     font-weight: 600;
     cursor: pointer;
@@ -337,7 +356,8 @@ a.white {
 }
 
 /* Tabs */
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
     font-weight: 600;
 }
 
@@ -528,6 +548,31 @@ footer .footer-brand img {
 }
 
 /* Support Tickets */
+.ql-snow {
+    background-color: #fff;
+}
+
+.ticket-preview-text {
+    font-style: normal !important;
+    font-weight: normal !important;
+    text-decoration: none !important;
+}
+
+.ticket-preview-text u,
+.ticket-preview-text strong {
+    font-style: normal !important;
+    font-weight: normal !important;
+    text-decoration: none !important;
+}
+
+.ticket-preview-text h1,
+.ticket-preview-text h2,
+.ticket-preview-text h3,
+.ticket-preview-text h4,
+.ticket-preview-text h5,
+.ticket-preview-text h6 {
+    font-size: 1rem !important;
+}
 
 .notification {
     position: fixed;
@@ -542,6 +587,7 @@ footer .footer-brand img {
     display: flex;
     position: relative;
     margin: 0 auto;
+    align-items: stretch;
 }
 
 .sidebar {
@@ -589,9 +635,11 @@ footer .footer-brand img {
         z-index: 99;
         transform: translateX(-100%);
         overflow-y: auto;
+        height: 100%;
         max-height: 100vh;
         border-radius: 0;
         margin-right: 0;
+        padding-top: 140px;
     }
 
     .sidebar.active {
@@ -642,9 +690,11 @@ footer .footer-brand img {
 
 .info-item .value {
     font-size: 1rem;
+    line-break: anywhere;
 }
 
-.status {
+.status-badge,
+.priority-badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border-radius: 50px;
@@ -652,53 +702,87 @@ footer .footer-brand img {
     font-weight: 500;
 }
 
-.status.open {
-    background-color: #ffe5ca;
-    color: #ff8c00;
+.status-badge.status-open {
+    background-color: var(--status-open-bg);
+    color: var(--status-open-color);
 }
 
-.status.in-progress {
-    background-color: #e0f7fa;
-    color: #0097a7;
+.status-badge.status-in-progress {
+    background-color: var(--status-in-progress-bg);
+    color: var(--status-in-progress-color);
 }
 
-.status.resolved {
-    background-color: #e0f2e9;
-    color: #27ae60;
+.status-badge.status.resolved {
+    background-color: var(--status-resolved-bg);
+    color: var(--status-resolved-color);
 }
 
-.status.pending {
-    background-color: #fce4ec;
-    color: #d81b60;
+.status-bage.status.pending {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-color);
 }
 
-.priority {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 500;
+.priority-badge.priority-low {
+    background-color: var(--priority-low-bg);
+    color: var(--priority-low-color);
 }
 
-.priority.low {
-    background-color: #e3f2fd;
-    color: #1e88e5;
+.priority-badge.priority-medium {
+    background-color: var(--priority-medium-bg);
+    color: var(--priority-medium-color);
 }
 
-.priority.medium {
-    background-color: #fff8e1;
-    color: #ffb300;
+.priority-badge.priority-high {
+    background-color: var(--priority-high-bg);
+    color: var(--priority-high-color);
 }
 
-.priority.high {
-    background-color: #ffebee;
-    color: #e53935;
+.priority-badge.priority-urgent {
+    background-color: var(--priority-urgent-bg);
+    color: var(--priority-urgent-color);
 }
 
-.priority.urgent {
-    background-color: #ffcccb;
-    color: #b71c1c;
+.ticket-card {
+    background-color: rgb(219 217 217 / 26%);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-card.priority-urgent {
+    border-left: 2px solid var(--priority-urgent-border);
+}
+
+.ticket-card.priority-high {
+    border-left: 2px solid var(--priority-high-border);
+}
+
+.ticket-card.priority-medium {
+    border-left: 2px solid var(--priority-medium-border);
+}
+
+.ticket-card.priority-low {
+    border-left: 2px solid var(--priority-low-border);
+}
+
+/* .ticket-card.status-open {
+    background-color: var(--status-open-bg);
+} */
+
+/* .ticket-card.status-in-progress {
+    background-color: var(--status-in-progress-bg);
+}
+
+.ticket-card.status-pending {
+    background-color: var(--status-pending-bg);
+}
+
+.ticket-card.status-resolved {
+    background-color: var(--status-resolved-bg);
+} */
 
 .actions {
     margin-top: 2rem;
@@ -798,6 +882,24 @@ footer .footer-brand img {
     font-size: 0.85rem;
     color: var(--text);
     text-decoration: none;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.attachment span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 280px;
+}
+
+.attachment button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
 }
 
 .attachment i {

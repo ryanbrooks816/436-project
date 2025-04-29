@@ -1,7 +1,6 @@
 <?php
-require_once 'classes/db.php';
+require 'header.php';
 require 'modules/require-login.php';
-include 'header.php';
 
 // Handle logout if the logout button was pressed
 if (isset($_POST['logout'])) {
@@ -24,7 +23,7 @@ $update_success = "";
 $update_error = "";
 
 // Update profile if form submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && !isset($_POST['logout']) && isset($_POST['update_profile'])) {
   $first = $_POST['first'] ?? '';
   $last = $_POST['last'] ?? '';
   $age = $_POST['age'] ?? '';
@@ -116,6 +115,7 @@ if (!file_exists($profilePicPath)) {
       <!-- Profile Details Tab -->
       <div class="tab-pane fade show active" id="profile-details" role="tabpanel" aria-labelledby="profile-details-tab">
         <form method="POST" enctype="multipart/form-data" class="mt-4">
+          <input type="hidden" name="update_profile" value="1">
           <div class="form-group">
             <label class="form-label">Change Profile Picture</label>
             <input type="file" name="profile_picture" accept="image/*" class="form-control-file">
@@ -163,4 +163,23 @@ if (!file_exists($profilePicPath)) {
   </div>
 </main>
 
-<?php include 'footer.php'; ?>
+<?php require 'footer.php'; ?>
+
+<script>
+  $(document).ready(function () {
+    // Save active tab to localStorage
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (event) {
+      localStorage.setItem('activeTab', $(event.target).data('bs-target'));
+    });
+
+    // On page load, check if there's an active tab stored
+    const activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+      const $activeTabButton = $(`button[data-bs-target="${activeTab}"]`);
+      if ($activeTabButton.length) {
+        const tab = new bootstrap.Tab($activeTabButton[0]);
+        tab.show();
+      }
+    }
+  });
+</script>

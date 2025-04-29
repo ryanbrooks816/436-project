@@ -1,11 +1,5 @@
 <?php
-session_start();
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require 'classes/db.php';
+require '../header.php';
 
 // Fetch dropdown data
 $publisher_stmt = $pdo->query("SELECT * FROM Publishers ORDER BY publisher_name ASC");
@@ -54,17 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Create New Game</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<?php include 'header.php'; ?>
-
-<body class="bg-light">
 <div class="container py-5">
   <h1 class="mb-4">Add New Game</h1>
 
@@ -98,11 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <button type="submit" class="btn btn-success">Create Game</button>
-    <a href="employee-game-list.php" class="btn btn-secondary ms-2">Cancel</a>
+    <a href="admin/game-list.php" class="btn btn-secondary ms-2">Cancel</a>
   </form>
 </div>
-</body>
 
-<?php include 'footer.php'; ?>
-
-</html>
+<?php require '../footer.php'; ?>

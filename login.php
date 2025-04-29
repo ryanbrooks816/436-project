@@ -1,6 +1,5 @@
 <?php
-require_once 'classes/db.php';
-session_start();
+require 'header.php';
 
 function redirect_after_login()
 {
@@ -54,9 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $login_error = "Please fill in both fields.";
     }
 }
-?>
-
-<?php include 'header.php';
 
 // Redirect if already logged in
 if (isset($_SESSION['user_type'])) {
@@ -72,7 +68,6 @@ if (isset($_SESSION['user_type'])) {
     ';
     exit;
 }
-
 ?>
 
 <section class="section-spo top-space bottom-space">
@@ -105,4 +100,4 @@ if (isset($_SESSION['user_type'])) {
     </div>
 </section>
 
-<?php include 'footer.php'; ?>
+<?php require 'footer.php'; ?>

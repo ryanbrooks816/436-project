@@ -1,9 +1,4 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-require_once 'classes/db.php';
-
 $customer = null;
 $profilePicPath = 'images/placeholder.jpg';
 
