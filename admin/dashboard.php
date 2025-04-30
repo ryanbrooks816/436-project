@@ -36,7 +36,7 @@ try {
 
 try {
   $stmt = $pdo->prepare('SELECT COUNT(*) AS ticket_count FROM tickets WHERE employee_id = :employee_id');
-  $stmt->execute(['employee_id' => $loggedInUserId]);
+  $stmt->execute(['employee_id' => $_SESSION['employee_id']]);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $ticketCount = $row['ticket_count'];
 } catch (PDOException $e) {

@@ -493,3 +493,119 @@ Stack trace:
 #0 /Applications/MAMP/htdocs/436-project/ticket-history.php(240): PDO->prepare('SELECT * FROM T...')
 #1 {main}
   thrown in /Applications/MAMP/htdocs/436-project/ticket-history.php on line 240
+[30-Apr-2025 12:34:54 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Operation timed out in /Applications/MAMP/htdocs/436-project/classes/db.php:28
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/classes/config.php(12): require_once()
+#1 /Applications/MAMP/htdocs/436-project/header.php(4): require('/Applications/M...')
+#2 /Applications/MAMP/htdocs/436-project/admin/my-tickets.php(3): require('/Applications/M...')
+#3 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/classes/db.php on line 28
+[30-Apr-2025 12:35:24 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Operation timed out in /Applications/MAMP/htdocs/436-project/classes/db.php:28
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/classes/config.php(12): require_once()
+#1 /Applications/MAMP/htdocs/436-project/header.php(4): require('/Applications/M...')
+#2 /Applications/MAMP/htdocs/436-project/game-list.php(2): require('/Applications/M...')
+#3 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/classes/db.php on line 28
+[30-Apr-2025 12:37:08 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:37:25 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:37:26 UTC] Categories fetched: Array
+(
+    [0] => Array
+        (
+            [cat_id] => 2
+            [cat_name] => Auditory
+        )
+
+    [1] => Array
+        (
+            [cat_id] => 5
+            [cat_name] => Color
+        )
+
+    [2] => Array
+        (
+            [cat_id] => 4
+            [cat_name] => Fine motor
+        )
+
+    [3] => Array
+        (
+            [cat_id] => 1
+            [cat_name] => General
+        )
+
+    [4] => Array
+        (
+            [cat_id] => 3
+            [cat_name] => Visual
+        )
+
+)
+
+[30-Apr-2025 12:37:47 UTC] PHP Notice:  Undefined index: user_id in /Applications/MAMP/htdocs/436-project/admin/manage-users.php on line 67
+[30-Apr-2025 12:37:47 UTC] PHP Notice:  Undefined index: user_id in /Applications/MAMP/htdocs/436-project/admin/manage-users.php on line 68
+[30-Apr-2025 12:37:55 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:39:09 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:41:07 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:41:27 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:46:19 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:48:12 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:48:23 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:48:29 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:48:37 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 12:54:44 UTC] PHP Notice:  Undefined variable: loggedInUserId in /Applications/MAMP/htdocs/436-project/admin/dashboard.php on line 39
+[30-Apr-2025 13:21:32 UTC] PHP Notice:  Undefined variable: game_release_date in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 95
+[30-Apr-2025 13:21:32 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'game_release_date' cannot be null in /Applications/MAMP/htdocs/436-project/admin/game-edit.php:96
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/admin/game-edit.php(96): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 96
+[30-Apr-2025 13:24:08 UTC] PHP Notice:  Undefined variable: game_release_date in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 95
+[30-Apr-2025 13:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'game_release_date' cannot be null in /Applications/MAMP/htdocs/436-project/admin/game-edit.php:96
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/admin/game-edit.php(96): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 96
+[30-Apr-2025 13:26:36 UTC] PHP Notice:  Undefined variable: game_release_date in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 95
+[30-Apr-2025 13:26:36 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'game_release_date' cannot be null in /Applications/MAMP/htdocs/436-project/admin/game-edit.php:96
+Stack trace:
+#0 /Applications/MAMP/htdocs/436-project/admin/game-edit.php(96): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 96
+[30-Apr-2025 13:28:01 UTC] PHP Notice:  Undefined variable: release_date in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 81
+[30-Apr-2025 13:28:13 UTC] PHP Notice:  Undefined variable: release_date in /Applications/MAMP/htdocs/436-project/admin/game-edit.php on line 81
+[30-Apr-2025 13:54:30 UTC] Categories fetched: Array
+(
+    [0] => Array
+        (
+            [cat_id] => 2
+            [cat_name] => Auditory
+        )
+
+    [1] => Array
+        (
+            [cat_id] => 5
+            [cat_name] => Color
+        )
+
+    [2] => Array
+        (
+            [cat_id] => 4
+            [cat_name] => Fine motor
+        )
+
+    [3] => Array
+        (
+            [cat_id] => 1
+            [cat_name] => General
+        )
+
+    [4] => Array
+        (
+            [cat_id] => 3
+            [cat_name] => Visual
+        )
+
+)
+

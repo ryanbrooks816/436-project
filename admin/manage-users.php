@@ -64,8 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['search_term'])) {
                 <td><?php echo htmlspecialchars($user['cust_email']); ?></td>
                 <td><?php echo htmlspecialchars($user['cust_age']); ?></td>
                 <!-- <td>
-                  <a href="edit-user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                  <a href="delete-user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-danger btn-sm"
+                  <a href="edit-user.php?id=<?php echo $user['customer_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                  <a href="delete-user.php?id=<?php echo $user['customer_id']; ?>" class="btn btn-danger btn-sm"
                     onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
                 </td> -->
               </tr>

@@ -77,7 +77,8 @@ $current_publisher_ids = array_column($pub_stmt->fetchAll(), 'publisher_id');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $game_name = $_POST['game_name'] ?? '';
     $game_rating = $_POST['game_rating'] ?? null;
-    $release_date = $_POST['game_release_date'] ?? null;
+    //$release_date = $_POST['game_release_date'] ?? '2020-01-01';
+    $game_release_date = date('Y-m-d', strtotime($release_date));
     $new_category_ids = $_POST['category_ids'] ?? [];
     $new_platform_ids = $_POST['platform_ids'] ?? [];
     $new_publisher_ids = $_POST['publisher_ids'] ?? [];
@@ -128,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $insert_feature->execute([$game_id, $fid]);
     }
 
-    header("Location: admin/game-view.php?game_id=$game_id");
+    header("Location: ../game-list.php?game_id=$game_id");
     exit;
 }
 ?>
@@ -160,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         value="<?= htmlspecialchars($game['game_rating']) ?>">
                                 </div>
                                 <div class="col-6 form-group">
-                                    <label for="release_date" class="form-label">Release Date</label>
+                                    <label for="game_release_date" class="form-label">Release Date</label>
                                     <input type="date" class="form-control-input" name="release_date"
                                         value="<?= htmlspecialchars($game['game_release_date']) ?>">
                                 </div>
@@ -206,7 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </select>
                             </div>
                             <div class="text-end">
-                                <a href="game-view.php?game_id=<?= urlencode($game['game_id']) ?>"
+                                <a href="game-list.php?game_id=<?= urlencode($game['game_id']) ?>"
                                     class="btn btn-secondary">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Update Game</button>
                             </div>
