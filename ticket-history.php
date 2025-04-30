@@ -204,7 +204,7 @@ if (isset($_GET['tid'])) {
             <?php endif; ?>
         </aside>
 
-        <div class="container" style="height: auto";>
+        <div class="container" style="height: auto;">
             <div class="ticket-content-wrapper">
                 <div class="ticket-content">
                     <div class="ticket-header">
@@ -220,7 +220,10 @@ if (isset($_GET['tid'])) {
                         <div class="message">
                             <div class="message-header">
                                 <div class="message-sender">
-                                    <div class="message-avatar">M</div>
+                                    <?php
+                                    $customer_pfp = getProfilePicturePath($pdo, 'customer', $customer['customer_id']); // defined in navbar.php
+                                    ?>
+                                    <img class="message-avatar" src="<?= $customer_pfp ?>">
                                     <div>
                                         <span
                                             class="message-name"><?= htmlspecialchars($customer['cust_name_first'] . ' ' . $customer['cust_name_last']) ?></span>
@@ -255,25 +258,27 @@ if (isset($_GET['tid'])) {
                             <div class="message">
                                 <div class="message-header">
                                     <div class="message-sender">
-                                        <div class="message-avatar">S</div>
+                                        <?php
+                                        if (isset($feedback['employee_id'])) {
+                                            $sql = "SELECT * FROM Employees WHERE employee_id = ? LIMIT 1";
+                                            $stmt = $pdo->prepare($sql);
+                                            $stmt->execute([$feedback['employee_id']]);
+                                            $employee = $stmt->fetch();
+                                            $name = $employee['em_name_first'] . ' ' . $employee['em_name_last'];
+                                            $role = "Support Agent";
+                                            $profile_picture = getProfilePicturePath($pdo, 'employee', $feedback['employee_id']);
+                                        } elseif (isset($feedback['customer_id'])) {
+                                            $sql = "SELECT * FROM Customers WHERE customer_id = ? LIMIT 1";
+                                            $stmt = $pdo->prepare($sql);
+                                            $stmt->execute([$feedback['customer_id']]);
+                                            $customer = $stmt->fetch();
+                                            $name = $customer['cust_name_first'] . ' ' . $customer['cust_name_last'];
+                                            $role = "User";
+                                            $profile_picture = getProfilePicturePath($pdo, 'customer', $feedback['customer_id']);
+                                        }
+                                        ?>
+                                        <img class="message-avatar" src="<?= $profile_picture ?>">
                                         <div>
-                                            <?php
-                                            if (isset($feedback['employee_id'])) {
-                                                $sql = "SELECT * FROM Employees WHERE employee_id = ? LIMIT 1";
-                                                $stmt = $pdo->prepare($sql);
-                                                $stmt->execute([$feedback['employee_id']]);
-                                                $employee = $stmt->fetch();
-                                                $name = $employee['em_name_first'] . ' ' . $employee['em_name_last'];
-                                                $role = "Support Agent";
-                                            } elseif (isset($feedback['customer_id'])) {
-                                                $sql = "SELECT * FROM Customers WHERE customer_id = ? LIMIT 1";
-                                                $stmt = $pdo->prepare($sql);
-                                                $stmt->execute([$feedback['customer_id']]);
-                                                $customer = $stmt->fetch();
-                                                $name = $customer['cust_name_first'] . ' ' . $customer['cust_name_last'];
-                                                $role = "User";
-                                            }
-                                            ?>
                                             <span class="message-name"><?= htmlspecialchars($name) ?></span>
                                             <span class="message-role"><?= htmlspecialchars($role) ?></span>
                                         </div>
@@ -309,7 +314,8 @@ if (isset($_GET['tid'])) {
                 <div class="reply-box">
                     <h3>Reply to Ticket</h3>
                     <!-- Alert -->
-                    <div class="alert alert-info d-none alert-dismissible fade show" id="mainAlert" role="alert"></div>
+                    <div class="alert alert-info d-none alert-dismissible fade show" id="mainAlert" role="alert">
+                    </div>
                     <form id="replyForm">
                         <div id="editor">
                             Type your reply here...
@@ -354,11 +360,12 @@ if (isset($_GET['tid'])) {
                         $employees = $stmt->fetchAll();
                         foreach ($employees as $employee):
                             $isAssigned = $employee['employee_id'] === $ticket['employee_id'];
+                            $employee_pfp = getProfilePicturePath($pdo, 'employee', $employee['employee_id']); // defined in navbar.php
                             ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
-                                    <img src="<?= htmlspecialchars($employee['profile_picture'] ?: 'images/placeholder.jpg') ?>"
-                                        alt="Profile Picture" class="rounded-circle me-3" width="40" height="40">
+                                    <img src="<?= htmlspecialchars($employee_pfp) ?>" alt="Profile Picture"
+                                        class="rounded-circle me-3" width="40" height="40">
                                     <?= htmlspecialchars($employee['em_name_first'] . ' ' . $employee['em_name_last']) ?>
                                 </div>
                                 <?php if ($isAssigned): ?>
@@ -448,23 +455,34 @@ if (isset($_GET['tid'])) {
 <div class="modal fade" id="closeTicketModal" tabindex="-1" aria-labelledby="closeTicketModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="closeTicketModalLabel">Confirm Close Ticket</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to close this ticket? This action will mark the ticket as "Resolved".
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" id="confirmCloseTicket" class="btn btn-danger">Close Ticket</button>
-            </div>
+            <form id="closeTicketForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="closeTicketModalLabel">Confirm Close Ticket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger mt-2 d-none" id="closeTicketAlert" role="alert"></div>
+                    <p> Are you sure you want to close this ticket? This action will mark the ticket as "Resolved" and
+                        unassign you.</p>
+                    <input type="hidden" name="ticket_id" value="<?= htmlspecialchars($ticket['ticket_id']) ?>">
+                    <input type="hidden" name="employee_id" value="<?= htmlspecialchars($_SESSION['employee_id']) ?>">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Close Ticket</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<?php foreach ($attachments as $attachment): ?>
-    <!-- Lightbox Modal -->
+<!-- Lightbox Modals -->
+<?php
+$sql = "SELECT * FROM Ticket_Attachments WHERE ticket_id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$ticket['ticket_id']]);
+$allAttachments = $stmt->fetchAll();
+foreach ($allAttachments as $attachment): ?>
     <div class="modal fade" id="lightboxModal-<?= htmlspecialchars($attachment['attachment_id']) ?>" tabindex="-1"
         aria-labelledby="lightboxModalLabel-<?= htmlspecialchars($attachment['attachment_id']) ?>" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -477,7 +495,11 @@ if (isset($_GET['tid'])) {
                 </div>
                 <div class="modal-body text-center">
                     <img src="<?= htmlspecialchars($attachment['file_path']) ?>"
-                        alt="<?= htmlspecialchars(basename($attachment['file_path'])) ?>" class="img-fluid">
+                        alt="<?= htmlspecialchars(basename($attachment['file_path'])) ?>" class="img-fluid"
+                        onerror="this.onerror=null; this.style.display='none'; document.getElementById('error-<?= htmlspecialchars($attachment['attachment_id']) ?>').classList.remove('d-none');">
+                    <div id="error-<?= htmlspecialchars($attachment['attachment_id']) ?>" class="alert alert-danger d-none">
+                        Error: The image could not be loaded.
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,24 +1,40 @@
 <?php
-$customer = null;
 $profilePicPath = 'images/placeholder.jpg';
 
-// Only if the user is logged in
-if (isset($_SESSION['email'])) {
-  $email = $_SESSION['email'];
-  $sql = "SELECT profile_picture FROM Customers WHERE cust_email = ?";
-  $customer = pdo($pdo, $sql, [$email])->fetch();
+function getProfilePicturePath($pdo, $userType, $userId)
+{
+  $defaultProfilePicPath = 'images/placeholder.jpg';
 
-  if ($customer && $customer['profile_picture']) {
-    $userFolder = 'images/pfps/' . md5($email); // Absolute path to the user's folder
-    $absoluteProfilePicPath = $userFolder . '/' . $customer['profile_picture'];
+  if ($userType === 'customer') {
+    $sql = "SELECT profile_picture FROM Customers WHERE customer_id = ?";
+  } elseif ($userType === 'employee') {
+    $sql = "SELECT profile_picture FROM Employees WHERE employee_id = ?";
+  } else {
+    return $defaultProfilePicPath;
+  }
 
-    $relativeProfilePicPath = 'images/pfps/' . md5($email) . '/' . $customer['profile_picture'];
+  $user = pdo($pdo, $sql, [$userId])->fetch();
+
+  if ($user && $user['profile_picture']) {
+    $userFolder = 'images/pfps/' . md5($userId); // Absolute path to the user's folder
+    $absoluteProfilePicPath = $userFolder . '/' . $user['profile_picture'];
+
+    $relativeProfilePicPath = 'images/pfps/' . md5($userId) . '/' . $user['profile_picture'];
     // Check if the file exists
     if (!file_exists($absoluteProfilePicPath)) {
-      $relativeProfilePicPath = 'images/placeholder.jpg';
+      return $defaultProfilePicPath;
     }
-    $profilePicPath = $relativeProfilePicPath;
+    return $relativeProfilePicPath;
   }
+
+  return $defaultProfilePicPath;
+}
+
+// Check if the user is logged in and determine their type
+if (isset($_SESSION['user_type'])) {
+  $userType = $_SESSION['user_type'];
+  $userId = ($userType === 'customer') ? $_SESSION['customer_id'] : $_SESSION['employee_id'];
+  $profilePicPath = getProfilePicturePath($pdo, $userType, $userId);
 }
 ?>
 
@@ -48,9 +64,15 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
           <li class="nav-item">
             <a class="nav-link" href="my-tickets.php">My Tickets</a>
           </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="login.php">LOG IN</a>
-          </li>
+          <?php if (isset($_SESSION['user_type'])): ?>
+            <li class="nav-item">
+              <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="profile.php">My Profile</a>
+            </li>
+          <?php else: ?>
+            <li class="nav-item">
+              <a class="btn btn-outline-white btn-xs mb-0 ms-2" href="login.php">Log In</a>
+            </li>
+          <?php endif; ?>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">

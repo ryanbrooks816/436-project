@@ -108,36 +108,32 @@ $(document).ready(function () {
     });
 
     // Handle close ticket modal
-    $('#confirmCloseTicket').on('click', function () {
-        const ticketId = $('.ticketId').val();
+    $('#closeTicketForm').on('submit', function (e) {
+        e.preventDefault();
 
         $.ajax({
-            url: 'endpoints/update_ticket.php',
+            url: 'endpoints/close_ticket.php',
             type: 'POST',
-            data: {
-                field: 'status',
-                value: 'Resolved',
-                ticket_id: ticketId
-            },
+            data: $(this).serialize(),
             success: function (response) {
                 const res = JSON.parse(response);
-                const mainAlert = $('#mainAlert');
-                mainAlert.removeClass('d-none alert-success alert-danger');
+                const closeTicketAlert = $('#closeTicketAlert');
+                closeTicketAlert.removeClass('d-none alert-success alert-danger');
 
                 if (res.success) {
-                    mainAlert.addClass('alert-success');
-                    mainAlert.text(res.message);
+                    closeTicketAlert.addClass('alert-success');
+                    closeTicketAlert.text(res.message);
                     location.reload();
                 } else {
-                    mainAlert.addClass('alert-danger');
-                    mainAlert.text(res.message);
+                    closeTicketAlert.addClass('alert-danger');
+                    closeTicketAlert.text(res.message);
                 }
             },
             error: function (xhr, status, error) {
                 console.error('Error:', error);
-                const mainAlert = $('#mainAlert');
-                mainAlert.removeClass('d-none alert-success').addClass('alert-danger');
-                mainAlert.text('An error occurred while closing the ticket.');
+                const closeTicketAlert = $('#closeTicketAlert');
+                closeTicketAlert.removeClass('d-none alert-success').addClass('alert-danger');
+                closeTicketAlert.text('An error occurred while closing the ticket.');
             }
         });
     });
@@ -226,7 +222,7 @@ $(document).ready(function () {
         if ($(window).width() > 768) {
             sidebar.removeClass('active');
             sidebarOverlay.removeClass('active');
-            sidebarToggle.removeClass('active'); s
+            sidebarToggle.removeClass('active');
         }
     });
 });
