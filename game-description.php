@@ -26,7 +26,7 @@ try {
     $error = "Error fetching game details: " . htmlspecialchars($e->getMessage());
 }
 
-// Fetch game platforms
+// Fetch game platforms from database
 try {
     $sql = "SELECT p.platform_name 
             FROM Platforms p 
@@ -38,7 +38,7 @@ try {
     $error_platforms = "Error fetching platforms: " . htmlspecialchars($e->getMessage());
 }
 
-// Fetch game accessibility features
+// Fetch game accessibility features from database
 try {
     $sql = "SELECT af.feature_name 
             FROM Accessibility_Features af 
@@ -50,65 +50,85 @@ try {
     $error_features = "Error fetching accessibility features: " . htmlspecialchars($e->getMessage());
 }
 
-// Function to extract game description from PDF
-function getGameDescriptionFromPDF($game_name)
-{
-    $pdf_path = 'Game Descriptions.pdf';
+// Function to extract game details from a text file
+function getGameDetailsFromText($game_name) {
+    $text_path = 'game_descriptions.txt';
 
-    if (!file_exists($pdf_path)) {
-        $pdf_path = 'Game Descriptions.pdf';
-        if (!file_exists($pdf_path)) {
-            return "Game description not available. PDF file not found at 'Game Descriptions.pdf'.";
+    if (!file_exists($text_path)) {
+        return [
+            'description' => "Game description not available. Text file not found at 'game_descriptions.txt'.",
+            'platforms' => [],
+            'age_rating' => 'N/A'
+        ];
+    }
+
+    $file_content = file_get_contents($text_path);
+    if ($file_content === false) {
+        return [
+            'description' => "Error reading text file.",
+            'platforms' => [],
+            'age_rating' => 'N/A'
+        ];
+    }
+
+    // Split the file into lines
+    $lines = array_filter(array_map('trim', explode("\n", $file_content)));
+
+    $description = "No description available.";
+    $txt_platforms = [];
+    $age_rating = 'N/A';
+    $current_game = '';
+    $current_section = '';
+
+    foreach ($lines as $line) {
+        // Check if the line is a game name (not a field with a colon)
+        if (!empty($line) && strpos($line, ':') === false) {
+            $current_game = $line;
+            $current_section = '';
+            continue;
+        }
+
+        // Skip header or empty lines
+        if ($line === 'Video Game List' || empty($line)) {
+            continue;
+        }
+
+        // Check if this line belongs to the game we're looking for
+        if ($current_game === $game_name) {
+            if (strpos($line, 'Publisher:') === 0) {
+                $current_section = 'Publisher';
+                continue;
+            } elseif (strpos($line, 'Age Rating:') === 0) {
+                $current_section = 'Age Rating';
+                $age_rating = trim(substr($line, strlen('Age Rating:')));
+                continue;
+            } elseif (strpos($line, 'Platforms:') === 0) {
+                $current_section = 'Platforms';
+                $platforms_string = trim(substr($line, strlen('Platforms:')));
+                $txt_platforms = array_map('trim', explode(',', $platforms_string));
+                continue;
+            } elseif (strpos($line, 'Description:') === 0) {
+                $current_section = 'Description';
+                $description = trim(substr($line, strlen('Description:')));
+                continue;
+            } elseif ($current_section === 'Description') {
+                // Continue appending to description if we're in that section
+                $description .= "\n" . $line;
+                continue;
+            }
         }
     }
 
-    if (extension_loaded('pdfparser') || extension_loaded('imagick') || class_exists('FPDI')) {
-        return "This game description would be extracted from 'Game Descriptions.pdf' using a PHP PDF library.";
-    } elseif (function_exists('exec') && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-        $output_file = tempnam(sys_get_temp_dir(), 'pdf_');
-        exec("pdftotext '$pdf_path' '$output_file'", $output, $return_var);
+    // Combine text file platforms with database platforms, avoiding duplicates
+    global $platforms;
+    $platform_names = array_column($platforms, 'platform_name');
+    $all_platforms = array_unique(array_merge($platform_names, $txt_platforms));
 
-        if ($return_var != 0) {
-            return "Error extracting text from PDF. Make sure the PDF file is properly formatted and poppler-utils is installed.";
-        }
-
-        $text = file_get_contents($output_file);
-        unlink($output_file);
-
-        $description = "";
-        $game_name_pattern = preg_quote($game_name, '/');
-
-        if (preg_match('/' . $game_name_pattern . '\s*(.*?)(?=\n\s*[A-Z]|\z)/s', $text, $matches)) {
-            $description = trim($matches[1]);
-        }
-
-        if (!empty($description)) {
-            return $description;
-        }
-    }
-
-    global $features, $platforms, $game_id, $pdo;
-
-    $feature_list = !empty($features) ? "Accessibility features include: " . implode(", ", array_column($features, 'feature_name')) . ".\n\n" : "";
-    $platform_list = !empty($platforms) ? "Available on: " . implode(", ", array_column($platforms, 'platform_name')) . ".\n\n" : "";
-
-    try {
-        $sql = "SELECT c.category_name 
-                FROM Game_Categories gc 
-                JOIN Categories c ON gc.category_id = c.category_id 
-                WHERE gc.game_id = ?";
-        $stmt = pdo($pdo, $sql, [$game_id]);
-        $categories = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        $category_list = !empty($categories) ? "Game categories: " . implode(", ", $categories) . ".\n\n" : "";
-    } catch (PDOException $e) {
-        $category_list = "";
-    }
-
-    return "This is a detailed description for " . htmlspecialchars($game_name) . ".\n\n" .
-        $category_list .
-        $feature_list .
-        $platform_list .
-        "The full description would be loaded from 'Game Descriptions.pdf'. In production, this PDF file would contain comprehensive information about the game including gameplay, storyline, accessibility options, and more.";
+    return [
+        'description' => $description,
+        'platforms' => $all_platforms,
+        'age_rating' => $age_rating
+    ];
 }
 ?>
 
@@ -159,17 +179,6 @@ function getGameDescriptionFromPDF($game_name)
         margin-bottom: 1.25rem;
     }
 
-    .game-description {
-        white-space: pre-line;
-        line-height: 1.8;
-        font-size: 1.1rem;
-        color: #333;
-        background-color: #f9f9f9;
-        padding: 25px;
-        border-radius: 8px;
-        border-left: 4px solid #0d6efd;
-    }
-
     .feature-badge,
     .platform-badge {
         padding: 8px 16px;
@@ -197,16 +206,6 @@ function getGameDescriptionFromPDF($game_name)
 
     .platform-badge:hover {
         background-color: #5c636a;
-    }
-
-    .pdf-viewer {
-        width: 100%;
-        height: 60vh;
-        max-height: 600px;
-        border: 1px solid #dee2e6;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        margin: 20px 0;
     }
 
     .list-group-item {
@@ -247,16 +246,6 @@ function getGameDescriptionFromPDF($game_name)
         .card-img-top {
             height: 200px;
         }
-
-        .pdf-viewer {
-            height: 40vh;
-            max-height: 400px;
-        }
-
-        .game-description {
-            padding: 20px;
-            font-size: 1rem;
-        }
     }
 </style>
 
@@ -283,6 +272,11 @@ function getGameDescriptionFromPDF($game_name)
                 <?php echo $error; ?>
             </div>
         <?php elseif ($game): ?>
+            <?php 
+                $game_details = getGameDetailsFromText($game['game_name']);
+                $txt_platforms = $game_details['platforms'];
+                $age_rating = $game_details['age_rating'];
+            ?>
             <div class="game-container">
                 <div class="game-header">
                     <h1><?php echo htmlspecialchars($game['game_name']); ?></h1>
@@ -305,6 +299,10 @@ function getGameDescriptionFromPDF($game_name)
                                         <?php echo isset($game['game_release_date']) ? date("F j, Y", strtotime($game['game_release_date'])) : 'Unknown'; ?>
                                     </li>
                                     <li class="list-group-item">
+                                        <strong>Age Rating:</strong>
+                                        <?php echo htmlspecialchars($age_rating); ?>
+                                    </li>
+                                    <li class="list-group-item">
                                         <strong>Rating:</strong>
                                         <span class="ms-2 badge bg-warning text-dark">
                                             <i class="bi bi-star-fill"></i>
@@ -319,36 +317,17 @@ function getGameDescriptionFromPDF($game_name)
                     <div class="col-md-8">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <h5>Game Description</h5>
-                                <div class="game-description">
-                                    <?php echo nl2br(htmlspecialchars(getGameDescriptionFromPDF($game['game_name']))); ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5>Game Description Document</h5>
-                                <p>You can also view the full game descriptions document below:</p>
-                                <iframe src="Game Descriptions.pdf#search=<?php echo urlencode($game['game_name']); ?>"
-                                    class="pdf-viewer"></iframe>
-                            </div>
-                        </div>
-
-                        <div class="card mb-4">
-                            <div class="card-body">
                                 <h5>Available Platforms</h5>
                                 <?php if (isset($error_platforms)): ?>
                                     <div class="alert alert-warning" role="alert">
                                         <?php echo $error_platforms; ?>
                                     </div>
-                                <?php elseif (empty($platforms)): ?>
+                                <?php elseif (empty($txt_platforms)): ?>
                                     <p class="text-muted">No platform information available.</p>
                                 <?php else: ?>
                                     <div>
-                                        <?php foreach ($platforms as $platform): ?>
-                                            <span
-                                                class="platform-badge"><?php echo htmlspecialchars($platform['platform_name']); ?></span>
+                                        <?php foreach ($txt_platforms as $platform): ?>
+                                            <span class="platform-badge"><?php echo htmlspecialchars($platform); ?></span>
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
@@ -367,8 +346,7 @@ function getGameDescriptionFromPDF($game_name)
                                 <?php else: ?>
                                     <div>
                                         <?php foreach ($features as $feature): ?>
-                                            <span
-                                                class="feature-badge"><?php echo htmlspecialchars($feature['feature_name']); ?></span>
+                                            <span class="feature-badge"><?php echo htmlspecialchars($feature['feature_name']); ?></span>
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>
