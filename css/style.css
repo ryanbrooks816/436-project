@@ -361,7 +361,7 @@ a.white {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0.5rem 1.25rem;
+    padding: 0rem 1.25rem;
     border: 1px solid #c4d8dc;
     border-radius: 0.25rem;
     background-color: #fff;
@@ -902,7 +902,7 @@ footer .footer-brand img {
     color: var(--status-resolved-color);
 }
 
-.status-bage.status-pending {
+.status-badge.status-pending {
     background-color: var(--status-pending-bg);
     color: var(--status-pending-color);
 }

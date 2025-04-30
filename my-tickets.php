@@ -23,7 +23,7 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
                         New Ticket
                     </a>
                 </div>
-                <hr>
+                <hr class="my-5">
 
                 <!-- Open Tickets -->
                 <div class="d-flex justify-content-center flex-column" style="min-height: 200px;">
@@ -40,8 +40,9 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
                     <?php else: ?>
                         <p>You have no open tickets.</p>
                     <?php endif; ?>
-                    <hr>
                 </div>
+
+                <hr class="my-5">
 
                 <!-- Resolved Tickets -->
                 <div class="d-flex justify-content-center flex-column" style="min-height: 200px;">
@@ -58,7 +59,6 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer') {
                     <?php else: ?>
                         <p>You have no resolved tickets.</p>
                     <?php endif; ?>
-                    <hr>
                 </div>
 
             <?php else: ?>

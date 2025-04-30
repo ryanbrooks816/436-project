@@ -32,7 +32,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
                 } ?>
             <?php endif; ?>
 
-            <hr>
+            <hr class="my-5">
 
             <!-- Unassigned Tickets -->
             <?php
@@ -50,7 +50,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
                 } ?>
             <?php endif; ?>
 
-            <hr>
+            <hr class="my-5">
 
             <!-- Tickets Assigned to Others -->
             <?php
