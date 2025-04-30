@@ -3,7 +3,7 @@ require 'header.php';
 
 // Check if game_id is provided
 if (!isset($_GET['game_id']) || empty($_GET['game_id'])) {
-    header('Location: games-homepage.php');
+    header('Location: game-list.php');
     exit;
 }
 
@@ -264,7 +264,7 @@ function getGameDescriptionFromPDF($game_name)
     <div class="container mt-4 mb-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="games-homepage.php">Games</a></li>
+                <li class="breadcrumb-item"><a href="game-list.php">Games</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                     <?php echo htmlspecialchars($game['game_name'] ?? 'Game Details'); ?>
                 </li>
@@ -273,7 +273,7 @@ function getGameDescriptionFromPDF($game_name)
 
         <!-- Back Button -->
         <div class="mb-4">
-            <a href="games-homepage.php" class="btn btn-outline-secondary">
+            <a href="game-list.php" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-2"></i>Back to Games
             </a>
         </div>

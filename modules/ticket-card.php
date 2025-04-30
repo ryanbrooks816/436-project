@@ -1,7 +1,7 @@
 <div
     class="ticket-card card my-4 shadow-sm priority-<?= strtolower(htmlspecialchars($ticket['priority'])); ?> status-<?= strtolower(htmlspecialchars($ticket['status'])); ?>">
     <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="ticket-card-header mb-2">
             <h5 class="card-title ticket-title">
                 <a href="#" class="text-decoration-none text-dark"><?= htmlspecialchars($ticket['ticket_name']); ?></a>
             </h5>
@@ -29,7 +29,7 @@
 
         <div class="ticket-preview-text"><?= htmlspecialchars_decode($ticket['ticket_text']); ?></div>
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="ticket-card-footer">
             <div class="text-muted small">
                 <i class="bi bi-clock me-1"></i>
                 <?php if ($ticket['last_updated_date'] === "0000-00-00 00:00:00"): ?>
@@ -41,7 +41,7 @@
                 <?php endif; ?>
             </div>
 
-            <div>
+            <div class="ticket-card-footer-controls">
                 <span class="text-muted small me-3">
                     <?php
                     $sql = "SELECT COUNT(*) as feedback_count FROM Ticket_Feedback WHERE ticket_id = ?";
@@ -52,7 +52,7 @@
                     <i class="bi bi-chat-dots me-1"></i>
                     <?= htmlspecialchars($feedbackCount['feedback_count']); ?> replies
                 </span>
-                <a href="ticket-history.php?tid=<?= bin2hex($ticket['ticket_pub_id']); ?>"
+                <a href="<?= $isAdminPage ? '../' : '' ?>ticket-history.php?tid=<?= bin2hex($ticket['ticket_pub_id']); ?>"
                     class="btn btn-sm btn-outline-primary">View Details</a>
             </div>
         </div>

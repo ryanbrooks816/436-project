@@ -5,7 +5,7 @@
         <div class="col-md-4">
             <div class="card shadow p-4 text-center">
                 <h4 class="mb-4">Welcome to Accessible Games Database</h4>
-                <a href="games-homepage.php" class="btn btn-primary w-100">Go to Games Homepage</a>
+                <a href="game-list.php" class="btn btn-primary w-100">Go to Games Homepage</a>
             </div>
         </div>
     </div>

@@ -10,8 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ticket_id = isset($_POST['ticket_id']) ? $_POST['ticket_id'] : null;
     $employee_id = isset($_POST['employee_id']) ? $_POST['employee_id'] : null;
 
-    error_log("Ticket ID: $ticket_id, Employee ID: $employee_id"); // Log the IDs for debugging
-
     if (!$ticket_id || !$employee_id) {
         echo json_encode(['success' => false, 'message' => 'Invalid input.']);
         exit;
