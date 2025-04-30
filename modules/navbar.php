@@ -43,7 +43,7 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
       <div class="d-flex w-100 justify-content-end align-items-center" style="gap: 5%;">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="search-games.php">Search Games</a>
+            <a class="nav-link" href="games-homepage.php">Search Games</a> <!-- Changed from search-games.php to games-homepage.php -->
           </li>
           <li class="nav-item">
             <a class="nav-link" href="my-tickets.php">My Tickets</a>
