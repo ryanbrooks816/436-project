@@ -3,7 +3,7 @@ require '../header.php';
 require_once "../modules/require-login.php";
 
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
-  header("Location: 403.php");
+  header("Location: ../403.php");
 }
 
 if (!isset($_GET['game_id'])) {
@@ -146,7 +146,7 @@ if (!$game) {
               <strong>Release Date:</strong><br>
               <?= $game['game_release_date'] ? htmlspecialchars($game['game_release_date']) : 'Unknown' ?>
             </div>
-            <div class="card-footer text-end pt-3">
+            <div class="text-end pt-3">
               <a href="../game-list.php" class="btn btn-secondary m-0 ms-2">Back to List</a>
               <a href="game-edit.php?game_id=<?= urlencode($game['game_id']) ?>" class="btn btn-primary m-0">Edit
                 Game</a>

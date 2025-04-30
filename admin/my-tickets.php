@@ -4,7 +4,7 @@ require '../header.php';
 require_once "../modules/require-login.php";
 
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
-    header("Location: 403.php");
+    header("Location: ../403.php");
 }
 ?>
 
