@@ -1,10 +1,24 @@
 <?php
-require '../header.php';
-require_once "../modules/require-login.php";
 
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require '../classes/db.php';
+//require_once "../modules/require-login.php";
+
+/*if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
   header("Location: 403.php");
   exit;
+}*/
+
+function generateUniqueGameId(PDO $pdo): int {
+  do {
+      $id = random_int(100000, 999999); // you can adjust the range
+      $stmt = $pdo->prepare("SELECT COUNT(*) FROM Games WHERE game_id = ?");
+      $stmt->execute([$id]);
+  } while ($stmt->fetchColumn() > 0);
+  return $id;
 }
 
 // Fetch dropdown data
@@ -15,6 +29,9 @@ $publishers = $pdo->query("SELECT * FROM Publishers ORDER BY publisher_name ASC"
 
 // Handle new game form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $game_id = 1917;
+  //generateUniqueGameId($pdo);
+
   $game_name = $_POST['game_name'] ?? '';
   $game_rating = $_POST['game_rating'] ?? null;
   $release_date = $_POST['release_date'] ?? null;
@@ -29,18 +46,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   try {
     // Insert game
-    $stmt = $pdo->prepare("INSERT INTO Games (game_name, game_rating, game_release_date) VALUES (?, ?, ?)");
-    $stmt->execute([$game_name, $game_rating, $release_date]);
+    $stmt = $pdo->prepare("INSERT INTO Games (game_id, game_rating, game_name, game_release_date) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$game_id, $game_rating, $game_name, $release_date]);
     $game_id = $pdo->lastInsertId();
     error_log("New game created with ID: $game_id");
 
     // Insert into join tables
     $insert = fn($sql, $ids) => array_map(fn($id) => $pdo->prepare($sql)->execute([$game_id, $id]), $ids);
 
-    $insert("INSERT INTO Game_Accessibility_Features (game_id, feature_id) VALUES (?, ?)", $feature_ids);
-    $insert("INSERT INTO Game_Categories (game_id, cat_id) VALUES (?, ?)", $category_ids);
-    $insert("INSERT INTO Game_Platforms (game_id, platform_id) VALUES (?, ?)", $platform_ids);
-    $insert("INSERT INTO Game_Publishers (game_id, publisher_id) VALUES (?, ?)", $publisher_ids);
+    //$insert("INSERT INTO Game_Accessibility_Features (game_id, feature_id) VALUES (?, ?)", $feature_ids);
+    //$insert("INSERT INTO Game_Categories (game_id, cat_id) VALUES (?, ?)", $category_ids);
+    //$insert("INSERT INTO Game_Platforms (game_id, platform_id) VALUES (?, ?)", $platform_ids);
+    //$insert("INSERT INTO Game_Publishers (game_id, publisher_id) VALUES (?, ?)", $publisher_ids);
 
     header("Location: game-view.php?game_id=$game_id");
     exit;
@@ -48,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     die("Error: " . $e->getMessage());
   }
 }
+
+require '../header.php';
 ?>
 
 <?php require '../modules/admin-sidebar.php' ?>
