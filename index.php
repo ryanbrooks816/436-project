@@ -1,13 +1,14 @@
-<?php require "header.php"; ?>
+<?php require 'header.php'; ?>
 
-<h1>Hiiiii</h1>
-
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Card Title</h5>
-        <p class="card-text">This is a simple card example using Bootstrap.</p>
-        <a href="admin/dashboard.php" class="btn btn-primary">Go somewhere</a>
+<div class="container d-flex flex-column justify-content-center align-items-center" style="min-height: 90vh; margin-top: -50px;">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-4">
+            <div class="card shadow p-4 text-center">
+                <h4 class="mb-4">Welcome to Accessible Games Database</h4>
+                <a href="games-homepage.php" class="btn btn-primary w-100">Go to Games Homepage</a>
+            </div>
+        </div>
     </div>
 </div>
 
-<?php require "footer.php"; ?>
+<?php require 'footer.php'; ?>
