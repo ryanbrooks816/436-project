@@ -229,7 +229,7 @@ try {
                         <div class="row mt-3">
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-primary">Apply Filters</button>
-                                <a href="game-list.php" class="btn btn-outline-secondary ms-2">Reset Filters</a>
+                                <a href="game-list.php" class="btn btn-secondary ms-2">Reset Filters</a>
                             </div>
                         </div>
                     </form>

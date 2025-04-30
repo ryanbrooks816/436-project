@@ -273,7 +273,7 @@ function getGameDescriptionFromPDF($game_name)
 
         <!-- Back Button -->
         <div class="mb-4">
-            <a href="game-list.php" class="btn btn-outline-secondary">
+            <a href="game-list.php" class="btn btn-secondary">
                 <i class="bi bi-arrow-left me-2"></i>Back to Games
             </a>
         </div>
