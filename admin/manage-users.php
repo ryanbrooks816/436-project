@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['search_term'])) {
   $searchTerm = '%' . trim($_POST['search_term']) . '%';
 
   try {
-    $stmt = $pdo->prepare("SELECT * FROM customers WHERE cust_name_first LIKE :term1 OR cust_name_last LIKE :term2 OR cust_email LIKE :term3");
+    $stmt = $pdo->prepare("SELECT * FROM Customers WHERE cust_name_first LIKE :term1 OR cust_name_last LIKE :term2 OR cust_email LIKE :term3");
     $stmt->execute(['term1' => $searchTerm, 'term2' => $searchTerm, 'term3' => $searchTerm]);
     $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
   } catch (PDOException $e) {
