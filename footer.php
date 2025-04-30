@@ -9,7 +9,7 @@
       <div class="row g-4">
         <div class="col-lg-5 col-md-6 col-12">
             <div class="footer-brand d-flex align-items-start flex-wrap gap-3">
-            <img src="/436-project/images/logo-mono.png" alt="Accessible Games Support Center" class="img-fluid me-3">
+            <img src="../images/logo-mono.png" alt="Accessible Games Support Center" class="img-fluid me-3">
             <p>Accessible Games<br>Support Center</p>
             </div>
         </div>
