@@ -743,17 +743,11 @@ footer .footer-brand img {
 }
 
 .ticket-card-footer {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 14px;
-}
-
-.ticket-card-footer-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 }
 
 @media screen and (max-width: 991px) {
@@ -936,6 +930,7 @@ footer .footer-brand img {
 .ticket-card {
     background-color: rgb(219 217 217 / 26%);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: auto;
 }
 
 .ticket-card:hover {

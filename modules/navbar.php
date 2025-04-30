@@ -51,7 +51,7 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
 <nav id="navbar" class="navbar bg-light navbar-expand-lg fixed-top top-nav-collapse <?php echo $navbarClass; ?>">
     <div class="container-fluid">
         <div class="navbar-brand d-flex align-items-center">
-            <img class="me-3" src="/436-project/images/logo.png" alt="Logo" height="70px">
+            <img class="me-3" src="<?= $isAdminPage ? '../images/logo.png' : 'images/logo.png'; ?>" alt="Logo" height="70px">
             <h1 class="logo-text">Accessible Games<br>Support Center</h1>
             <?php if ($isEmployee): ?>
                 <span class="badge bg-success ms-3">Employee</span>
