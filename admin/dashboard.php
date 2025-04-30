@@ -3,16 +3,17 @@
 require '../header.php';
 require '../modules/require-login.php';
 
-
-$loggedInUserId = $_SESSION['employee_id'];
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
+  header("Location: 403.php");
+}
 
 try {
-    $stmt = $pdo->query('SELECT COUNT(*) AS total_games FROM games');
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $totalGames = $row['total_games'];
+  $stmt = $pdo->query('SELECT COUNT(*) AS total_games FROM games');
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $totalGames = $row['total_games'];
 } catch (PDOException $e) {
-    echo "Error fetching total games: " . $e->getMessage();
-    $totalGames = 0; // fallback in case of error
+  echo "Error fetching total games: " . $e->getMessage();
+  $totalGames = 0; // fallback in case of error
 }
 
 try {
@@ -42,62 +43,54 @@ try {
   echo "Error fetching ticket count: " . $e->getMessage();
   $ticketCount = 0; // fallback
 }
-
 ?>
 
-<!-- Sidebar -->
-<div class="sidebar">
-  <a href="dashboard.php">Dashboard</a>
-  <a href="game-list.php">Manage Games</a>
-  <a href="manage-game-details.php">Manage Game Details</a>
-  <a href="manage-users.php">Manage Users</a>
-  <a href="my-tickets.php">Tickets</a>
-</div>
+<?php require '../modules/admin-sidebar.php' ?>
 
-<!-- Main Content -->
-<div class="content">
-  <div class="container-fluid mt-4">
-    <h1 class="mb-4">Welcome, Admin!</h1>
-
-    <div class="row">
-      <div class="mb-4">
-        <div class="card text-white bg-primary">
-          <div class="card-body">
-            <h5 class="card-title">Total Games</h5>
-            <p class="card-text display-6"><?php echo htmlspecialchars($totalGames); ?></p>
+<main class="page-wrapper">
+  <div class="top-space bg-primary text-white text-center py-5">
+    <h1 class="text-white">Welcome, Admin!</h1>
+  </div>
+  <div class="after-sidebar-content">
+    <div class="container">
+      <div class="mt-5 row">
+        <div class="col-3 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Total Games</h5>
+              <p class="card-text display-6"><?php echo htmlspecialchars($totalGames); ?></p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="mb-4">
-        <div class="card text-white bg-primary">
-          <div class="card-body">
-            <h5 class="card-title">Accessibility Features</h5>
-            <p class="card-text display-6"><?php echo htmlspecialchars($totalFeatures); ?></p>
+        <div class="col-3 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Accessibility Features</h5>
+              <p class="card-text display-6"><?php echo htmlspecialchars($totalFeatures); ?></p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="mb-4">
-        <div class="card text-white bg-primary">
-          <div class="card-body">
-            <h5 class="card-title">Registered Users</h5>
-            <p class="card-text display-6"><?php echo htmlspecialchars($totalUsers); ?></p>
+        <div class="col-3 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Registered Users</h5>
+              <p class="card-text display-6"><?php echo htmlspecialchars($totalUsers); ?></p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="mb-4">
-        <div class="card text-white bg-primary">
-          <div class="card-body">
-            <h5 class="card-title">Tickets Assigned to You</h5>
-            <p class="card-text display-6"><?php echo htmlspecialchars($ticketCount); ?></p>
+        <div class="col-3 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Tickets Assigned to You</h5>
+              <p class="card-text display-6"><?php echo htmlspecialchars($ticketCount); ?></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-  </div>
-</div>
+</main>
 
 <?php require '../footer.php'; ?>

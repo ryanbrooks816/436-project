@@ -96,115 +96,113 @@ if (isset($_GET['tid'])) {
 }
 ?>
 
-<main class="page-wrapper top-space bottom-space">
-    <section class="tickets-section">
-        <!-- Sidebar toggle button for mobile screens -->
-        <button class="sidebar-toggle" id="sidebarToggle">
-            <i class="bi bi-list"></i>
-        </button>
-        <!-- Overlay for mobile when sidebar is open -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<!-- Sidebar toggle button for mobile screens -->
+<button class="sidebar-toggle" id="sidebarToggle">
+    <i class="bi bi-list"></i>
+</button>
 
-        <aside class="sidebar" id="sidebar" style="height: auto;">
-            <div class="ticket-info">
-                <h2>Ticket Details</h2>
-                <div class="info-item">
-                    <div class="label">Ticket ID</div>
-                    <div class="value"><?= htmlspecialchars($ticketId) ?></div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Status</div>
-                    <div class="value">
-                        <span
-                            class="status-badge status-<?= htmlspecialchars(strtolower(str_replace(' ', '-', $ticket['status']))) ?>"><?= htmlspecialchars($ticket['status']) ?></span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Priority</div>
-                    <div class="value">
-                        <span
-                            class="priority-badge priority-<?= htmlspecialchars(strtolower($ticket['priority'])) ?>"><?= htmlspecialchars(ucfirst($ticket['priority'])) ?></span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Created</div>
-                    <div class="value">
-                        <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['submission_date']))) ?>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Last Updated</div>
-                    <div class="value">
-                        <?php if ($ticket['last_updated_date'] === "0000-00-00 00:00:00"): ?>
-                            No Activity Yet
-                        <?php else: ?>
-                            <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['last_updated_date']))) ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Category</div>
-                    <?php
-                    $sql = "SELECT type_name FROM Ticket_Types WHERE type_id = ? LIMIT 1";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$ticket['ticket_type_id']]);
-                    $ticketType = $stmt->fetch();
-                    ?>
-                    <div class="value"><?= htmlspecialchars($ticketType['type_name']) ?></div>
-                </div>
-                <div class="info-item">
-                    <div class="label">Assigned to</div>
-                    <div class="value">
-                        <?= isset($employee['em_name_first'], $employee['em_name_last'])
-                            ? htmlspecialchars($employee['em_name_first'] . ' ' . $employee['em_name_last'])
-                            : 'Unassigned' ?>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="label">User</div>
-                    <div class="value">
-                        <?= htmlspecialchars($customer['cust_name_first'] . ' ' . $customer['cust_name_last']) ?>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="label">User Email</div>
-                    <div class="value"><?= htmlspecialchars($customer['cust_email']) ?></div>
-                </div>
+<nav id="sidebar" class="c-sidebar tickets-sidebar top-space" style="background-color: #fff; width: 300px">
+    <div class="ticket-info">
+        <h2>Ticket Details</h2>
+        <div class="info-item">
+            <div class="label">Ticket ID</div>
+            <div class="value"><?= htmlspecialchars($ticketId) ?></div>
+        </div>
+        <div class="info-item">
+            <div class="label">Status</div>
+            <div class="value">
+                <span
+                    class="status-badge status-<?= htmlspecialchars(strtolower(str_replace(' ', '-', $ticket['status']))) ?>"><?= htmlspecialchars($ticket['status']) ?></span>
             </div>
-            <?php if ($_SESSION['user_type'] === 'employee'): ?>
-                <div class="actions">
-                    <?php if ($ticket['employee_id'] === $_SESSION['employee_id']): ?>
-                        <button id="reassign-ticket" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#assignModal">
-                            Reassign Ticket
-                        </button>
-                    <?php else: ?>
-                        <div class="btn-group w-100">
-                            <button id="assign-to-me" class="btn btn-primary" style="flex: 7;"
-                                onclick="assignToCurrentUser()">Assign to Me</button>
-                            <button id="assign-to-others" class="btn btn-primary" style="flex: 3;" data-bs-toggle="modal"
-                                data-bs-target="#assignModal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-chevron-down" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1">
-                                    <path fill-rule="evenodd"
-                                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                                </svg>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <button id="change-status" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
-                        data-bs-target="#changeStatusModal">Change Status</button>
-                    <button id="update-priority" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
-                        data-bs-target="#updatePriorityModal">Update Priority</button>
-                    <button id="close-ticket" class="btn btn-danger w-100" data-bs-toggle="modal"
-                        data-bs-target="#closeTicketModal" <?= $ticket['status'] === 'Resolved' ? 'disabled' : '' ?>>
-                        <?= $ticket['status'] === 'Resolved' ? 'Ticket is Closed' : 'Close Ticket' ?>
+        </div>
+        <div class="info-item">
+            <div class="label">Priority</div>
+            <div class="value">
+                <span
+                    class="priority-badge priority-<?= htmlspecialchars(strtolower($ticket['priority'])) ?>"><?= htmlspecialchars(ucfirst($ticket['priority'])) ?></span>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="label">Created</div>
+            <div class="value">
+                <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['submission_date']))) ?>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="label">Last Updated</div>
+            <div class="value">
+                <?php if ($ticket['last_updated_date'] === "0000-00-00 00:00:00"): ?>
+                    No Activity Yet
+                <?php else: ?>
+                    <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['last_updated_date']))) ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="label">Category</div>
+            <?php
+            $sql = "SELECT type_name FROM Ticket_Types WHERE type_id = ? LIMIT 1";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$ticket['ticket_type_id']]);
+            $ticketType = $stmt->fetch();
+            ?>
+            <div class="value"><?= htmlspecialchars($ticketType['type_name']) ?></div>
+        </div>
+        <div class="info-item">
+            <div class="label">Assigned to</div>
+            <div class="value">
+                <?= isset($employee['em_name_first'], $employee['em_name_last'])
+                    ? htmlspecialchars($employee['em_name_first'] . ' ' . $employee['em_name_last'])
+                    : 'Unassigned' ?>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="label">User</div>
+            <div class="value">
+                <?= htmlspecialchars($customer['cust_name_first'] . ' ' . $customer['cust_name_last']) ?>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="label">User Email</div>
+            <div class="value"><?= htmlspecialchars($customer['cust_email']) ?></div>
+        </div>
+    </div>
+    <?php if ($_SESSION['user_type'] === 'employee'): ?>
+        <div class="actions">
+            <?php if ($ticket['employee_id'] === $_SESSION['employee_id']): ?>
+                <button id="reassign-ticket" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#assignModal">
+                    Reassign Ticket
+                </button>
+            <?php else: ?>
+                <div class="btn-group w-100">
+                    <button id="assign-to-me" class="btn btn-primary flex-grow-1" onclick="assignToCurrentUser()">Assign to
+                        Me</button>
+                    <button id="assign-to-others" class="btn btn-primary flex-grow-0" data-bs-toggle="modal"
+                        data-bs-target="#assignModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-chevron-down" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1">
+                            <path fill-rule="evenodd"
+                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                        </svg>
                     </button>
                 </div>
             <?php endif; ?>
-        </aside>
+            <button id="change-status" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                data-bs-target="#changeStatusModal">Change Status</button>
+            <button id="update-priority" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                data-bs-target="#updatePriorityModal">Update Priority</button>
+            <button id="close-ticket" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#closeTicketModal"
+                <?= $ticket['status'] === 'Resolved' ? 'disabled' : '' ?>>
+                <?= $ticket['status'] === 'Resolved' ? 'Ticket is Closed' : 'Close Ticket' ?>
+            </button>
+        </div>
+    <?php endif; ?>
+</nav>
 
-        <div class="container" style="height: auto;">
+<main class="page-wrapper top-space bottom-space">
+    <!-- Override default sidebar width -->
+    <div class="after-sidebar-content tickets-sidebar">
+        <div class="container">
             <div class="ticket-content-wrapper">
                 <div class="ticket-content">
                     <div class="ticket-header">
@@ -338,7 +336,7 @@ if (isset($_GET['tid'])) {
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </main>
 
 <!-- Assign to Others Modal -->
@@ -514,6 +512,8 @@ foreach ($allAttachments as $attachment): ?>
     });
 </script>
 
+<script src="js/ticket-history.js"></script>
+
 <?php if ($_SESSION['user_type'] === 'employee'): ?>
     <script>
         function assignToCurrentUser() {
@@ -552,3 +552,23 @@ foreach ($allAttachments as $attachment): ?>
         }
     </script>
 <?php endif; ?>
+
+<script>
+    $(document).ready(function () {
+        $('#sidebarToggle').on('click', function () {
+            $(this).toggleClass('active');
+            $(this).toggleClass('active');
+        });
+
+        // Close the sidebar when clicking outside of it
+        $(document).on('click', function (event) {
+            const $sidebar = $('#sidebar');
+            const $toggleButton = $('#sidebarToggle');
+            if (!$sidebar.is(event.target) && $sidebar.has(event.target).length === 0 &&
+                !$toggleButton.is(event.target) && $toggleButton.has(event.target).length === 0) {
+                $sidebar.removeClass('active');
+                $toggleButton.removeClass('active');
+            }
+        });
+    });
+</script>

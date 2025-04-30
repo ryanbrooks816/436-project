@@ -19,8 +19,6 @@ if (isset($_SESSION['user_type'])) {
     die("User not logged in.");
 }
 
-error_log("UI{$user_id}");
-
 if (!$user_id) {
     die("User ID not found.");
 }

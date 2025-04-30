@@ -3,68 +3,72 @@
 require '../header.php';
 require_once "../modules/require-login.php";
 
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'employee') {
-    $sql = "SELECT * FROM Tickets WHERE employee_id = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['employee_id']]);
-    $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
+    header("Location: 403.php");
 }
 ?>
 
-<main class="page-wrapper top-space bottom-space">
-    <?php include '../modules/notification-alert.php'; ?>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<?php require '../modules/admin-sidebar.php'?>
 
-    <section>
-
-    <div class="sidebar">
-        <a href="dashboard.php">Dashboard</a>
-        <a href="game-list.php">Manage Games</a>
-        <a href="manage-game-details.php">Manage Game Details</a>
-        <a href="manage-users.php">Manage Users</a>
-        <a href="my-tickets.php">Tickets</a>
+<main class="page-wrapper">
+    <div class="top-space bg-primary text-white text-center py-5">
+        <h1 class="text-white">My Assigned Tickets</h1>
     </div>
-        <div class="container mt-4">
-            <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'employee'): ?>
-
-                <!-- Open Tickets -->
-                <h3>Open Tickets</h3>
-                <?php
-                $openTickets = array_filter($tickets, function ($ticket) {
-                    return strtolower($ticket['status']) !== 'resolved';
-                });
-                ?>
-                <?php if (!empty($openTickets)): ?>
-                    <?php foreach ($openTickets as $ticket) {
-                        include '../modules/ticket-card.php';
-                    } ?>
-                <?php else: ?>
-                    <p>You have no open tickets.</p>
-                <?php endif; ?>
-
-                <!-- Resolved Tickets -->
-                <h3>Resolved Tickets</h3>
-                <?php
-                $resolvedTickets = array_filter($tickets, function ($ticket) {
-                    return strtolower($ticket['status']) === 'resolved';
-                });
-                ?>
-                <?php if (!empty($resolvedTickets)): ?>
-                    <?php foreach ($resolvedTickets as $ticket) {
-                        include '../modules/ticket-card.php';
-                    } ?>
-                <?php else: ?>
-                    <p>You have no resolved tickets.</p>
-                <?php endif; ?>
+    <div class="after-sidebar-content">
+        <div class="container">
+            <!-- Assigned Tickets -->
+            <?php
+            $sql = "SELECT * FROM Tickets WHERE employee_id = ? AND status != 'Resolved'";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$_SESSION['employee_id']]);
+            $tickets = $stmt->fetchAll();
+            ?>
+            <h2 class="mt-5">Your Tickets</h2>
+            <?php if (empty($resolvedTickets)): ?>
+                <p class="my-3 fs-5">You're not assigned to any tickets.</p>
             <?php else: ?>
-                <div class="text-center">
-                    <h2 class="mb-4">Please Switch to a Customer Account</h2>
-                    <p class="lead">Sorry, this page requires you to be signed in as a customer to access.</p>
-                    <a href="login.php" class="btn btn-primary mt-3">Go to Login</a>
-                </div>
+                <?php foreach ($resolvedTickets as $ticket) {
+                    include '../modules/ticket-card.php';
+                } ?>
+            <?php endif; ?>
+
+            <hr>
+
+            <!-- Unassigned Tickets -->
+            <?php
+            $sql = "SELECT * FROM Tickets WHERE employee_id IS NULL AND status != 'Resolved'";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $tickets = $stmt->fetchAll();
+            ?>
+            <h2 class="mt-5">Available Tickets</h2>
+            <?php if (empty($tickets)): ?>
+                <p class="my-3 fs-5">No tickets available.</p>
+            <?php else: ?>
+                <?php foreach ($tickets as $ticket) {
+                    include '../modules/ticket-card.php';
+                } ?>
+            <?php endif; ?>
+
+            <hr>
+
+            <!-- Tickets Assigned to Others -->
+            <?php
+            $sql = "SELECT * FROM Tickets WHERE employee_id IS NOT NULL AND employee_id != ? AND status != 'Resolved'";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$_SESSION['employee_id']]);
+            $tickets = $stmt->fetchAll();
+            ?>
+            <h2 class="mt-5">Tickets Assigned to Others</h2>
+            <?php if (empty($tickets)): ?>
+                <p class="my-3 fs-5">No tickets assigned to others.</p>
+            <?php else: ?>
+                <?php foreach ($tickets as $ticket) {
+                    include '../modules/ticket-card.php';
+                } ?>
             <?php endif; ?>
         </div>
-    </section>
+    </div>
 </main>
 
 <?php require '../footer.php' ?>

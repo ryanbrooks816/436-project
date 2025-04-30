@@ -8,7 +8,7 @@ function redirect_after_login()
         unset($_SESSION['redirect_after_login']);
         header("Location: $redirect_url");
     } else {
-        header("Location: index.php");
+        header("Location: game-list.php");
     }
 }
 
@@ -61,7 +61,7 @@ if (isset($_SESSION['user_type'])) {
         <div class="container">
             <div class="d-flex justify-content-center flex-column text-center">
                 <h2 class="mb-4">You\' Already Logged In, Redirecting...</h2>
-                <script>setTimeout(function() { window.location.href = "index.php"; }, 3000);</script>
+                <script>setTimeout(function() { window.location.href = "game-list.php"; }, 3000);</script>
             </div>
         </div>
     </section>
