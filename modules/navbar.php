@@ -63,12 +63,12 @@ if (in_array($currentPage, $pagesWithCustomClass)) {
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="<?= $isEmployee ? '../admin/game-list.php' : '/game-list.php'; ?>">Search
+                            href="<?= $isEmployee ? '../admin/game-list.php' : 'game-list.php'; ?>">Search
                             Games</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                            href="<?= $isEmployee ? '../admin/my-tickets.php' : '/my-tickets.php'; ?>">My
+                            href="<?= $isEmployee ? '../admin/my-tickets.php' : 'my-tickets.php'; ?>">My
                             Tickets</a>
                     </li>
                     <?php if (isset($_SESSION['user_type'])): ?>

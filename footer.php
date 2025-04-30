@@ -18,7 +18,7 @@
             <ul class="footer-nav-list d-flex flex-column flex-md-row justify-content-md-end">
               <li class="footer-nav-item"><a href="<?= $isEmployee ? '../index.php' : 'index.php'; ?>" class="footer-nav-link">Home</a></li>
               <li class="footer-nav-item"><a href="<?= $isEmployee ? '../admin/game-list.php' : 'search-games.php'; ?>" class="footer-nav-link">Search Games</a></li>
-              <li class="footer-nav-item"><a href="<?= $isEmployee ? '../admin/my-tickets.php' : '/my-tickets.php'; ?>" class="footer-nav-link">My Tickets</a></li>
+              <li class="footer-nav-item"><a href="<?= $isEmployee ? '../admin/my-tickets.php' : 'my-tickets.php'; ?>" class="footer-nav-link">My Tickets</a></li>
               <li class="footer-nav-item"><a href="<?= $isEmployee ? '../profile.php' : 'profile.php'; ?>" class="footer-nav-link">My Profile</a></li>
               <li class="footer-nav-item"><a href="<?= $isEmployee ? '../login.php' : 'login.php'; ?>" class="footer-nav-link">Login</a></li>
             </ul>
