@@ -175,7 +175,7 @@ if (isset($_GET['tid'])) {
                 </button>
             <?php else: ?>
                 <div class="btn-group w-100">
-                    <button id="assign-to-me" class="btn btn-primary flex-grow-1" onclick="assignToCurrentUser()">Assign to
+                    <button id="assign-to-me" class="btn btn-primary flex-grow-1" style="text-wrap: nowrap;" onclick="assignToCurrentUser()">Assign to
                         Me</button>
                     <button id="assign-to-others" class="btn btn-primary flex-grow-0" data-bs-toggle="modal"
                         data-bs-target="#assignModal">
