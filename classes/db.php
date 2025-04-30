@@ -1,22 +1,13 @@
 <?php
 
 $type = 'mysql';                             // Type of database
-$server = 'localhost';                    // Server the database is on
-$db = 'csc436project';                  // Name of the database
-$port = '8889';                           // Port is usually 3306 in Hostgator
+$server = '192.185.2.183';                    // Server the database is on
+$db = 'rybro8_436-project';                  // Name of the database
+$port = '3306';                           // Port is usually 3306 in Hostgator
 $charset = 'utf8mb4';                       // UTF-8 encoding using 4 bytes of data per char
 
-$username = 'matthewc';     // Enter YOUR cPanel username and user here
-$password = 'testpass123';           // Enter YOUR user password here
-
-// $type = 'mysql';                             // Type of database
-// $server = '192.185.2.183';                    // Server the database is on
-// $db = 'rybro8_436-project';                  // Name of the database
-// $port = '3306';                           // Port is usually 3306 in Hostgator
-// $charset = 'utf8mb4';                       // UTF-8 encoding using 4 bytes of data per char
-
-// $username = 'rybro8_main';     // Enter YOUR cPanel username and user here
-// $password = '1hO9bAOQ8Pr0CfyoaLY';           // Enter YOUR user password here
+$username = 'rybro8_main';     // Enter YOUR cPanel username and user here
+$password = '1hO9bAOQ8Pr0CfyoaLY';           // Enter YOUR user password here
 
 
 // DO *NOT* CHANGE ANYTHING BENEATH THIS LINE

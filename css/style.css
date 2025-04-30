@@ -169,7 +169,6 @@ a.white {
     min-width: 120px;
     padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
     border-radius: 2rem;
-    color: white;
     font-weight: 600;
     cursor: pointer;
     text-align: center;
@@ -326,6 +325,35 @@ a.white {
     border: 1px solid #a1a1a1;
 }
 
+/* Checkbox group styling */
+.checkbox-group {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--primary);
+    border-radius: 0.25rem;
+}
+
+.checkbox-group .form-check {
+    margin-bottom: 0.5rem;
+}
+
+.checkbox-group .form-check-input {
+    background-color: #fff;
+    border: 1px solid #c4d8dc;
+}
+
+.checkbox-group .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkbox-group .form-check-label {
+    color: #fff;
+    font-size: 0.875rem;
+}
+
 /* Tabs */
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
@@ -444,7 +472,6 @@ a.white {
     font-size: 2rem;
 }
 
-
 /* Footer */
 footer p {
     color: #fff;
@@ -559,6 +586,7 @@ footer .footer-brand img {
     display: flex;
     position: relative;
     margin: 0 auto;
+    align-items: stretch;
 }
 
 .sidebar {
@@ -568,7 +596,7 @@ footer .footer-brand img {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: var(--bg-card);
     height: fit-content;
-    width: 300px;
+    width: 350px;
     flex-shrink: 0;
     margin-right: 40px;
     transition: transform 0.3s ease;
@@ -592,7 +620,6 @@ footer .footer-brand img {
     justify-content: center;
 }
 
-
 @media (max-width: 768px) {
     .tickets-section {
         flex-direction: column;
@@ -607,9 +634,11 @@ footer .footer-brand img {
         z-index: 99;
         transform: translateX(-100%);
         overflow-y: auto;
+        height: 100%;
         max-height: 100vh;
         border-radius: 0;
         margin-right: 0;
+        padding-top: 140px;
     }
 
     .sidebar.active {
@@ -660,6 +689,7 @@ footer .footer-brand img {
 
 .info-item .value {
     font-size: 1rem;
+    line-break: anywhere;
 }
 
 .status-badge,
@@ -681,12 +711,12 @@ footer .footer-brand img {
     color: var(--status-in-progress-color);
 }
 
-.status-badge.status.resolved {
+.status-badge.status-resolved {
     background-color: var(--status-resolved-bg);
     color: var(--status-resolved-color);
 }
 
-.status-bage.status.pending {
+.status-bage.status-pending {
     background-color: var(--status-pending-bg);
     color: var(--status-pending-color);
 }
@@ -813,9 +843,6 @@ footer .footer-brand img {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-weight: bold;
-    background-color: var(--primary);
 }
 
 .message-name {
@@ -939,7 +966,7 @@ footer .footer-brand img {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-body {
+/* body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -975,4 +1002,4 @@ body {
 }
 #main-content {
   padding-left: 250px;
-}
+} */
