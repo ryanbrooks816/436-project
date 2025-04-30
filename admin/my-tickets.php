@@ -24,10 +24,10 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'employee') {
             $tickets = $stmt->fetchAll();
             ?>
             <h2 class="mt-5">Your Tickets</h2>
-            <?php if (empty($resolvedTickets)): ?>
+            <?php if (empty($tickets)): ?>
                 <p class="my-3 fs-5">You're not assigned to any tickets.</p>
             <?php else: ?>
-                <?php foreach ($resolvedTickets as $ticket) {
+                <?php foreach ($tickets as $ticket) {
                     include '../modules/ticket-card.php';
                 } ?>
             <?php endif; ?>
