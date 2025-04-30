@@ -1,4 +1,6 @@
 <?php 
+ob_start();
+
 $isAdminPage = strpos($_SERVER['PHP_SELF'], '/admin/') !== false;
 
 require $isAdminPage ? "../classes/config.php" : "classes/config.php";
