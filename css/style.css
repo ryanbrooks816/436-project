@@ -1347,3 +1347,8 @@ footer .footer-brand img {
     background-color: #2ecc71;
     color: white;
 }
+
+.game-category-tag.ugc-game {
+    background-color: #e74c3c;
+    color: white;
+}
