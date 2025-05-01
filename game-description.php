@@ -7,128 +7,38 @@ if (!isset($_GET['game_id']) || empty($_GET['game_id'])) {
     exit;
 }
 
-$game_id = intval($_GET['game_id']);
+$game_id = $_GET['game_id'];
 
-// Fetch game details from database
-try {
-    $sql = "SELECT g.*, p.publisher_name 
-            FROM Games g
-            LEFT JOIN Game_Publishers gp ON g.game_id = gp.game_id
-            LEFT JOIN Publishers p ON gp.publisher_id = p.publisher_id
-            WHERE g.game_id = ?";
-    $stmt = pdo($pdo, $sql, [$game_id]);
-    $game = $stmt->fetch();
+// Fetch game with joined info
+$sql = "
+  SELECT 
+    g.game_id,
+    g.game_name,
+    g.game_rating,
+    g.game_release_date,
+    GROUP_CONCAT(DISTINCT af.feature_name ORDER BY af.feature_name SEPARATOR ', ') AS features,
+    GROUP_CONCAT(DISTINCT pl.platform_name ORDER BY pl.platform_name SEPARATOR ', ') AS platforms,
+    GROUP_CONCAT(DISTINCT cat.cat_name ORDER BY cat.cat_name SEPARATOR ', ') AS categories,
+    GROUP_CONCAT(DISTINCT pub.publisher_name ORDER BY pub.publisher_name SEPARATOR ', ') AS publishers
+  FROM Games g
+  LEFT JOIN Game_Accessibility_Features gaf ON g.game_id = gaf.game_id
+  LEFT JOIN Accessibility_Features af ON gaf.feature_id = af.feature_id
+  LEFT JOIN Game_Platforms gp ON g.game_id = gp.game_id
+  LEFT JOIN Platforms pl ON gp.platform_id = pl.platform_id
+  LEFT JOIN Game_Categories gc ON g.game_id = gc.game_id
+  LEFT JOIN Categories cat ON gc.cat_id = cat.cat_id
+  LEFT JOIN Game_Publishers gpub ON g.game_id = gpub.game_id
+  LEFT JOIN Publishers pub ON gpub.publisher_id = pub.publisher_id
+  WHERE g.game_id = :game_id
+  GROUP BY g.game_id, g.game_name, g.game_rating
+";
 
-    if (!$game) {
-        $error = "Game not found.";
-    }
-} catch (PDOException $e) {
-    $error = "Error fetching game details: " . htmlspecialchars($e->getMessage());
-}
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':game_id' => $game_id]);
+$game = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Fetch game platforms from database
-try {
-    $sql = "SELECT p.platform_name 
-            FROM Platforms p 
-            JOIN Game_Platforms gp ON p.platform_id = gp.platform_id 
-            WHERE gp.game_id = ?";
-    $stmt = pdo($pdo, $sql, [$game_id]);
-    $platforms = $stmt->fetchAll();
-} catch (PDOException $e) {
-    $error_platforms = "Error fetching platforms: " . htmlspecialchars($e->getMessage());
-}
-
-// Fetch game accessibility features from database
-try {
-    $sql = "SELECT af.feature_name 
-            FROM Accessibility_Features af 
-            JOIN Game_Accessibility_Features gaf ON af.feature_id = gaf.feature_id 
-            WHERE gaf.game_id = ?";
-    $stmt = pdo($pdo, $sql, [$game_id]);
-    $features = $stmt->fetchAll();
-} catch (PDOException $e) {
-    $error_features = "Error fetching accessibility features: " . htmlspecialchars($e->getMessage());
-}
-
-// Function to extract game details from a text file
-function getGameDetailsFromText($game_name) {
-    $text_path = 'game_descriptions.txt';
-
-    if (!file_exists($text_path)) {
-        return [
-            'description' => "Game description not available. Text file not found at 'game_descriptions.txt'.",
-            'platforms' => [],
-            'age_rating' => 'N/A'
-        ];
-    }
-
-    $file_content = file_get_contents($text_path);
-    if ($file_content === false) {
-        return [
-            'description' => "Error reading text file.",
-            'platforms' => [],
-            'age_rating' => 'N/A'
-        ];
-    }
-
-    // Split the file into lines
-    $lines = array_filter(array_map('trim', explode("\n", $file_content)));
-
-    $description = "No description available.";
-    $txt_platforms = [];
-    $age_rating = 'N/A';
-    $current_game = '';
-    $current_section = '';
-
-    foreach ($lines as $line) {
-        // Check if the line is a game name (not a field with a colon)
-        if (!empty($line) && strpos($line, ':') === false) {
-            $current_game = $line;
-            $current_section = '';
-            continue;
-        }
-
-        // Skip header or empty lines
-        if ($line === 'Video Game List' || empty($line)) {
-            continue;
-        }
-
-        // Check if this line belongs to the game we're looking for
-        if ($current_game === $game_name) {
-            if (strpos($line, 'Publisher:') === 0) {
-                $current_section = 'Publisher';
-                continue;
-            } elseif (strpos($line, 'Age Rating:') === 0) {
-                $current_section = 'Age Rating';
-                $age_rating = trim(substr($line, strlen('Age Rating:')));
-                continue;
-            } elseif (strpos($line, 'Platforms:') === 0) {
-                $current_section = 'Platforms';
-                $platforms_string = trim(substr($line, strlen('Platforms:')));
-                $txt_platforms = array_map('trim', explode(',', $platforms_string));
-                continue;
-            } elseif (strpos($line, 'Description:') === 0) {
-                $current_section = 'Description';
-                $description = trim(substr($line, strlen('Description:')));
-                continue;
-            } elseif ($current_section === 'Description') {
-                // Continue appending to description if we're in that section
-                $description .= "\n" . $line;
-                continue;
-            }
-        }
-    }
-
-    // Combine text file platforms with database platforms, avoiding duplicates
-    global $platforms;
-    $platform_names = array_column($platforms, 'platform_name');
-    $all_platforms = array_unique(array_merge($platform_names, $txt_platforms));
-
-    return [
-        'description' => $description,
-        'platforms' => $all_platforms,
-        'age_rating' => $age_rating
-    ];
+if (!$game) {
+    die("Game not found.");
 }
 ?>
 
@@ -255,7 +165,7 @@ function getGameDetailsFromText($game_name) {
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="game-list.php">Games</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    <?php echo htmlspecialchars($game['game_name'] ?? 'Game Details'); ?>
+                    <?php echo htmlspecialchars($game['game_name']); ?>
                 </li>
             </ol>
         </nav>
@@ -267,95 +177,118 @@ function getGameDetailsFromText($game_name) {
             </a>
         </div>
 
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $error; ?>
+        <div class="game-container">
+            <div class="game-header">
+                <h1><?php echo htmlspecialchars($game['game_name']); ?></h1>
             </div>
-        <?php elseif ($game): ?>
-            <?php 
-                $game_details = getGameDetailsFromText($game['game_name']);
-                $txt_platforms = $game_details['platforms'];
-                $age_rating = $game_details['age_rating'];
-            ?>
-            <div class="game-container">
-                <div class="game-header">
-                    <h1><?php echo htmlspecialchars($game['game_name']); ?></h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Game Information</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>Publishers:</strong>
+                                    <?php if ($game['publishers']): ?>
+                                        <?php foreach (explode(', ', $game['publishers']) as $publisher): ?>
+                                            <span><?= htmlspecialchars($publisher) ?></span>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        None listed
+                                    <?php endif; ?>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Release Date:</strong>
+                                    <?php echo isset($game['game_release_date']) ? date("F j, Y", strtotime($game['game_release_date'])) : 'Unknown'; ?>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Rating:</strong>
+                                    <span class="ms-2 badge bg-warning text-dark">
+                                        <i class="bi bi-star-fill"></i>
+                                        <?php echo htmlspecialchars($game['game_rating'] ?? 'N/A'); ?>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <img src="images/placeholder.jpg" class="card-img-top"
-                                alt="Image for <?php echo htmlspecialchars($game['game_name']); ?>">
-                            <div class="card-body">
-                                <h5>Game Information</h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <strong>Publisher:</strong>
-                                        <?php echo htmlspecialchars($game['publisher_name'] ?? 'Unknown'); ?>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Release Date:</strong>
-                                        <?php echo isset($game['game_release_date']) ? date("F j, Y", strtotime($game['game_release_date'])) : 'Unknown'; ?>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Age Rating:</strong>
-                                        <?php echo htmlspecialchars($age_rating); ?>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Rating:</strong>
-                                        <span class="ms-2 badge bg-warning text-dark">
-                                            <i class="bi bi-star-fill"></i>
-                                            <?php echo htmlspecialchars($game['game_rating'] ?? 'N/A'); ?>
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Available Platforms</h5>
+                            <div class="game-card-tag-list">
+                                <?php if ($game['platforms']): ?>
+                                    <?php foreach (explode(', ', $game['platforms']) as $platform): ?>
+                                        <span class="game-platform-tag"><?= htmlspecialchars($platform) ?></span>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p class="text-muted">No platforms listed.</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Categories</h5>
+                            <div class="game-card-tag-list">
+                                <?php if ($game['categories']): ?>
+                                    <?php foreach (explode(', ', $game['categories']) as $category): ?>
+                                        <?php
+                                        $categoryClass = strtolower(str_replace([' ', "'", '(', ')'], '-', $category));
+                                        ?>
+                                        <span class="game-category-tag <?= htmlspecialchars($categoryClass) ?>">
+                                            <?= htmlspecialchars($category) ?>
                                         </span>
-                                    </li>
-                                </ul>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p class="text-muted">No categories listed.</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-8">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5>Available Platforms</h5>
-                                <?php if (isset($error_platforms)): ?>
-                                    <div class="alert alert-warning" role="alert">
-                                        <?php echo $error_platforms; ?>
-                                    </div>
-                                <?php elseif (empty($txt_platforms)): ?>
-                                    <p class="text-muted">No platform information available.</p>
-                                <?php else: ?>
-                                    <div>
-                                        <?php foreach ($txt_platforms as $platform): ?>
-                                            <span class="platform-badge"><?php echo htmlspecialchars($platform); ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5>Accessibility Features</h5>
+                            <?php
+                            // Query to fetch features grouped by their categories
+                            $featureSql = "
+                                    SELECT 
+                                        afc.cat_name,
+                                        GROUP_CONCAT(af.feature_name ORDER BY af.feature_name SEPARATOR ', ') AS features
+                                    FROM Accessibility_Features af
+                                    INNER JOIN Accessibility_Feature_Categories afc ON af.feature_cat_id = afc.cat_id
+                                    INNER JOIN Game_Accessibility_Features gaf ON af.feature_id = gaf.feature_id
+                                    WHERE gaf.game_id = :game_id
+                                    GROUP BY afc.cat_name
+                                    ORDER BY afc.cat_name
+                                    ";
+                            $featureStmt = $pdo->prepare($featureSql);
+                            $featureStmt->execute([':game_id' => $game_id]);
+                            $featureCategories = $featureStmt->fetchAll(PDO::FETCH_ASSOC);
+                            ?>
 
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5>Accessibility Features</h5>
-                                <?php if (isset($error_features)): ?>
-                                    <div class="alert alert-warning" role="alert">
-                                        <?php echo $error_features; ?>
-                                    </div>
-                                <?php elseif (empty($features)): ?>
-                                    <p class="text-muted">No accessibility features listed.</p>
-                                <?php else: ?>
-                                    <div>
-                                        <?php foreach ($features as $feature): ?>
-                                            <span class="feature-badge"><?php echo htmlspecialchars($feature['feature_name']); ?></span>
+                            <?php if ($featureCategories): ?>
+                                <?php foreach ($featureCategories as $category): ?>
+                                    <div class="game-card-tag-list mb-2">
+                                        <p class="m-0">
+                                            <strong><?= htmlspecialchars($category['cat_name']) ?>:</strong>
+                                        </p>
+                                        <?php foreach (explode(', ', $category['features']) as $feature): ?>
+                                            <span class="game-accessibility-tag"><?= htmlspecialchars($feature) ?></span>
                                         <?php endforeach; ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>None listed</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
+        </div>
     </div>
 </main>
 

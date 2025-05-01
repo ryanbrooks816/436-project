@@ -751,6 +751,7 @@ footer .footer-brand img {
 }
 
 @media screen and (max-width: 991px) {
+
     .ticket-card-header,
     .ticket-card-footer {
         flex-direction: column;
@@ -1151,4 +1152,198 @@ footer .footer-brand img {
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Game Cards */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.game-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-card-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.game-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+    word-break: break-word;
+}
+
+.game-card-info-label {
+    font-size: 12px;
+    color: #718096;
+    margin-bottom: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.game-card-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.game-accessibility-tag {
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.game-platform-tag {
+    background-color: #4a5568;
+    color: white;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.game-platform-count {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 11px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-left: 6px;
+}
+
+.game-category-tag {
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.game-category-count {
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 11px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-left: 6px;
+}
+
+.game-category-tag.action {
+    background-color: #00b5d8;
+    color: white;
+}
+
+.game-category-tag.survival {
+    background-color: #38a169;
+    color: white;
+}
+
+.game-category-tag.third-person-shooter--tps-,
+.game-category-tag.first-person-shooter--fps- {
+    background-color: #e53e3e;
+    color: white;
+}
+
+.game-category-tag.adventure {
+    background-color: #805ad5;
+    color: white;
+}
+
+.game-category-tag.platformer {
+    background-color: #f6ad55;
+    color: white;
+}
+
+.game-category-tag.racing {
+    background-color: #4299e1;
+    color: white;
+}
+
+.game-category-tag.vehicular-combat {
+    background-color: #d69e2e;
+    color: white;
+}
+
+.game-category-tag.role-playing-game--rpg- {
+    background-color: #9b59b6;
+    color: white;
+}
+
+.game-category-tag.roguelike {
+    background-color: #34495e;
+    color: white;
+}
+
+.game-category-tag.real-time-strategy--rts- {
+    background-color: #1abc9c;
+    color: white;
+}
+
+.game-category-tag.sports-sim {
+    background-color: #e67e22;
+    color: white;
+}
+
+.game-category-tag.turn-based-rpg {
+    background-color: #2980b9;
+    color: white;
+}
+
+.game-category-tag.fighting {
+    background-color: #c0392b;
+    color: white;
+}
+
+.game-category-tag.flight-simulator {
+    background-color: #16a085;
+    color: white;
+}
+
+.game-category-tag.party {
+    background-color: #ff6f61;
+    color: white;
+}
+
+.game-category-tag.puzzle {
+    background-color: #f39c12;
+    color: white;
+}
+
+.game-category-tag.space-combat {
+    background-color: #3498db;
+    color: white;
+}
+
+.game-category-tag.horror {
+    background-color: #8e44ad;
+    color: white;
+}
+
+.game-category-tag.cooperative-cooking {
+    background-color: #2ecc71;
+    color: white;
 }

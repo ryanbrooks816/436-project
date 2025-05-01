@@ -255,64 +255,72 @@ try {
                     </div>
                 </div>
             <?php else: ?>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-5" id="game-list">
+                <div class="game-grid" id="game-list">
                     <?php foreach ($games as $game): ?>
                         <div class="col">
-                            <div class="card h-100 d-flex flex-column">
-                                <img src="images/placeholder.jpg" class="card-img-top" style="height: 200px; object-fit: cover;"
-                                    alt="Placeholder image for <?php echo htmlspecialchars($game['game_name']); ?>">
-                                <div class="card-body d-flex flex-column justify-content-between">
-                                    <h5 class="card-title d-flex justify-content-between align-items-start mb-3"
-                                        style="gap: 8px;">
+                            <div class="card game-card">
+                                <!-- <img src="images/placeholder.jpg" class="card-img-top" style="height: 200px; object-fit: cover;"
+                                    alt="Placeholder image for <?php echo htmlspecialchars($game['game_name']); ?>"> -->
+                                <div class="card-header game-card-header mb-3">
+                                    <h5 class="card-title game-card-title">
                                         <?php echo htmlspecialchars($game['game_name']); ?>
-                                        <span class="badge bg-warning text-dark">
-                                            <i class="bi bi-star-fill"></i>
-                                            <?php echo htmlspecialchars($game['game_rating'] ?? 'N/A'); ?>
-                                        </span>
                                     </h5>
-                                    <p class="card-text">
-                                        Platforms:
-                                        <?php
-                                        // Fetch platforms for the game
-                                        $sql = "SELECT p.Platform_Name 
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="bi bi-star-fill"></i>
+                                        <?php echo htmlspecialchars($game['game_rating'] ?? 'N/A'); ?>
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="game-card-info-label">Platforms</div>
+                                        <div class="game-card-tag-list">
+                                            <?php
+                                            // Fetch platforms for the game
+                                            $sql = "SELECT p.Platform_Name 
                                                     FROM Platforms p 
                                                     JOIN Game_Platforms gp ON p.Platform_ID = gp.Platform_ID 
                                                     WHERE gp.Game_ID = ?";
-                                        $stmt = pdo($pdo, $sql, [$game['game_id']]);
-                                        $platforms = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                                        foreach ($platforms as $index => $platform) {
-                                            echo '<span class="badge bg-secondary me-1">' . htmlspecialchars($platform) . '</span>';
-                                            if ($index === 0 && count($platforms) > 1) {
-                                                echo '<span class="badge bg-secondary">+ ' . (count($platforms) - 1) . '</span>';
-                                                break;
+                                            $stmt = pdo($pdo, $sql, [$game['game_id']]);
+                                            $platforms = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                                            if (!empty($platforms)) {
+                                                echo '<span class="game-platform-tag">' . htmlspecialchars($platforms[0]);
+                                                if (count($platforms) > 1) {
+                                                    echo ' <span class="game-platform-count">+' . (count($platforms) - 1) . '</span>';
+                                                }
+                                                echo '</span>';
                                             }
-                                        }
-                                        ?><br>
-                                        Categories:
-                                        <?php
-                                        // Fetch categories for the game
-                                        $sql = "SELECT c.Cat_Name 
-                                                    FROM Categories c 
-                                                    JOIN Game_Categories gc ON c.Cat_ID = gc.Cat_ID 
-                                                    WHERE gc.Game_ID = ?";
-                                        $stmt = pdo($pdo, $sql, [$game['game_id']]);
-                                        $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                                        foreach ($categories as $index => $category) {
-                                            echo '<span class="badge bg-info me-1">' . htmlspecialchars($category) . '</span>';
-                                            if ($index === 0 && count($categories) > 1) {
-                                                echo '<span class="badge bg-info">+ ' . (count($categories) - 1) . '</span>';
-                                                break;
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="game-card-info-label">Categories</div>
+                                        <div class="game-card-tag-list">
+                                            <?php
+                                            // Fetch categories for the game
+                                            $sql = "SELECT c.Cat_Name 
+                                                            FROM Categories c 
+                                                            JOIN Game_Categories gc ON c.Cat_ID = gc.Cat_ID 
+                                                            WHERE gc.Game_ID = ?";
+                                            $stmt = pdo($pdo, $sql, [$game['game_id']]);
+                                            $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                                            if (!empty($categories)) {
+                                                $firstCategoryClass = strtolower(str_replace([' ', "'", '(', ')'], '-', $categories[0]));
+                                                echo '<span class="game-category-tag ' . htmlspecialchars($firstCategoryClass) . '">' . htmlspecialchars($categories[0]);
+                                                if (count($categories) > 1) {
+                                                    echo ' <span class="game-category-count">+' . (count($categories) - 1) . '</span>';
+                                                }
+                                                echo '</span>';
                                             }
-                                        }
-                                        ?>
-                                    </p>
-                                    <div class="mt-4">
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 60px;">
                                         <?php if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'employee'): ?>
-                                            <a href="admin/game-view.php?game_id=<?php echo htmlspecialchars($game['game_id']); ?>" 
-                                                class="btn btn-primary btn-sm w-100">Edit / View Details</a>
+                                            <a href="admin/game-view.php?game_id=<?php echo htmlspecialchars($game['game_id']); ?>"
+                                                class="btn btn-primary btn-xs w-100">Edit / View Details</a>
                                         <?php else: ?>
-                                            <a href="game-description.php?game_id=<?php echo htmlspecialchars($game['game_id']); ?>" 
-                                                class="btn btn-primary btn-sm w-100">View Details</a>
+                                            <a href="game-description.php?game_id=<?php echo htmlspecialchars($game['game_id']); ?>"
+                                                class="btn btn-primary btn-xs w-100">View Details</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
