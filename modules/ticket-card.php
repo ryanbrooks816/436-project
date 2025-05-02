@@ -29,7 +29,7 @@
             <div>
                 <div class="text-muted small">
                     <i class="bi bi-clock me-1"></i>
-                    <?php if ($ticket['last_updated_date'] === "0000-00-00 00:00:00"): ?>
+                    <?php if ($ticket['last_updated_date'] === "0000-00-00 00:00:00" || $ticket['last_updated_date'] === null): ?>
                         Created:
                         <?= htmlspecialchars(date("F j, Y, g:i A", strtotime($ticket['submission_date']))); ?>
                     <?php else: ?>
